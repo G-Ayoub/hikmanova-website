@@ -15,7 +15,6 @@ const mainNav = [
   { label: ui.nav.caseStudies, href: "/case-studies" },
   { label: ui.nav.about, href: "/about" },
   { label: ui.nav.insights, href: "/blog" },
-  { label: ui.nav.contact, href: "/contact" },
 ];
 
 const footerColumns = [
@@ -73,19 +72,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         Skip to content
       </a>
 
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
         <div className="container flex items-center justify-between gap-4 py-3">
-          <Link href="/" className="flex items-center gap-2 font-serif text-2xl font-bold hover:opacity-80 transition-opacity shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 font-serif text-[1.375rem] font-bold hover:opacity-80 transition-opacity shrink-0">
             <img src={asset("/hikmanova-logo.png")} alt="" className="w-10 h-10 object-contain" />
             <span className="hidden sm:inline" dir="ltr">HikmaNova</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6" aria-label="Main">
+          <nav className="hidden lg:flex items-center gap-7" aria-label="Main">
             {mainNav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${isActive(link.href) ? "text-primary" : ""}`}
+                className={`text-[0.9375rem] font-medium transition-colors hover:text-primary ${isActive(link.href) ? "text-primary" : ""}`}
               >
                 {t(link.label)}
               </Link>
@@ -113,6 +112,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </Button>
 
+            <Button asChild className="hidden sm:inline-flex h-11 px-5 font-semibold">
+              <Link href="/contact">{t(ui.contactUs)}</Link>
+            </Button>
+
             <Button
               variant="ghost"
               size="icon"
@@ -129,7 +132,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {mobileMenuOpen && (
           <nav className="lg:hidden border-t border-border bg-card" aria-label="Mobile">
             <div className="container py-4 flex flex-col">
-              {mainNav.map((link) => (
+              {[...mainNav, { label: ui.nav.contact, href: "/contact" }].map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -145,18 +148,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <main id="main" className="flex-1">{children}</main>
 
-      <footer className="border-t border-border bg-card text-card-foreground">
+      <footer className="bg-[var(--navy-deep)] text-[#B9C6E4]">
         <div className="container py-12">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
             <div className="col-span-2">
-              <p className="font-serif font-bold text-lg mb-3" dir="ltr">HikmaNova</p>
-              <p className="text-sm text-muted-foreground mb-4 max-w-xs">{t(ui.brandTagline)}</p>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <a href={`mailto:${company.email}`} className="flex items-center gap-2 hover:text-foreground">
+              <p className="font-serif font-bold text-xl mb-3 text-white" dir="ltr">HikmaNova</p>
+              <p className="text-sm mb-4 max-w-xs">{t(ui.brandTagline)}</p>
+              <div className="space-y-2 text-sm">
+                <a href={`mailto:${company.email}`} className="flex items-center gap-2 hover:text-white">
                   <Mail className="w-4 h-4" /> <span dir="ltr">{company.email}</span>
                 </a>
                 {company.social.linkedin && (
-                  <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-foreground">
+                  <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
                     <Linkedin className="w-4 h-4" /> LinkedIn
                   </a>
                 )}
@@ -170,11 +173,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {footerColumns.map((column) => (
               <div key={column.title.en}>
-                <p className="font-serif font-bold mb-4">{t(column.title)}</p>
+                <p className="font-serif font-bold mb-4 text-white">{t(column.title)}</p>
                 <ul className="space-y-2 text-sm">
                   {column.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                      <Link href={link.href} className="hover:text-white transition-colors">
                         {t(link.label)}
                       </Link>
                     </li>
@@ -184,7 +187,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </div>
 
-          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
+          <div className="border-t border-white/10 pt-8 text-center text-sm">
             <p>
               &copy; {new Date().getFullYear()} <span dir="ltr">HikmaNova</span>. {t(ui.footer.rights)}
             </p>

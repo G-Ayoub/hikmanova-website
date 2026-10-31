@@ -19,7 +19,7 @@ export default function Services() {
   return (
     <Layout>
       <PageHero title={t(ui.nav.services)} subtitle={t(copy.subtitle)} />
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((s) => {
             const Icon = serviceIcons[s.icon];

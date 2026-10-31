@@ -18,7 +18,7 @@ export default function LegalPage({ title, updated, sections }: { title: Localiz
   return (
     <Layout>
       <PageHero title={t(title)} subtitle={`${t(updatedLabel)}: ${t(updated)}`} />
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container max-w-3xl space-y-10">
           {sections.map((s, i) => (
             <div key={s.heading.en}>

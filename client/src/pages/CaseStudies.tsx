@@ -21,7 +21,7 @@ export default function CaseStudies() {
   return (
     <Layout>
       <PageHero title={t(ui.nav.caseStudies)} subtitle={t(copy.subtitle)} />
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container space-y-8">
           {studies.map((s) => (
             <article key={s.slug} className="grid grid-cols-1 md:grid-cols-5 gap-0 rounded-lg overflow-hidden border border-border bg-card">

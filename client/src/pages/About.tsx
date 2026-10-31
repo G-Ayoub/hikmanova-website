@@ -44,7 +44,7 @@ export default function About() {
     <Layout>
       <PageHero title={t(copy.title)} subtitle={t(copy.subtitle)} />
 
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">{t(copy.storyTitle)}</h2>
@@ -91,7 +91,7 @@ export default function About() {
                   {p.photo ? (
                     <img src={asset(p.photo)} alt={p.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
                   ) : (
-                    <div className="w-24 h-24 rounded-full mx-auto mb-4 hero-gradient flex items-center justify-center text-2xl font-bold text-white" aria-hidden>
+                    <div className="w-24 h-24 rounded-full mx-auto mb-4 bg-[var(--navy)] flex items-center justify-center text-2xl font-serif font-bold text-white" aria-hidden>
                       {initials(p.name)}
                     </div>
                   )}

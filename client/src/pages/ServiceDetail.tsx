@@ -21,16 +21,15 @@ export default function ServiceDetail() {
 
   return (
     <Layout>
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 hero-gradient opacity-10 -z-10" />
+      <section className="signal-hero">
         <div className="container py-12 md:py-16">
-          <Link href="/services" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6">
+          <Link href="/services" className="inline-flex items-center gap-2 text-sm text-[var(--on-navy-muted)] hover:text-white mb-6">
             <BackArrow /> {t(ui.nav.services)}
           </Link>
           <div className="max-w-3xl">
-            <Icon className="w-12 h-12 text-primary mb-4" aria-hidden />
-            <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">{t(service.name)}</h1>
-            <p className="text-xl text-muted-foreground">{t(service.description)}</p>
+            <Icon className="w-12 h-12 text-[var(--teal)] mb-4" aria-hidden />
+            <h1 className="text-4xl md:text-6xl font-serif font-bold leading-[1.05] mb-4">{t(service.name)}</h1>
+            <p className="text-xl text-[var(--on-navy-muted)]">{t(service.description)}</p>
           </div>
         </div>
       </section>

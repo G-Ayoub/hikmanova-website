@@ -37,7 +37,7 @@ export default function Innovation() {
     <Layout>
       <PageHero title={t(ui.nav.innovation)} subtitle={t(copy.subtitle)} />
 
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container">
           <SectionHeading title={t(copy.ipTitle)} />
           <article className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-lg overflow-hidden border border-border bg-card max-w-5xl mx-auto">

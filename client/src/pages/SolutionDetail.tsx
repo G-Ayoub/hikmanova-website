@@ -25,10 +25,9 @@ export default function SolutionDetail() {
 
   return (
     <Layout>
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 hero-gradient opacity-10 -z-10" />
+      <section className="signal-hero">
         <div className="container py-12 md:py-16">
-          <Link href="/solutions" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6">
+          <Link href="/solutions" className="inline-flex items-center gap-2 text-sm text-[var(--on-navy-muted)] hover:text-white mb-6">
             <BackArrow /> {t(ui.nav.solutions)}
           </Link>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -38,21 +37,21 @@ export default function SolutionDetail() {
                   {t(ui.categories[solution.category])}
                 </span>
                 {cs && (
-                  <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
+                  <span className="px-3 py-1 bg-accent text-accent-foreground text-xs font-semibold rounded-full">
                     {t(ui.solution.caseStudyBadge)}
                   </span>
                 )}
               </div>
-              <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">{solution.name}</h1>
-              <p className="text-xl text-muted-foreground mb-6">{t(solution.tagline)}</p>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold leading-[1.05] mb-4">{solution.name}</h1>
+              <p className="text-xl text-[var(--on-navy-muted)] mb-6">{t(solution.tagline)}</p>
               {solution.client && (
                 <p className="text-sm">
-                  <span className="text-muted-foreground">{t(ui.solution.client)}: </span>
+                  <span className="text-[var(--on-navy-muted)]">{t(ui.solution.client)}: </span>
                   <strong>{t(solution.client)}</strong>
                 </p>
               )}
             </div>
-            <img src={asset(solution.image)} alt="" className="w-full rounded-lg border border-border aspect-video object-cover" />
+            <img src={asset(solution.image)} alt="" className="w-full rounded-2xl border border-white/10 aspect-video object-cover bg-[#F4F7FF] shadow-[0_30px_60px_rgba(0,0,0,0.35)]" />
           </div>
         </div>
       </section>

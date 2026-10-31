@@ -36,7 +36,7 @@ export default function Careers() {
     <Layout>
       <PageHero title={t(ui.nav.careers)} subtitle={t(copy.subtitle)} />
 
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container">
           <SectionHeading title={t(copy.cultureTitle)} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

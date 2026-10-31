@@ -22,7 +22,7 @@ export default function Sitemap() {
   return (
     <Layout>
       <PageHero title={t(ui.nav.sitemap)} />
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {groups.map((g) => (
             <div key={g.title.en}>

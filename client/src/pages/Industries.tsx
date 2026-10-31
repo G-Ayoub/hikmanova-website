@@ -21,7 +21,7 @@ export default function Industries() {
   return (
     <Layout>
       <PageHero title={t(ui.nav.industries)} subtitle={t(copy.subtitle)} />
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {industries.map((industry) => {
             const Icon = industryIcons[industry.icon];

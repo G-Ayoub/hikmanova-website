@@ -26,7 +26,7 @@ export default function Blog() {
   return (
     <Layout>
       <PageHero title={t(ui.nav.insights)} subtitle={t(copy.subtitle)} />
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sorted.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="group card-hover rounded-lg overflow-hidden bg-card border border-border flex flex-col">

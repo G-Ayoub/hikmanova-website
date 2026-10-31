@@ -25,7 +25,7 @@ export default function Solutions() {
     <Layout>
       <PageHero title={t(ui.nav.solutions)} subtitle={t(copy.subtitle)} />
 
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container">
           <div className="flex flex-wrap gap-2 justify-center mb-10" role="group" aria-label={t(ui.nav.solutions)}>
             {filters.map((f) => (

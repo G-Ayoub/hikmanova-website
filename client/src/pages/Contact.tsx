@@ -116,7 +116,7 @@ export default function Contact() {
     <Layout>
       <PageHero title={t(copy.title)} subtitle={t(copy.subtitle)} />
 
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-12">
           <aside className="space-y-6">
             <div className="p-6 rounded-lg border border-border bg-card">

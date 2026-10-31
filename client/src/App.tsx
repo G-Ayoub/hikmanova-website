@@ -37,6 +37,9 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/solutions" component={Solutions} />
+      <Route path="/solutions/hotel-pms">
+        <Redirect to="/solutions" replace />
+      </Route>
       <Route path="/solutions/:slug" component={SolutionDetail} />
       <Route path="/services" component={Services} />
       <Route path="/services/:slug" component={ServiceDetail} />

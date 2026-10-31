@@ -81,7 +81,7 @@ export function SolutionCard({ solution }: { solution: Solution }) {
       href={`/solutions/${solution.slug}`}
       className="group card-hover rounded-lg overflow-hidden bg-background border border-border h-full flex flex-col"
     >
-      <div className="relative overflow-hidden h-48 bg-muted">
+      <div className="relative overflow-hidden aspect-video bg-[#F4F7FF]">
         <img
           src={asset(solution.image)}
           alt=""

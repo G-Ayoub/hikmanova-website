@@ -70,7 +70,7 @@ describe("content data", () => {
 
   it("images are local, kebab-case files", () => {
     for (const img of [...solutions, ...services, ...posts].map((x) => x.image)) {
-      expect(img).toMatch(/^\/images\/[a-z0-9-]+\.(jpg|png|webp)$/);
+      expect(img).toMatch(/^\/images\/[a-z0-9-]+\.(jpg|png|webp|svg)$/);
     }
   });
 });

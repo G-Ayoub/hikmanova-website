@@ -159,7 +159,7 @@ export const solutions: Solution[] = [
     stack: ["IoT sensors", "MQTT", "Dashboards", "Alerting", "PostgreSQL"],
     industries: ["logistics", "hospitality"],
     services: ["iot-connected-systems", "backend-enterprise-platforms"],
-    image: "/images/abstract-4.jpg",
+    image: "/images/iot-cold-chain.svg",
   },
   {
     slug: "lamana",
@@ -179,27 +179,7 @@ export const solutions: Solution[] = [
     stack: ["Flutter", "Django", "PostgreSQL", "REST APIs"],
     industries: ["logistics"],
     services: ["mobile-apps", "backend-enterprise-platforms"],
-    image: "/images/abstract-11.jpg",
-  },
-  {
-    slug: "hotel-pms",
-    category: "Platform",
-    name: "Sovereign Hotel PMS",
-    tagline: l("A locally hosted property management system for hotels", "نظام إدارة فنادق مستضاف محلياً"),
-    overview: l(
-      "A hotel property management system designed as a sovereign alternative to international suites such as Oracle OPERA. It runs on local infrastructure so guest data stays in the country and complies with data-localisation rules.",
-      "نظام لإدارة العمليات الفندقية صُمّم بديلاً سيادياً للأنظمة الدولية مثل Oracle OPERA. يعمل على بنية تحتية محلية لتبقى بيانات النزلاء داخل البلد وفق متطلبات توطين البيانات.",
-    ),
-    features: [
-      l("Reservations, front desk and room management", "الحجوزات والاستقبال وإدارة الغرف"),
-      l("Hosted on-premises or in a national cloud", "استضافة داخلية أو على سحابة وطنية"),
-      l("Built to comply with data-localisation regulations", "مصمم للامتثال لأنظمة توطين البيانات"),
-      l("Modern APIs for integration with existing hotel systems", "واجهات برمجية حديثة للتكامل مع أنظمة الفندق الحالية"),
-    ],
-    stack: ["Django", "PostgreSQL", "Docker", "Kubernetes", "Keycloak"],
-    industries: ["hospitality", "public-sector"],
-    services: ["backend-enterprise-platforms", "devops-sovereign-hosting"],
-    image: "/images/abstract-3.jpg",
+    image: "/images/lamana.svg",
   },
 ];
 

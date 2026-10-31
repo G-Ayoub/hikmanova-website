@@ -29,8 +29,8 @@ export const industries: Industry[] = [
     icon: "hotel",
     name: l("Hospitality", "الضيافة والفنادق"),
     description: l(
-      "Locally hosted hotel management and connected monitoring that keep guest data in the country.",
-      "إدارة فندقية مستضافة محلياً ومراقبة متصلة تُبقي بيانات النزلاء داخل البلد.",
+      "Connected cold-chain monitoring and locally hosted platforms that keep guest data in the country.",
+      "مراقبة متصلة لسلسلة التبريد ومنصات مستضافة محلياً تُبقي بيانات النزلاء داخل البلد.",
     ),
     services: ["backend-enterprise-platforms", "devops-sovereign-hosting", "iot-connected-systems"],
   },

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Illustration: a connected refrigerator sends temperature readings to a monitoring dashboard that raises an alert">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#0B1F4B" flood-opacity="0.16"/>
+    </filter>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2F6BFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#2F6BFF" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0 H0 V40" fill="none" stroke="#DCE7FF" stroke-width="1.5"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="#F4F7FF"/>
+  <rect width="1200" height="675" fill="url(#grid)" opacity="0.8"/>
+  <ellipse cx="250" cy="600" rx="190" ry="22" fill="#0B1F4B" opacity="0.08"/>
+
+  <!-- Refrigerator -->
+  <g transform="translate(120 120)" filter="url(#shadow)">
+    <rect width="260" height="470" rx="28" fill="#FFFFFF" stroke="#0B1F4B" stroke-width="6"/>
+    <path d="M3 168 H257" stroke="#0B1F4B" stroke-width="6"/>
+    <rect x="214" y="48" width="14" height="80" rx="7" fill="#0B1F4B"/>
+    <rect x="214" y="208" width="14" height="130" rx="7" fill="#0B1F4B"/>
+    <!-- snowflake -->
+    <g transform="translate(100 84)" stroke="#2F6BFF" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M0 -34 V34 M-29 -17 L29 17 M-29 17 L29 -17"/>
+      <path d="M-9 -26 L0 -17 L9 -26 M-9 26 L0 17 L9 26"/>
+    </g>
+    <!-- temperature display -->
+    <rect x="44" y="214" width="132" height="64" rx="14" fill="#0B1F4B"/>
+    <text x="110" y="257" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" fill="#5EEAD4">4.2°</text>
+    <!-- sensor puck -->
+    <g transform="translate(110 360)">
+      <circle r="32" fill="#2F6BFF"/>
+      <circle r="12" fill="#FFFFFF"/>
+      <circle r="5" fill="#2F6BFF"/>
+    </g>
+  </g>
+
+  <!-- Wireless signal -->
+  <g transform="translate(410 480)" fill="none" stroke="#2F6BFF" stroke-width="8" stroke-linecap="round">
+    <path d="M0 -40 A 40 40 0 0 1 0 40" opacity="0.9"/>
+    <path d="M24 -70 A 72 72 0 0 1 24 70" opacity="0.55"/>
+    <path d="M48 -100 A 104 104 0 0 1 48 100" opacity="0.25"/>
+  </g>
+
+  <!-- Data path -->
+  <path d="M500 420 C 560 420 580 330 650 330" fill="none" stroke="#2F6BFF" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 14"/>
+
+  <!-- Dashboard -->
+  <g transform="translate(650 110)" filter="url(#shadow)">
+    <rect width="440" height="420" rx="28" fill="#FFFFFF"/>
+    <!-- header: thermometer + value -->
+    <g transform="translate(36 36)">
+      <rect width="56" height="56" rx="16" fill="#E6EEFF"/>
+      <g transform="translate(28 28)" stroke="#2F6BFF" stroke-width="4" fill="none" stroke-linecap="round">
+        <path d="M-4 6 V-14 a4 4 0 0 1 8 0 V6"/>
+        <circle cx="0" cy="11" r="7"/>
+      </g>
+    </g>
+    <text x="110" y="78" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="700" fill="#0B1F4B">4.2°C</text>
+    <rect x="300" y="48" width="104" height="36" rx="18" fill="#CCFBF1"/>
+    <circle cx="322" cy="66" r="7" fill="#14B8A6"/>
+    <rect x="338" y="61" width="50" height="10" rx="5" fill="#0F766E"/>
+
+    <!-- chart -->
+    <g transform="translate(36 130)">
+      <rect width="368" height="230" rx="16" fill="#F7F9FF"/>
+      <!-- safe band 2–8 °C -->
+      <rect x="0" y="70" width="368" height="100" fill="#14B8A6" opacity="0.12"/>
+      <path d="M0 70 H368 M0 170 H368" stroke="#14B8A6" stroke-width="2" stroke-dasharray="6 8" opacity="0.7"/>
+      <!-- reading -->
+      <path d="M16 130 L56 122 L96 136 L136 118 L176 128 L216 114 L256 126 L292 98 L320 40 L352 52 L352 230 L16 230 Z" fill="url(#area)"/>
+      <path d="M16 130 L56 122 L96 136 L136 118 L176 128 L216 114 L256 126 L292 98" fill="none" stroke="#2F6BFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M292 98 L320 40 L352 52" fill="none" stroke="#F59E0B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="320" cy="40" r="12" fill="#F59E0B"/>
+      <circle cx="320" cy="40" r="22" fill="#F59E0B" opacity="0.2"/>
+    </g>
+    <!-- legend bars -->
+    <rect x="36" y="382" width="90" height="10" rx="5" fill="#0B1F4B" opacity="0.18"/>
+    <rect x="146" y="382" width="60" height="10" rx="5" fill="#0B1F4B" opacity="0.12"/>
+  </g>
+
+  <!-- Alert toast -->
+  <g transform="translate(770 520)" filter="url(#shadow)">
+    <rect width="330" height="84" rx="22" fill="#0B1F4B"/>
+    <g transform="translate(26 20)">
+      <rect width="44" height="44" rx="14" fill="#F59E0B"/>
+      <g transform="translate(22 22)" fill="none" stroke="#0B1F4B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M-10 6 V-2 a10 10 0 0 1 20 0 V6 l3 4 H-13 Z"/>
+        <path d="M-3 14 a3 3 0 0 0 6 0"/>
+      </g>
+    </g>
+    <rect x="90" y="26" width="150" height="11" rx="5.5" fill="#FFFFFF"/>
+    <rect x="90" y="47" width="200" height="9" rx="4.5" fill="#FFFFFF" opacity="0.45"/>
+  </g>
+</svg>

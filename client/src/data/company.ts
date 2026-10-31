@@ -22,8 +22,8 @@ export const company = {
   stats: [
     { value: "8+", label: l("Years of experience", "سنوات من الخبرة") },
     { value: "4", label: l("Countries served", "دول نخدمها") },
+    { value: "100+", label: l("Stadium staff tracked at FIFA World Cup Qatar 2022", "موظف في الملاعب تم تتبّعهم خلال كأس العالم FIFA قطر 2022") },
     { value: "5", label: l("Patents & registered IP", "براءات اختراع وملكية فكرية مسجّلة") },
-    // TODO: add once confirmed — { value: "…", label: l("Field staff managed at FIFA World Cup 2022", "موظف ميداني تمت إدارتهم في كأس العالم FIFA 2022") },
   ] as Stat[],
 
   /** CEO, COO, ... (names and roles carried over from the previous site) */

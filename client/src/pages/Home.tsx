@@ -74,9 +74,9 @@ export default function Home() {
         <div className="container">
           <h2 className="sr-only">{t(copy.numbersTitle)}</h2>
           {company.stats.length > 0 ? (
-            <dl className="flex flex-wrap justify-center gap-x-16 gap-y-8 text-center">
+            <dl className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 text-center max-w-5xl mx-auto">
               {company.stats.map((stat) => (
-                <div key={stat.label.en} className="flex flex-col-reverse">
+                <div key={stat.label.en} className="flex flex-col-reverse justify-end gap-1">
                   <dt className="text-sm text-muted-foreground">{t(stat.label)}</dt>
                   <dd className="text-3xl md:text-4xl font-serif font-bold text-primary" dir="ltr">{stat.value}</dd>
                 </div>

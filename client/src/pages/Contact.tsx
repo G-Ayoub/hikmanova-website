@@ -7,6 +7,7 @@ import { PageHero, SectionHeading } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { company } from "@/data/company";
+import { asset } from "@/lib/asset";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mkglzgqd";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -167,7 +168,7 @@ export default function Contact() {
 
             {company.profilePdf ? (
               <Button asChild variant="outline" className="w-full gap-2">
-                <a href={company.profilePdf} download>
+                <a href={asset(company.profilePdf)} download>
                   <Download className="w-4 h-4" aria-hidden /> {t(ui.downloadProfile)}
                 </a>
               </Button>

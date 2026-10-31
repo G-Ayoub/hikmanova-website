@@ -8,6 +8,7 @@ import { ui, useI18n, type Localized } from "@/lib/i18n";
 import type { Solution } from "@/data/solutions";
 import type { ServiceIcon } from "@/data/services";
 import type { IndustryIcon } from "@/data/industries";
+import { asset } from "@/lib/asset";
 
 export const serviceIcons: Record<ServiceIcon, LucideIcon> = {
   brain: Brain,
@@ -82,7 +83,7 @@ export function SolutionCard({ solution }: { solution: Solution }) {
     >
       <div className="relative overflow-hidden h-48 bg-muted">
         <img
-          src={solution.image}
+          src={asset(solution.image)}
           alt=""
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

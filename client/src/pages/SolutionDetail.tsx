@@ -9,6 +9,7 @@ import { getSolution } from "@/data/solutions";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
 import NotFound from "./NotFound";
+import { asset } from "@/lib/asset";
 
 export default function SolutionDetail() {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -51,7 +52,7 @@ export default function SolutionDetail() {
                 </p>
               )}
             </div>
-            <img src={solution.image} alt="" className="w-full rounded-lg border border-border aspect-video object-cover" />
+            <img src={asset(solution.image)} alt="" className="w-full rounded-lg border border-border aspect-video object-cover" />
           </div>
         </div>
       </section>
@@ -104,11 +105,11 @@ export default function SolutionDetail() {
             <div>
               <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.media)}</h2>
               {solution.video ? (
-                <video src={solution.video} controls className="w-full rounded-lg border border-border" />
+                <video src={asset(solution.video)} controls className="w-full rounded-lg border border-border" />
               ) : solution.gallery?.length ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {solution.gallery.map((src) => (
-                    <img key={src} src={src} alt="" loading="lazy" className="rounded-lg border border-border" />
+                    <img key={src} src={asset(src)} alt="" loading="lazy" className="rounded-lg border border-border" />
                   ))}
                 </div>
               ) : (

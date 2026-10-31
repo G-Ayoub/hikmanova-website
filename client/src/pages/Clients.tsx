@@ -4,6 +4,7 @@ import { ComingSoon, CTA, defaultCta, PageHero, SectionHeading } from "@/compone
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { company } from "@/data/company";
+import { asset } from "@/lib/asset";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
@@ -34,7 +35,7 @@ export default function Clients() {
           {company.clientLogos.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
               {company.clientLogos.map((c) => (
-                <img key={c.name} src={c.logo} alt={c.name} loading="lazy" className="h-14 w-auto mx-auto" />
+                <img key={c.name} src={asset(c.logo)} alt={c.name} loading="lazy" className="h-14 w-auto mx-auto" />
               ))}
             </div>
           ) : (

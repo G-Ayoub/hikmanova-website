@@ -8,6 +8,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { solutions } from "@/data/solutions";
 import { services } from "@/data/services";
 import { company } from "@/data/company";
+import { asset } from "@/lib/asset";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
@@ -133,7 +134,7 @@ export default function Home() {
           {company.clientLogos.length > 0 ? (
             <div className="flex flex-wrap justify-center items-center gap-10">
               {company.clientLogos.map((c) => (
-                <img key={c.name} src={c.logo} alt={c.name} loading="lazy" className="h-12 w-auto grayscale hover:grayscale-0 transition" />
+                <img key={c.name} src={asset(c.logo)} alt={c.name} loading="lazy" className="h-12 w-auto grayscale hover:grayscale-0 transition" />
               ))}
             </div>
           ) : (

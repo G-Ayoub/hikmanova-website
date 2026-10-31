@@ -5,6 +5,7 @@ import { ForwardArrow, PageHero } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { posts } from "@/data/posts";
+import { asset } from "@/lib/asset";
 
 const copy = {
   subtitle: {
@@ -30,7 +31,7 @@ export default function Blog() {
           {sorted.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="group card-hover rounded-lg overflow-hidden bg-card border border-border flex flex-col">
               <div className="relative h-48 overflow-hidden bg-muted">
-                <img src={post.image} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <img src={asset(post.image)} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 <span className="absolute top-4 start-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
                   {t(post.category)}
                 </span>

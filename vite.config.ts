@@ -6,7 +6,8 @@ import { defineConfig } from "vite";
 const plugins = [react(), tailwindcss()];
 
 export default defineConfig({
-  base: '/',
+  // Served from https://g-ayoub.github.io/hikmanova-website/
+  base: '/hikmanova-website/',
   plugins,
   resolve: {
     alias: {

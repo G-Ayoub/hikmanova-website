@@ -7,6 +7,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { getPost, posts } from "@/data/posts";
 import { formatDate } from "./Blog";
 import NotFound from "./NotFound";
+import { asset } from "@/lib/asset";
 
 export default function BlogPost() {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -37,7 +38,7 @@ export default function BlogPost() {
         </header>
 
         <div className="container max-w-4xl mb-10">
-          <img src={post.image} alt="" className="w-full rounded-lg border border-border aspect-[2/1] object-cover" />
+          <img src={asset(post.image)} alt="" className="w-full rounded-lg border border-border aspect-[2/1] object-cover" />
         </div>
 
         <div className="container max-w-3xl pb-16">

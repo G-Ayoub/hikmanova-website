@@ -1,7 +1,12 @@
 # HikmaNova website
 
 Marketing site for **HikmaNova** — AI & IoT solutions for North Africa and the Gulf.
-Live at <https://elbaraediscord.github.io>.
+Live at <https://g-ayoub.github.io/hikmanova-website/>.
+
+The site is served from the `/hikmanova-website/` sub-path: `base` in `vite.config.ts` and `SITE_URL` in
+`client/src/const.ts` must match the deployment URL. Reference files in `client/public` through
+`asset("/images/…")` (`client/src/lib/asset.ts`) so they get the base prefix. To move to a custom domain,
+set `base: "/"` and update `SITE_URL`.
 
 Built with React 18, TypeScript, Vite, Tailwind CSS v4 and [wouter](https://github.com/molefrog/wouter) for routing.
 Bilingual (English / Arabic with RTL), with French planned.

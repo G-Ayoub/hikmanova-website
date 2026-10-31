@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Redirect, Route, Switch } from "wouter";
+import { Redirect, Route, Switch, Router as WouterRouter } from "wouter";
+import { BASE } from "./lib/asset";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -77,7 +78,9 @@ function App() {
         <ThemeProvider defaultTheme="light" switchable>
           <TooltipProvider>
             <Toaster />
-            <Router />
+            <WouterRouter base={BASE}>
+              <Router />
+            </WouterRouter>
           </TooltipProvider>
         </ThemeProvider>
       </LanguageProvider>

@@ -6,6 +6,7 @@ import { LANGUAGES, useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { ui, useI18n } from "@/lib/i18n";
 import { company } from "@/data/company";
+import { asset } from "@/lib/asset";
 
 const mainNav = [
   { label: ui.nav.solutions, href: "/solutions" },
@@ -75,7 +76,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex items-center justify-between gap-4 py-3">
           <Link href="/" className="flex items-center gap-2 font-serif text-2xl font-bold hover:opacity-80 transition-opacity shrink-0">
-            <img src="/hikmanova-logo.png" alt="" className="w-10 h-10 object-contain" />
+            <img src={asset("/hikmanova-logo.png")} alt="" className="w-10 h-10 object-contain" />
             <span className="hidden sm:inline" dir="ltr">HikmaNova</span>
           </Link>
 

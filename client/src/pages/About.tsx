@@ -4,6 +4,7 @@ import { ComingSoon, CTA, defaultCta, PageHero, SectionHeading } from "@/compone
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { company } from "@/data/company";
+import { asset } from "@/lib/asset";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
@@ -51,7 +52,7 @@ export default function About() {
               <p key={p.en} className="text-lg text-muted-foreground leading-relaxed mb-4">{t(p)}</p>
             ))}
           </div>
-          <img src="/images/abstract-6.jpg" alt="" loading="lazy" className="rounded-lg border border-border w-full aspect-video object-cover" />
+          <img src={asset("/images/abstract-6.jpg")} alt="" loading="lazy" className="rounded-lg border border-border w-full aspect-video object-cover" />
         </div>
       </section>
 
@@ -88,7 +89,7 @@ export default function About() {
               {company.leadership.map((p) => (
                 <div key={p.name} className="p-6 rounded-lg border border-border bg-background text-center">
                   {p.photo ? (
-                    <img src={p.photo} alt={p.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+                    <img src={asset(p.photo)} alt={p.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
                   ) : (
                     <div className="w-24 h-24 rounded-full mx-auto mb-4 hero-gradient flex items-center justify-center text-2xl font-bold text-white" aria-hidden>
                       {initials(p.name)}

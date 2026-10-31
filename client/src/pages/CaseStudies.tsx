@@ -4,6 +4,7 @@ import { CTA, defaultCta, ForwardArrow, PageHero } from "@/components/site";
 import { ui, useI18n } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { solutions } from "@/data/solutions";
+import { asset } from "@/lib/asset";
 
 const copy = {
   subtitle: {
@@ -24,7 +25,7 @@ export default function CaseStudies() {
         <div className="container space-y-8">
           {studies.map((s) => (
             <article key={s.slug} className="grid grid-cols-1 md:grid-cols-5 gap-0 rounded-lg overflow-hidden border border-border bg-card">
-              <img src={s.image} alt="" loading="lazy" className="md:col-span-2 w-full h-56 md:h-full object-cover" />
+              <img src={asset(s.image)} alt="" loading="lazy" className="md:col-span-2 w-full h-56 md:h-full object-cover" />
               <div className="md:col-span-3 p-6 md:p-8">
                 <p className="text-sm font-semibold text-primary mb-2">
                   {t(ui.categories[s.category])}

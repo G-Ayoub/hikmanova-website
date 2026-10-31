@@ -5,6 +5,7 @@ import { CTA, defaultCta, ForwardArrow, PageHero, SectionHeading } from "@/compo
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { getSolution } from "@/data/solutions";
+import { asset } from "@/lib/asset";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
@@ -40,7 +41,7 @@ export default function Innovation() {
         <div className="container">
           <SectionHeading title={t(copy.ipTitle)} />
           <article className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-lg overflow-hidden border border-border bg-card max-w-5xl mx-auto">
-            <img src={nusuk.image} alt="" className="w-full h-64 md:h-full object-cover" />
+            <img src={asset(nusuk.image)} alt="" className="w-full h-64 md:h-full object-cover" />
             <div className="p-8">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-4">
                 <Award className="w-4 h-4" aria-hidden /> {t(copy.registered)}

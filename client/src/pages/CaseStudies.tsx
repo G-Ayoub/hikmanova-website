@@ -24,14 +24,14 @@ export default function CaseStudies() {
       <section className="py-16 md:py-24">
         <div className="container space-y-8">
           {studies.map((s) => (
-            <article key={s.slug} className="grid grid-cols-1 md:grid-cols-5 gap-0 rounded-lg overflow-hidden border border-border bg-card">
+            <article key={s.slug} className="grid grid-cols-1 md:grid-cols-5 gap-0 rounded-xl overflow-hidden bg-card ring-1 ring-[var(--hairline)]">
               <img src={asset(s.image)} alt="" loading="lazy" className="md:col-span-2 w-full h-56 md:h-full object-cover" />
               <div className="md:col-span-3 p-6 md:p-8">
                 <p className="text-sm font-semibold text-primary mb-2">
                   {t(ui.categories[s.category])}
                   {s.client && <> · {t(s.client)}</>}
                 </p>
-                <h2 className="text-2xl md:text-3xl font-serif font-bold mb-3">{s.name}</h2>
+                <h2 className="text-2xl md:text-3xl font-serif font-semibold mb-3">{s.name}</h2>
                 <h3 className="font-semibold mb-1">{t(ui.solution.challenge)}</h3>
                 <p className="text-muted-foreground mb-4 line-clamp-3">{t(s.caseStudy!.challenge)}</p>
                 <h3 className="font-semibold mb-1">{t(ui.solution.results)}</h3>

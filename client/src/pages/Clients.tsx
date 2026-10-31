@@ -50,7 +50,7 @@ export default function Clients() {
           {company.testimonials.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {company.testimonials.map((q) => (
-                <figure key={q.author} className="p-6 rounded-lg border border-border bg-background">
+                <figure key={q.author} className="p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)]">
                   <Quote className="w-6 h-6 text-primary mb-3" aria-hidden />
                   <blockquote className="mb-4">{t(q.quote)}</blockquote>
                   <figcaption className="text-sm">

@@ -110,7 +110,7 @@ export default function Contact() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary";
+    "w-full px-4 py-3 rounded-md border border-input bg-card transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/30";
 
   return (
     <Layout>
@@ -119,8 +119,8 @@ export default function Contact() {
       <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-12">
           <aside className="space-y-6">
-            <div className="p-6 rounded-lg border border-border bg-card">
-              <h2 className="font-serif font-bold mb-3 flex items-center gap-2">
+            <div className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+              <h2 className="font-serif font-semibold mb-3 flex items-center gap-2">
                 <Mail className="w-5 h-5 text-primary" aria-hidden /> {t(copy.email)}
               </h2>
               <a href={`mailto:${company.email}`} className="text-muted-foreground hover:text-primary" dir="ltr">
@@ -128,8 +128,8 @@ export default function Contact() {
               </a>
             </div>
 
-            <div className="p-6 rounded-lg border border-border bg-card">
-              <h2 className="font-serif font-bold mb-3 flex items-center gap-2">
+            <div className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+              <h2 className="font-serif font-semibold mb-3 flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-primary" aria-hidden /> {t(copy.offices)}
               </h2>
               <ul className="space-y-1 text-muted-foreground">
@@ -145,7 +145,7 @@ export default function Contact() {
               </ul>
             </div>
 
-            <div className="p-6 rounded-lg border border-border bg-card space-y-3">
+            <div className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)] space-y-3">
               {company.social.whatsapp ? (
                 <a href={`https://wa.me/${company.social.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary">
                   <MessageCircle className="w-5 h-5 text-primary" aria-hidden /> {t(copy.whatsapp)}
@@ -180,7 +180,7 @@ export default function Contact() {
           </aside>
 
           <div className="lg:col-span-2">
-            <h2 className="text-3xl font-serif font-bold mb-2">{t(copy.form.title)}</h2>
+            <h2 className="text-3xl font-serif font-semibold mb-2">{t(copy.form.title)}</h2>
             <p className="text-muted-foreground mb-8">{t(copy.form.subtitle)}</p>
 
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
@@ -215,8 +215,8 @@ export default function Contact() {
           <SectionHeading title={t(copy.faqTitle)} />
           <div className="space-y-4">
             {copy.faqs.map((item) => (
-              <details key={item.q.en} className="group p-6 rounded-lg border border-border bg-background">
-                <summary className="font-serif font-bold text-lg cursor-pointer list-none flex justify-between gap-4">
+              <details key={item.q.en} className="group p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)]">
+                <summary className="font-serif font-semibold text-lg cursor-pointer list-none flex justify-between gap-4">
                   {t(item.q)}
                   <span className="text-primary transition-transform group-open:rotate-45" aria-hidden>+</span>
                 </summary>

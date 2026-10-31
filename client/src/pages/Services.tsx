@@ -24,9 +24,9 @@ export default function Services() {
           {services.map((s) => {
             const Icon = serviceIcons[s.icon];
             return (
-              <Link key={s.slug} href={`/services/${s.slug}`} className="group card-hover p-8 rounded-lg border border-border bg-card flex flex-col">
+              <Link key={s.slug} href={`/services/${s.slug}`} className="group card-hover p-8 rounded-xl bg-card ring-1 ring-[var(--hairline)] flex flex-col">
                 <Icon className="w-10 h-10 text-primary mb-4" aria-hidden />
-                <h2 className="text-2xl font-serif font-bold mb-3 group-hover:text-primary transition-colors">{t(s.name)}</h2>
+                <h2 className="text-2xl font-serif font-semibold mb-3 group-hover:text-primary transition-colors">{t(s.name)}</h2>
                 <p className="text-muted-foreground mb-4 flex-1">{t(s.description)}</p>
                 <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
                   {t(ui.learnMore)} <ForwardArrow />

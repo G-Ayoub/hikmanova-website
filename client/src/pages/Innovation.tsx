@@ -40,13 +40,13 @@ export default function Innovation() {
       <section className="py-16 md:py-24">
         <div className="container">
           <SectionHeading title={t(copy.ipTitle)} />
-          <article className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-lg overflow-hidden border border-border bg-card max-w-5xl mx-auto">
+          <article className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-xl overflow-hidden bg-card ring-1 ring-[var(--hairline)] max-w-5xl mx-auto">
             <img src={asset(nusuk.image)} alt="" className="w-full h-64 md:h-full object-cover" />
             <div className="p-8">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-4">
                 <Award className="w-4 h-4" aria-hidden /> {t(copy.registered)}
               </span>
-              <h3 className="text-2xl font-serif font-bold mb-3">{nusuk.name}</h3>
+              <h3 className="text-2xl font-serif font-semibold mb-3">{nusuk.name}</h3>
               <p className="text-muted-foreground mb-6">{t(copy.nusukText)}</p>
               <Link href={`/solutions/${nusuk.slug}`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline">
                 {t(ui.learnMore)} <ForwardArrow />
@@ -61,9 +61,9 @@ export default function Innovation() {
           <SectionHeading title={t(copy.approachTitle)} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {copy.approach.map(({ icon: Icon, title, text }) => (
-              <div key={title.en} className="p-6 rounded-lg border border-border bg-background">
+              <div key={title.en} className="p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)]">
                 <Icon className="w-8 h-8 text-primary mb-3" aria-hidden />
-                <h3 className="font-serif font-bold mb-2">{t(title)}</h3>
+                <h3 className="font-serif font-semibold mb-2">{t(title)}</h3>
                 <p className="text-sm text-muted-foreground">{t(text)}</p>
               </div>
             ))}

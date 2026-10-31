@@ -26,7 +26,7 @@ export default function Sitemap() {
         <div className="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {groups.map((g) => (
             <div key={g.title.en}>
-              <h2 className="text-xl font-serif font-bold mb-4">{t(g.title)}</h2>
+              <h2 className="text-xl font-serif font-semibold mb-4">{t(g.title)}</h2>
               <ul className="space-y-2">
                 {g.links.map((link) => (
                   <li key={link.href}>

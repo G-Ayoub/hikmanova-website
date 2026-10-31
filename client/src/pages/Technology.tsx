@@ -55,8 +55,8 @@ export default function Technology() {
           <SectionHeading title={t(copy.stackTitle)} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {stack.map((group) => (
-              <div key={group.title.en} className="p-6 rounded-lg border border-border bg-card">
-                <h3 className="font-serif font-bold mb-4">{t(group.title)}</h3>
+              <div key={group.title.en} className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+                <h3 className="font-serif font-semibold mb-4">{t(group.title)}</h3>
                 <TagList items={group.items} />
               </div>
             ))}
@@ -69,9 +69,9 @@ export default function Technology() {
           <SectionHeading title={t(copy.sovereignTitle)} subtitle={t(copy.sovereignSubtitle)} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {sovereign.map(({ icon: Icon, title, text }) => (
-              <div key={title.en} className="p-6 rounded-lg border border-border bg-background">
+              <div key={title.en} className="p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)]">
                 <Icon className="w-8 h-8 text-primary mb-3" aria-hidden />
-                <h3 className="font-serif font-bold mb-2">{t(title)}</h3>
+                <h3 className="font-serif font-semibold mb-2">{t(title)}</h3>
                 <p className="text-sm text-muted-foreground">{t(text)}</p>
               </div>
             ))}
@@ -84,9 +84,9 @@ export default function Technology() {
           <SectionHeading title={t(copy.securityTitle)} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {security.map(({ icon: Icon, title, text }) => (
-              <div key={title.en} className="p-6 rounded-lg border border-border bg-card">
+              <div key={title.en} className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
                 <Icon className="w-8 h-8 text-primary mb-3" aria-hidden />
-                <h3 className="font-serif font-bold mb-2">{t(title)}</h3>
+                <h3 className="font-serif font-semibold mb-2">{t(title)}</h3>
                 <p className="text-sm text-muted-foreground">{t(text)}</p>
               </div>
             ))}

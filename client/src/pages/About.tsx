@@ -47,21 +47,21 @@ export default function About() {
       <section className="py-16 md:py-24">
         <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">{t(copy.storyTitle)}</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-semibold mb-6">{t(copy.storyTitle)}</h2>
             {copy.story.map((p) => (
               <p key={p.en} className="text-lg text-muted-foreground leading-relaxed mb-4">{t(p)}</p>
             ))}
           </div>
-          <img src={asset("/images/abstract-6.jpg")} alt="" loading="lazy" className="rounded-lg border border-border w-full aspect-video object-cover" />
+          <img src={asset("/images/abstract-6.jpg")} alt="" loading="lazy" className="rounded-xl ring-1 ring-[var(--hairline)] w-full aspect-video object-cover" />
         </div>
       </section>
 
       <section className="py-16 md:py-24 bg-card">
         <div className="container grid grid-cols-1 md:grid-cols-3 gap-6">
           {copy.pillars.map(({ icon: Icon, title, text }) => (
-            <div key={title.en} className="p-8 rounded-lg border border-border bg-background">
+            <div key={title.en} className="p-8 rounded-xl bg-background ring-1 ring-[var(--hairline)]">
               <Icon className="w-8 h-8 text-primary mb-4" aria-hidden />
-              <h2 className="text-2xl font-serif font-bold mb-3">{t(title)}</h2>
+              <h2 className="text-2xl font-serif font-semibold mb-3">{t(title)}</h2>
               <p className="text-muted-foreground">{t(text)}</p>
             </div>
           ))}
@@ -73,7 +73,7 @@ export default function About() {
           <SectionHeading title={t(copy.regionsTitle)} />
           <div className="flex flex-wrap justify-center gap-3">
             {company.regions.map((r) => (
-              <span key={r.en} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card">
+              <span key={r.en} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card ring-1 ring-[var(--hairline)]">
                 <MapPin className="w-4 h-4 text-primary" aria-hidden /> {t(r)}
               </span>
             ))}
@@ -87,15 +87,15 @@ export default function About() {
           {company.leadership.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {company.leadership.map((p) => (
-                <div key={p.name} className="p-6 rounded-lg border border-border bg-background text-center">
+                <div key={p.name} className="p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)] text-center">
                   {p.photo ? (
                     <img src={asset(p.photo)} alt={p.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
                   ) : (
-                    <div className="w-24 h-24 rounded-full mx-auto mb-4 bg-[var(--navy)] flex items-center justify-center text-2xl font-serif font-bold text-white" aria-hidden>
+                    <div className="w-24 h-24 rounded-full mx-auto mb-4 bg-secondary flex items-center justify-center text-2xl font-serif font-semibold text-secondary-foreground" aria-hidden>
                       {initials(p.name)}
                     </div>
                   )}
-                  <h3 className="font-serif text-lg font-bold" dir="ltr">{p.name}</h3>
+                  <h3 className="font-serif text-lg font-semibold" dir="ltr">{p.name}</h3>
                   <p className="text-sm text-primary">{t(p.role)}</p>
                 </div>
               ))}

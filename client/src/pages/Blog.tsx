@@ -4,14 +4,12 @@ import Layout from "@/components/Layout";
 import { ForwardArrow, PageHero } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { posts } from "@/data/posts";
 import { asset } from "@/lib/asset";
 
 const copy = {
-  subtitle: {
-    en: "Notes from the field on AI agents, IoT and sovereign cloud.",
-    ar: "ملاحظات من الميدان حول وكلاء الذكاء الاصطناعي وإنترنت الأشياء والسحابة السيادية.",
-  } satisfies Localized,
+  subtitle: pageDescriptions["/blog"],
 };
 
 export function formatDate(date: string, language: string) {

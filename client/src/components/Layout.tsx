@@ -6,7 +6,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { LANGUAGES, useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { ui, useI18n } from "@/lib/i18n";
-import { company } from "@/data/company";
+import { company, hasClientProof } from "@/data/company";
 import { asset } from "@/lib/asset";
 import { Segmented, spring } from "@/components/motion";
 
@@ -35,7 +35,7 @@ const footerColumns = [
     links: [
       { label: ui.nav.about, href: "/about" },
       { label: ui.nav.innovation, href: "/innovation" },
-      { label: ui.nav.clients, href: "/clients" },
+      ...(hasClientProof() ? [{ label: ui.nav.clients, href: "/clients" }] : []),
       { label: ui.nav.careers, href: "/careers" },
       { label: ui.nav.insights, href: "/blog" },
     ],

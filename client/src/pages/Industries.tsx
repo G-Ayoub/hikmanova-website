@@ -3,15 +3,13 @@ import Layout from "@/components/Layout";
 import { CTA, defaultCta, industryIcons, PageHero } from "@/components/site";
 import { ui, useI18n } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { industries } from "@/data/industries";
 import { solutions } from "@/data/solutions";
 import { services } from "@/data/services";
 
 const copy = {
-  subtitle: {
-    en: "Sectors where our AI, IoT and sovereign platforms are already at work across North Africa and the Gulf.",
-    ar: "قطاعات تعمل فيها حلولنا في الذكاء الاصطناعي وإنترنت الأشياء والمنصات السيادية في شمال أفريقيا والخليج.",
-  },
+  subtitle: pageDescriptions["/industries"],
 };
 
 export default function Industries() {

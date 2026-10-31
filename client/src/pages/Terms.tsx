@@ -1,3 +1,4 @@
+import { pageDescriptions } from "@/data/routes";
 import LegalPage, { type LegalSection } from "@/components/LegalPage";
 import { ui, type Localized } from "@/lib/i18n";
 import { CONTACT_EMAIL } from "@/const";
@@ -37,5 +38,5 @@ const sections: LegalSection[] = [
 ];
 
 export default function Terms() {
-  return <LegalPage title={ui.nav.terms} updated={l("October 2026", "أكتوبر 2026")} sections={sections} />;
+  return <LegalPage description={pageDescriptions["/terms"]} title={ui.nav.terms} updated={l("October 2026", "أكتوبر 2026")} sections={sections} />;
 }

@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import {
-  ArrowLeft, ArrowRight, Brain, Building2, Clock, Hotel, Landmark, Presentation, Radio,
+  ArrowLeft, ArrowRight, Brain, Building2, Hotel, Landmark, Presentation, Radio,
   Satellite, Server, ShieldCheck, Zap, Smartphone, Trophy, Truck, type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import type { ServiceIcon } from "@/data/services";
 import type { IndustryIcon } from "@/data/industries";
 import { asset } from "@/lib/asset";
 import { Reveal } from "@/components/motion";
+import { company } from "@/data/company";
 
 export const serviceIcons: Record<ServiceIcon, LucideIcon> = {
   brain: Brain,
@@ -84,15 +85,19 @@ export function SectionHeading({ title, subtitle, eyebrow, center = false }: { t
   );
 }
 
-/** Visible placeholder for content that is not available yet. */
-export function ComingSoon({ title, note }: { title?: string; note?: string }) {
-  const { t } = useI18n();
+/** Client logos on white tiles, so brand colours stay true in light and dark mode. */
+export function ClientLogoGrid({ compact = false }: { compact?: boolean }) {
   return (
-    <div className="rounded-lg border border-dashed border-input bg-card/60 p-8 text-center">
-      <Clock className="w-7 h-7 mx-auto mb-3 text-muted-foreground" strokeWidth={1.75} aria-hidden />
-      <p className="font-semibold mb-1">{title ?? t(ui.comingSoon)}</p>
-      <p className="text-sm text-muted-foreground">{note ?? t(ui.comingSoonNote)}</p>
-    </div>
+    <ul className={`grid gap-4 ${compact ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2 md:grid-cols-4 gap-5"}`}>
+      {company.clientLogos.map((c) => (
+        <li
+          key={c.name}
+          className={`flex items-center justify-center rounded-xl bg-white ring-1 ring-[var(--hairline)] ${compact ? "h-24 p-4" : "h-36 p-6"}`}
+        >
+          <img src={asset(c.logo)} alt={c.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+        </li>
+      ))}
+    </ul>
   );
 }
 

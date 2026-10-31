@@ -4,7 +4,9 @@ import { solutions } from "../solutions";
 import { services } from "../services";
 import { industries } from "../industries";
 import { posts } from "../posts";
-import { allPaths, staticRoutes } from "../routes";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { allPaths, pageMeta, staticRoutes } from "../routes";
 
 /** Recursively collect every Localized value in an object. */
 function localizedValues(value: unknown, out: Localized[] = []): Localized[] {
@@ -71,6 +73,18 @@ describe("content data", () => {
   it("images are local, kebab-case files", () => {
     for (const img of [...solutions, ...services, ...posts].map((x) => x.image)) {
       expect(img).toMatch(/^\/images\/[a-z0-9-]+\.(jpg|png|webp|svg)$/);
+    }
+  });
+
+  it("every page has a title, description and share image (run `pnpm og` after adding content)", () => {
+    const publicDir = path.resolve(__dirname, "../../../public");
+    for (const route of allPaths()) {
+      const meta = pageMeta(route);
+      expect(meta, route).toBeDefined();
+      if (route !== "/") expect(meta!.title.en.trim(), route).not.toBe("");
+      expect(meta!.description.en.trim(), route).not.toBe("");
+      expect(meta!.description.ar.trim(), route).not.toBe("");
+      expect(existsSync(path.join(publicDir, meta!.image)), `${route}: missing ${meta!.image}`).toBe(true);
     }
   });
 });

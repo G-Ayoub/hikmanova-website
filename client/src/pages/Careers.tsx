@@ -2,18 +2,16 @@ import { Link } from "wouter";
 import { Globe2, Rocket, Users } from "lucide-react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { ComingSoon, PageHero, SectionHeading } from "@/components/site";
+import { PageHero, SectionHeading } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { company } from "@/data/company";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
 const copy = {
-  subtitle: l(
-    "Join a small team shipping AI and IoT systems that run in stadiums, holy sites and national data centres.",
-    "انضم إلى فريق صغير يطوّر أنظمة ذكاء اصطناعي وإنترنت أشياء تعمل في الملاعب والمشاعر المقدسة ومراكز البيانات الوطنية.",
-  ),
+  subtitle: pageDescriptions["/careers"],
   cultureTitle: l("How we work", "كيف نعمل"),
   culture: [
     { icon: Rocket, title: l("Real impact", "أثر حقيقي"), text: l("Your work goes into production for large events and enterprises.", "يصل عملك إلى بيئات تشغيل فعلية لفعاليات ومؤسسات كبرى.") },
@@ -26,6 +24,10 @@ const copy = {
     "لم تجد وظيفة مناسبة؟ أرسل لنا سيرتك الذاتية وأخبرنا بما تودّ بناءه.",
   ),
   apply: l("Apply", "تقدّم الآن"),
+  noRoles: l(
+    "We have no open positions right now, but we always like to meet engineers who want to build systems that run in the field.",
+    "لا توجد وظائف شاغرة حالياً، لكننا نرحب دائماً بالتعرّف على مهندسين يرغبون في بناء أنظمة تعمل في الميدان.",
+  ),
 };
 
 export default function Careers() {
@@ -69,10 +71,10 @@ export default function Careers() {
               ))}
             </ul>
           ) : (
-            <ComingSoon />
+            <p className="text-lg text-muted-foreground">{t(copy.noRoles)}</p>
           )}
-          <p className="text-center text-muted-foreground mt-8 mb-4">{t(copy.spontaneous)}</p>
-          <div className="text-center">
+          {company.openRoles.length > 0 && <p className="text-center text-muted-foreground mt-8">{t(copy.spontaneous)}</p>}
+          <div className="text-center mt-6">
             <Button asChild variant="outline">
               <Link href="/contact">{t(ui.contactUs)}</Link>
             </Button>

@@ -1,3 +1,4 @@
+import { pageDescriptions } from "@/data/routes";
 import LegalPage, { type LegalSection } from "@/components/LegalPage";
 import { ui, type Localized } from "@/lib/i18n";
 
@@ -33,5 +34,5 @@ const sections: LegalSection[] = [
 ];
 
 export default function Cookies() {
-  return <LegalPage title={ui.nav.cookies} updated={l("October 2026", "أكتوبر 2026")} sections={sections} />;
+  return <LegalPage description={pageDescriptions["/cookies"]} title={ui.nav.cookies} updated={l("October 2026", "أكتوبر 2026")} sections={sections} />;
 }

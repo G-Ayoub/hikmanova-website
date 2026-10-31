@@ -1,23 +1,19 @@
 import { Quote } from "lucide-react";
 import Layout from "@/components/Layout";
-import { ComingSoon, CTA, defaultCta, PageHero, SectionHeading } from "@/components/site";
+import { ClientLogoGrid, CTA, defaultCta, PageHero, SectionHeading } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { company } from "@/data/company";
-import { asset } from "@/lib/asset";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
 const copy = {
-  subtitle: l(
-    "Organisations across telecom, events, religious tourism and hospitality that we have worked with.",
-    "مؤسسات في قطاعات الاتصالات والفعاليات والسياحة الدينية والضيافة عملنا معها.",
-  ),
-  logosTitle: l("Clients & partners", "العملاء والشركاء"),
+  subtitle: pageDescriptions["/clients"],
   testimonialsTitle: l("What they say", "ماذا يقولون"),
   permission: l(
-    "Logos and testimonials are shown only with each organisation's permission.",
-    "تُعرض الشعارات والشهادات فقط بعد الحصول على إذن كل جهة.",
+    "Operators, universities and digital-services companies we have built and tested systems with.",
+    "مشغّلون وجامعات وشركات خدمات رقمية بنينا معها أنظمتنا واختبرناها.",
   ),
 };
 
@@ -29,25 +25,22 @@ export default function Clients() {
     <Layout>
       <PageHero title={t(ui.nav.clients)} subtitle={t(copy.subtitle)} />
 
+      {company.clientLogos.length > 0 && (
       <section className="py-16 md:py-24">
         <div className="container">
-          <SectionHeading title={t(copy.logosTitle)} subtitle={t(copy.permission)} />
-          {company.clientLogos.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-              {company.clientLogos.map((c) => (
-                <img key={c.name} src={asset(c.logo)} alt={c.name} loading="lazy" className="h-14 w-auto mx-auto" />
-              ))}
-            </div>
-          ) : (
-            <ComingSoon />
+          <p className="mb-8 text-lg text-muted-foreground max-w-2xl">{t(copy.permission)}</p>
+          {(
+            <ClientLogoGrid />
           )}
         </div>
       </section>
+      )}
 
+      {company.testimonials.length > 0 && (
       <section className="py-16 md:py-24 bg-card">
         <div className="container">
           <SectionHeading title={t(copy.testimonialsTitle)} />
-          {company.testimonials.length > 0 ? (
+          {(
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {company.testimonials.map((q) => (
                 <figure key={q.author} className="p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)]">
@@ -59,11 +52,10 @@ export default function Clients() {
                 </figure>
               ))}
             </div>
-          ) : (
-            <ComingSoon />
           )}
         </div>
       </section>
+      )}
 
       <CTA {...defaultCta} />
     </Layout>

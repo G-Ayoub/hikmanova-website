@@ -5,15 +5,13 @@ import { Segmented, spring } from "@/components/motion";
 import { CTA, defaultCta, PageHero, SolutionCard } from "@/components/site";
 import { ui, useI18n } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { solutions, type SolutionCategory } from "@/data/solutions";
 
 const filters: ("all" | SolutionCategory)[] = ["all", "AI", "IoT", "Platform"];
 
 const copy = {
-  subtitle: {
-    en: "Products we have built and deployed — each one available as a solution you can adopt, adapt and host on your own infrastructure.",
-    ar: "منتجات بنيناها ونشرناها — كل منها متاح كحل يمكنك تبنيه وتكييفه واستضافته على بنيتك التحتية.",
-  },
+  subtitle: pageDescriptions["/solutions"],
 };
 
 export default function Solutions() {

@@ -41,13 +41,15 @@ All copy is in typed data files; each text is a `{ en, ar }` object (`Localized`
 | Navigation, buttons and shared labels | `ui` in `client/src/lib/i18n.ts` |
 | Page-specific copy | the `copy` object at the top of each page in `client/src/pages/` |
 
-Anything left empty in `company.ts` shows a visible **"Coming soon"** placeholder; fill it in and the
-section appears automatically. Images go in `client/public/images/` (kebab-case names, ≤1600 px wide).
+Anything left empty in `company.ts` is hidden; fill it in and the section appears automatically. The
+Clients page (and its nav/footer/sitemap entries) appears once there are client logos or testimonials;
+until then `/clients` redirects to the case studies. Images go in `client/public/images/` (kebab-case names, ≤1600 px wide).
 
 ### Adding a solution, service or article
 
-Add an entry to the relevant data file. The detail page, listing cards, sitemap page and `sitemap.xml`
-are generated from it. `pnpm test` checks that every entry has English and Arabic text, slugs are unique,
+Add an entry to the relevant data file. The detail page, listing cards, sitemap page, `sitemap.xml` and
+the page's own `<head>` (title, description, share tags, JSON-LD) are generated from it. Then run
+`pnpm og` to render its share image into `client/public/og/` and commit it (needs Playwright locally). `pnpm test` checks that every entry has English and Arabic text, slugs are unique,
 cross-references exist and images are local.
 
 ### Adding French

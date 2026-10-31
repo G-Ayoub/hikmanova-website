@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PageHero, SectionHeading } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { company } from "@/data/company";
 import { asset } from "@/lib/asset";
 
@@ -16,13 +17,9 @@ const l = (en: string, ar: string): Localized => ({ en, ar });
 
 const copy = {
   title: l("Get in touch", "تواصل معنا"),
-  subtitle: l(
-    "Tell us about your project, or book a proof-of-concept workshop with our team.",
-    "أخبرنا عن مشروعك، أو احجز ورشة إثبات مفهوم مع فريقنا.",
-  ),
+  subtitle: pageDescriptions["/contact"],
   email: l("Email", "البريد الإلكتروني"),
   offices: l("Offices", "المكاتب"),
-  moreOffices: l("Additional offices (KSA / UK)", "مكاتب إضافية (السعودية / المملكة المتحدة)"),
   whatsapp: l("WhatsApp", "واتساب"),
   linkedin: l("LinkedIn", "لينكدإن"),
   form: {
@@ -139,32 +136,23 @@ export default function Contact() {
                     {o.address && <span className="block text-sm">{t(o.address)}</span>}
                   </li>
                 ))}
-                <li className="text-sm italic">
-                  {t(copy.moreOffices)}: {t(ui.comingSoon)}
-                </li>
               </ul>
             </div>
 
+            {(company.social.whatsapp || company.social.linkedin) && (
             <div className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)] space-y-3">
               {company.social.whatsapp ? (
                 <a href={`https://wa.me/${company.social.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary">
                   <MessageCircle className="w-5 h-5 text-primary" aria-hidden /> {t(copy.whatsapp)}
                 </a>
-              ) : (
-                <p className="flex items-center gap-2 text-muted-foreground">
-                  <MessageCircle className="w-5 h-5" aria-hidden /> {t(copy.whatsapp)} — {t(ui.comingSoon)}
-                </p>
-              )}
+              ) : null}
               {company.social.linkedin ? (
                 <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary">
                   <Linkedin className="w-5 h-5 text-primary" aria-hidden /> {t(copy.linkedin)}
                 </a>
-              ) : (
-                <p className="flex items-center gap-2 text-muted-foreground">
-                  <Linkedin className="w-5 h-5" aria-hidden /> {t(copy.linkedin)} — {t(ui.comingSoon)}
-                </p>
-              )}
+              ) : null}
             </div>
+            )}
 
             {company.profilePdf ? (
               <Button asChild variant="outline" className="w-full gap-2">
@@ -172,11 +160,7 @@ export default function Contact() {
                   <Download className="w-4 h-4" aria-hidden /> {t(ui.downloadProfile)}
                 </a>
               </Button>
-            ) : (
-              <Button variant="outline" className="w-full gap-2 h-auto whitespace-normal py-2" disabled>
-                <Download className="w-4 h-4 shrink-0" aria-hidden /> {t(ui.downloadProfile)} — {t(ui.comingSoon)}
-              </Button>
-            )}
+            ) : null}
           </aside>
 
           <div className="lg:col-span-2">

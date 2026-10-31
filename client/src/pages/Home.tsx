@@ -4,9 +4,10 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { ChevronRight, Cpu, Radio, ShieldCheck } from "lucide-react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { CTA, defaultCta, Eyebrow, ForwardArrow, industryIcons, SectionHeading, SolutionCard } from "@/components/site";
+import { ClientLogoGrid, CTA, defaultCta, Eyebrow, ForwardArrow, industryIcons, SectionHeading, SolutionCard } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { asset } from "@/lib/asset";
 import { Reveal } from "@/components/motion";
 import { solutions } from "@/data/solutions";
@@ -19,14 +20,12 @@ const l = (en: string, ar: string): Localized => ({ en, ar });
 const copy = {
   eyebrow: l("AI + IoT for North Africa & the Gulf", "الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج"),
   title: l("Intelligent systems, built and hosted where your data lives", "أنظمة ذكية تُبنى وتُستضاف حيث تقيم بياناتك"),
-  subtitle: l(
-    "HikmaNova designs AI agents, connected devices and sovereign enterprise platforms for telecom, events, religious tourism, logistics and the public sector — from proof of concept to production.",
-    "تصمم HikmaNova وكلاء ذكاء اصطناعي وأجهزة متصلة ومنصات مؤسسية سيادية لقطاعات الاتصالات والفعاليات والسياحة الدينية والخدمات اللوجستية والقطاع العام — من إثبات المفهوم إلى التشغيل الفعلي.",
-  ),
+  subtitle: pageDescriptions["/"],
   ctaPrimary: l("Explore our solutions", "استكشف حلولنا"),
   heroArtIot: l("Connected refrigerator streaming temperature to a dashboard", "ثلاجة متصلة ترسل درجات الحرارة إلى لوحة متابعة"),
   heroArtLamana: l("Parcel route from France to Algeria tracked on a phone", "مسار طرد من فرنسا إلى الجزائر يُتابَع عبر الهاتف"),
   numbersTitle: l("HikmaNova in numbers", "HikmaNova بالأرقام"),
+  clientsTitle: l("Trusted by operators, universities and digital-services leaders", "موضع ثقة مشغّلين وجامعات ورواد في الخدمات الرقمية"),
   solutionsTitle: l("Products built and deployed across the region", "منتجات بنيناها ونشرناها في المنطقة"),
   viewAllSolutions: l("View all solutions", "عرض كل الحلول"),
   servicesTitle: l("End-to-end engineering, delivered on your infrastructure", "هندسة متكاملة تُنفَّذ على بنيتك التحتية"),
@@ -87,6 +86,18 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* Clients */}
+      {company.clientLogos.length > 0 && (
+        <section className="pb-4 md:pb-8">
+          <div className="container">
+            <Reveal>
+              <h2 className="mb-6 text-center text-[0.9375rem] font-medium tracking-normal text-muted-foreground">{t(copy.clientsTitle)}</h2>
+              <ClientLogoGrid compact />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* Solutions */}
       <section className="py-16 md:py-28">

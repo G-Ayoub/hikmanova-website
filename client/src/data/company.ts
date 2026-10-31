@@ -8,7 +8,7 @@ import { CONTACT_EMAIL } from "@/const";
 
 export interface Stat { value: string; label: Localized }
 export interface Leader { name: string; role: Localized; bio?: Localized; photo?: string; linkedin?: string }
-export interface Advisor { name: string; focus: Localized; country: Localized }
+export interface Advisor { name: string; focus: Localized; country: Localized; bio?: Localized; photo?: string }
 export interface Office { city: Localized; country: Localized; address?: Localized; headquarters?: boolean }
 export interface ClientLogo { name: string; logo: string; url?: string }
 export interface Testimonial { quote: Localized; author: string; role: Localized; company: string }
@@ -68,13 +68,27 @@ export const company = {
 
   /** Board & advisory, from the company deck. */
   advisors: [
-    { name: "Nadjia Drici", focus: l("Market access, adoption & international deployment", "النفاذ إلى الأسواق والتبنّي والانتشار الدولي"), country: l("Switzerland", "سويسرا") },
-    { name: "Maha Ammouche", focus: l("Market adoption & MENA execution", "تبنّي الأسواق والتنفيذ في منطقة الشرق الأوسط وشمال أفريقيا"), country: l("Algeria", "الجزائر") },
-    { name: "Zara Zaghoui", focus: l("Pharma AI, data science & scientific credibility", "الذكاء الاصطناعي في الصناعة الدوائية وعلوم البيانات والمصداقية العلمية"), country: l("United Kingdom", "المملكة المتحدة") },
-    { name: "Othmane Allaoui", focus: l("AI infrastructure, data & enterprise scalability", "بنية الذكاء الاصطناعي التحتية والبيانات وقابلية التوسع المؤسسي"), country: l("France", "فرنسا") },
-    { name: "Matthieu Quiniou", focus: l("AI regulation, compliance & enterprise trust", "تنظيم الذكاء الاصطناعي والامتثال وثقة المؤسسات"), country: l("France", "فرنسا") },
-    { name: "Mehdi Ammi", focus: l("Scientific AI leadership & deeptech platforms", "القيادة العلمية في الذكاء الاصطناعي ومنصات التقنيات العميقة"), country: l("France", "فرنسا") },
-    { name: "Naji Bouchiba", focus: l("Cognitive UX & AI solution adoption", "تجربة المستخدم المعرفية وتبنّي حلول الذكاء الاصطناعي"), country: l("France", "فرنسا") },
+    { name: "Nadjia Drici", focus: l("Market access, adoption & international deployment", "النفاذ إلى الأسواق والتبنّي والانتشار الدولي"), country: l("Switzerland", "سويسرا"),
+      bio: l("International healthcare leader in pharmaceutical digital transformation, market access and reimbursement strategy.", "قيادية دولية في قطاع الرعاية الصحية متخصصة في التحول الرقمي الدوائي والنفاذ إلى الأسواق واستراتيجيات التعويض."),
+      photo: "/images/advisors/nadjia-drici.jpg" },
+    { name: "Maha Ammouche", focus: l("Market adoption & MENA execution", "تبنّي الأسواق والتنفيذ في منطقة الشرق الأوسط وشمال أفريقيا"), country: l("Algeria", "الجزائر"),
+      bio: l("Entrepreneur who launches and scales digital solutions across MENA markets, turning market needs into products.", "رائدة أعمال تطلق الحلول الرقمية وتوسّعها في أسواق الشرق الأوسط وشمال أفريقيا، وتحوّل احتياجات السوق إلى منتجات."),
+      photo: "/images/advisors/maha-ammouche.jpg" },
+    { name: "Zara Zaghoui", focus: l("Pharma AI, data science & scientific credibility", "الذكاء الاصطناعي في الصناعة الدوائية وعلوم البيانات والمصداقية العلمية"), country: l("United Kingdom", "المملكة المتحدة"),
+      bio: l("AI and data science leader focused on reliable, business-focused AI built with scientific rigour.", "قيادية في الذكاء الاصطناعي وعلوم البيانات تركّز على حلول ذكاء اصطناعي موثوقة وموجّهة للأعمال مبنية بصرامة علمية."),
+      photo: "/images/advisors/zara-zaghoui.jpg" },
+    { name: "Othmane Allaoui", focus: l("AI infrastructure, data & enterprise scalability", "بنية الذكاء الاصطناعي التحتية والبيانات وقابلية التوسع المؤسسي"), country: l("France", "فرنسا"),
+      bio: l("Senior technology leader in AI, data platforms and large-scale, telecom-grade cloud architectures.", "قائد تقني أول في الذكاء الاصطناعي ومنصات البيانات والبنى السحابية واسعة النطاق بمستوى الاتصالات."),
+      photo: "/images/advisors/othmane-allaoui.jpg" },
+    { name: "Matthieu Quiniou", focus: l("AI regulation, compliance & enterprise trust", "تنظيم الذكاء الاصطناعي والامتثال وثقة المؤسسات"), country: l("France", "فرنسا"),
+      bio: l("Legal and technology expert in AI regulation, blockchain, digital governance and data protection.", "خبير قانوني وتقني في تنظيم الذكاء الاصطناعي وسلاسل الكتل والحوكمة الرقمية وحماية البيانات."),
+      photo: "/images/advisors/matthieu-quiniou.jpg" },
+    { name: "Mehdi Ammi", focus: l("Scientific AI leadership & deeptech platforms", "القيادة العلمية في الذكاء الاصطناعي ومنصات التقنيات العميقة"), country: l("France", "فرنسا"),
+      bio: l("Leading expert in artificial intelligence, robotics and intelligent systems.", "خبير بارز في الذكاء الاصطناعي والروبوتات والأنظمة الذكية."),
+      photo: "/images/advisors/mehdi-ammi.jpg" },
+    { name: "Naji Bouchiba", focus: l("Cognitive UX & AI solution adoption", "تجربة المستخدم المعرفية وتبنّي حلول الذكاء الاصطناعي"), country: l("France", "فرنسا"),
+      bio: l("Expert in cognitive psychology, human-computer interaction and UX, making AI intuitive and trusted.", "خبير في علم النفس المعرفي والتفاعل بين الإنسان والحاسوب وتجربة المستخدم، يجعل الذكاء الاصطناعي سهلاً وموثوقاً."),
+      photo: "/images/advisors/naji-bouchiba.jpg" },
   ] as Advisor[],
 
   offices: [

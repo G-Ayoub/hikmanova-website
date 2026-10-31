@@ -123,17 +123,20 @@ export default function About() {
         <section className="py-16 md:py-24">
           <div className="container">
             <SectionHeading title={t(copy.advisorsTitle)} subtitle={t(copy.advisorsSubtitle)} />
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {company.advisors.map((a) => (
-                <li key={a.name} className="flex items-start gap-4 py-5 border-t border-[var(--hairline)]">
-                  <span className="w-11 h-11 shrink-0 rounded-full bg-muted flex items-center justify-center text-sm font-semibold" aria-hidden>
-                    {initials(a.name)}
-                  </span>
-                  <span>
-                    <span className="block font-semibold" dir="ltr">{a.name}</span>
-                    <span className="block text-muted-foreground">{t(a.focus)}</span>
-                    <span className="block text-sm text-muted-foreground/80">{t(a.country)}</span>
-                  </span>
+                <li key={a.name} className="flex flex-col p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+                  {a.photo ? (
+                    <img src={asset(a.photo)} alt={a.name} loading="lazy" className="w-20 h-20 rounded-full mb-4 object-cover ring-1 ring-[var(--hairline)]" />
+                  ) : (
+                    <span className="w-20 h-20 rounded-full mb-4 bg-muted flex items-center justify-center text-lg font-semibold" aria-hidden>
+                      {initials(a.name)}
+                    </span>
+                  )}
+                  <h3 className="font-serif text-lg font-semibold" dir="ltr">{a.name}</h3>
+                  <p className="text-sm font-medium text-primary">{t(a.focus)}</p>
+                  <p className="text-xs text-muted-foreground mb-3">{t(a.country)}</p>
+                  {a.bio && <p className="text-sm text-muted-foreground leading-relaxed">{t(a.bio)}</p>}
                 </li>
               ))}
             </ul>

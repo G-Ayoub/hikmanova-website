@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useEffect, useState } from "react";
-import { Moon, Sun, Menu, X, Mail, MapPin } from "lucide-react";
+import { Moon, Sun, Menu, X, Mail, MapPin, Linkedin } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { LANGUAGES, useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
@@ -155,6 +155,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <a href={`mailto:${company.email}`} className="flex items-center gap-2 hover:text-foreground">
                   <Mail className="w-4 h-4" /> <span dir="ltr">{company.email}</span>
                 </a>
+                {company.social.linkedin && (
+                  <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-foreground">
+                    <Linkedin className="w-4 h-4" /> LinkedIn
+                  </a>
+                )}
                 {company.offices.map((office) => (
                   <p key={office.city.en} className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" /> {t(office.city)}, {t(office.country)}

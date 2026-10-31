@@ -19,7 +19,12 @@ export const company = {
   email: CONTACT_EMAIL,
 
   /** Key numbers for the Home page, e.g. { value: "10+", label: l("Years of experience", "...") } */
-  stats: [] as Stat[],
+  stats: [
+    { value: "8+", label: l("Years of experience", "سنوات من الخبرة") },
+    { value: "4", label: l("Countries served", "دول نخدمها") },
+    { value: "5", label: l("Patents & registered IP", "براءات اختراع وملكية فكرية مسجّلة") },
+    // TODO: add once confirmed — { value: "…", label: l("Field staff managed at FIFA World Cup 2022", "موظف ميداني تمت إدارتهم في كأس العالم FIFA 2022") },
+  ] as Stat[],
 
   /** CEO, COO, ... (names and roles carried over from the previous site) */
   leadership: [
@@ -40,7 +45,7 @@ export const company = {
   ],
 
   social: {
-    linkedin: null as string | null,
+    linkedin: "https://www.linkedin.com/company/hikmanova/" as string | null,
     /** International format without "+" or spaces, e.g. "213555000000" */
     whatsapp: null as string | null,
   },

@@ -74,11 +74,11 @@ export default function Home() {
         <div className="container">
           <h2 className="sr-only">{t(copy.numbersTitle)}</h2>
           {company.stats.length > 0 ? (
-            <dl className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <dl className="flex flex-wrap justify-center gap-x-16 gap-y-8 text-center">
               {company.stats.map((stat) => (
                 <div key={stat.label.en} className="flex flex-col-reverse">
                   <dt className="text-sm text-muted-foreground">{t(stat.label)}</dt>
-                  <dd className="text-3xl md:text-4xl font-serif font-bold text-primary">{stat.value}</dd>
+                  <dd className="text-3xl md:text-4xl font-serif font-bold text-primary" dir="ltr">{stat.value}</dd>
                 </div>
               ))}
             </dl>

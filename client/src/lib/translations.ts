@@ -1040,13 +1040,15 @@ export const translations = {
 
 export function getTranslation(language: 'en' | 'ar', path: string): string {
   const keys = path.split('.');
-  let value: any = translations[language];
+  const lookup = (lang: 'en' | 'ar') => {
+    let value: any = translations[lang];
+    for (const key of keys) value = value?.[key];
+    return typeof value === 'string' ? value : undefined;
+  };
 
-  for (const key of keys) {
-    value = value?.[key];
-  }
-
-  return typeof value === 'string' ? value : path;
+  // Fall back to English when a key is missing in the selected language,
+  // and only show the raw key as a last resort.
+  return lookup(language) ?? lookup('en') ?? path;
 }
 
 export function useTranslation(language: 'en' | 'ar') {

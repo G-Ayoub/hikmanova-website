@@ -11,7 +11,7 @@ const featuredProjects = [
     titleKey: "home.projects.neuralVision.title",
     categoryKey: "home.projects.neuralVision.category",
     descriptionKey: "home.projects.neuralVision.description",
-    image: "Image 1.jpg",
+    image: "/images/abstract-1.jpg",
     slug: "neural-vision-platform",
   },
   {
@@ -19,7 +19,7 @@ const featuredProjects = [
     titleKey: "home.projects.dataPipeline.title",
     categoryKey: "home.projects.dataPipeline.category",
     descriptionKey: "home.projects.dataPipeline.description",
-    image: "Image 2.jpg",
+    image: "/images/abstract-2.jpg",
     slug: "data-pipeline-architecture",
   },
   {
@@ -27,7 +27,7 @@ const featuredProjects = [
     titleKey: "home.projects.cloudOptimization.title",
     categoryKey: "home.projects.cloudOptimization.category",
     descriptionKey: "home.projects.cloudOptimization.description",
-    image: "Image 3.jpg",
+    image: "/images/abstract-3.jpg",
     slug: "cloud-infrastructure-optimization",
   },
 ];

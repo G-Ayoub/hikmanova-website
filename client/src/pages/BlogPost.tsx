@@ -10,7 +10,7 @@ const blogPostsData: Record<string, any> = {
     date: "2025-10-20",
     category: "AI",
     readTime: "8 min read",
-    image: "/future-of-ai-in-enterprise.jpg",
+    image: "/images/future-of-ai-in-enterprise.jpg",
     content: `
       <h2>Introduction</h2>
       <p>Artificial intelligence is no longer a futuristic concept—it's reshaping how enterprises operate today. From automating routine tasks to enabling data-driven decision making, AI is becoming essential for competitive advantage.</p>
@@ -134,7 +134,7 @@ const blogPostsData: Record<string, any> = {
     date: "2025-10-05",
     category: "AI",
     readTime: "12 min read",
-    image: "/machine-learning-production.jpg",
+    image: "/images/machine-learning-production.jpg",
     content: `
       <h2>Introduction</h2>
       <p>Deploying machine learning models to production is fundamentally different from building models in notebooks. In this comprehensive guide, we'll cover the key challenges and proven solutions.</p>
@@ -236,7 +236,7 @@ const blogPostsData: Record<string, any> = {
     date: "2025-09-25",
     category: "Cloud",
     readTime: "11 min read",
-    image: "/kubernetes-best-practices.jpg",
+    image: "/images/kubernetes-best-practices.jpg",
     content: `
       <h2>Introduction</h2>
       <p>Kubernetes is powerful but complex. Getting it right requires understanding best practices for security, reliability, and operations. Let's dive into the key practices we recommend.</p>

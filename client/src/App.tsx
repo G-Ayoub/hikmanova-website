@@ -20,7 +20,7 @@ import Sitemap from "./pages/Sitemap";
 
 function Router() {
   return (
-    <WouterRouter base="/">
+    <WouterRouter>
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/about"} component={About} />

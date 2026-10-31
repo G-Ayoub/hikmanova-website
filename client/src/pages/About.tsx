@@ -23,19 +23,19 @@ const team = [
     nameKey: "about.team.Khalil.name",
     roleKey: "about.team.Khalil.role",
     bioKey: "about.team.Khalil.bio",
-    avatar: "Anonymous.jpg",
+    avatar: "/images/abstract-2.jpg",
   },
   {
     nameKey: "about.team.hicham.name",
     roleKey: "about.team.hicham.role",
     bioKey: "about.team.hicham.bio",
-    avatar: "Anonymous.jpg",
+    avatar: "/images/abstract-2.jpg",
   },
   {
     nameKey: "about.team.ayoub.name",
     roleKey: "about.team.ayoub.role",
     bioKey: "about.team.ayoub.bio",
-    avatar: "Anonymous.jpg",
+    avatar: "/images/abstract-2.jpg",
   },
 ];
 

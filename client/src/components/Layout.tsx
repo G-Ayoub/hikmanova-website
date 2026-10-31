@@ -31,7 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Link href="/">
             <span className="flex items-center gap-2 font-serif text-2xl font-bold hover:opacity-80 transition-opacity cursor-pointer">
               <img 
-                src="/Hikma Nova Final.png" 
+                src="/hikmanova-logo.png" 
                 alt="HikmaNova" 
                 className="w-10 h-10"
               />
@@ -197,7 +197,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Copyright */}
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 HikmaNova. {t('footer.allRightsReserved')}</p>
+            <p>&copy; {new Date().getFullYear()} HikmaNova. {t('footer.allRightsReserved')}</p>
           </div>
         </div>
       </footer>

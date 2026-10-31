@@ -14,7 +14,7 @@ const blogPosts = [
     author: "HikmaNova",
     date: "2025-10-20",
     categoryKey: "blog.posts.aiEnterprise.category",
-    image: "Image 1.jpg",
+    image: "/images/abstract-1.jpg",
     readTimeKey: "blog.readTime.8min",
   },
   {
@@ -26,7 +26,7 @@ const blogPosts = [
     author: "HikmaNova",
     date: "2025-10-15",
     categoryKey: "blog.posts.dataPipelines.category",
-    image: "Image 2.jpg",
+    image: "/images/abstract-2.jpg",
     readTimeKey: "blog.readTime.10min",
   },
   {
@@ -38,7 +38,7 @@ const blogPosts = [
     author: "HikmaNova",
     date: "2025-10-10",
     categoryKey: "blog.posts.cloudCost.category",
-    image: "Image 3.jpg",
+    image: "/images/abstract-3.jpg",
     readTimeKey: "blog.readTime.7min",
   },
   {
@@ -50,7 +50,7 @@ const blogPosts = [
     author: "HikmaNova",
     date: "2025-10-05",
     categoryKey: "blog.posts.mlProduction.category",
-    image: "Image 4.jpg",
+    image: "/images/abstract-4.jpg",
     readTimeKey: "blog.readTime.12min",
   },
   {
@@ -62,7 +62,7 @@ const blogPosts = [
     author: "HikmaNova",
     date: "2025-09-30",
     categoryKey: "blog.posts.realtimeAnalytics.category",
-    image: "Image 5.jpg",
+    image: "/images/abstract-5.jpg",
     readTimeKey: "blog.readTime.9min",
   },
   {
@@ -74,7 +74,7 @@ const blogPosts = [
     author: "HikmaNova",
     date: "2025-09-25",
     categoryKey: "blog.posts.kubernetes.category",
-    image: "Image 6.jpg",
+    image: "/images/abstract-6.jpg",
     readTimeKey: "blog.readTime.11min",
   },
 ];

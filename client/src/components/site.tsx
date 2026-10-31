@@ -58,8 +58,8 @@ export function PageHero({ title, subtitle, eyebrow }: { title: string; subtitle
 /** Accent label above a hero headline. */
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="eyebrow mb-4 inline-flex items-center gap-2">
-      <span className="h-1.5 w-1.5 rounded-full bg-teal" aria-hidden />
+    <p className="eyebrow mb-4">
+      <span className="me-2 inline-block h-1.5 w-1.5 rounded-full bg-teal align-middle" aria-hidden />
       {children}
     </p>
   );

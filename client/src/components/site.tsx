@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import {
   ArrowLeft, ArrowRight, Brain, Building2, Clock, Hotel, Landmark, Presentation, Radio,
-  Satellite, Server, ShieldCheck, Smartphone, Trophy, Truck, type LucideIcon,
+  Satellite, Server, ShieldCheck, Zap, Smartphone, Trophy, Truck, type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
@@ -26,6 +26,8 @@ export const industryIcons: Record<IndustryIcon, LucideIcon> = {
   truck: Truck,
   trophy: Trophy,
   building: Building2,
+  server: Server,
+  zap: Zap,
 };
 
 /** Arrow that points "forward" in both LTR and RTL. */

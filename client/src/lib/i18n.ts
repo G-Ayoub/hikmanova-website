@@ -77,6 +77,8 @@ export const ui = {
   solution: {
     overview: l("Overview", "نظرة عامة"),
     features: l("Key capabilities", "القدرات الرئيسية"),
+    monitors: l("What it monitors", "ما الذي يراقبه"),
+    benefits: l("Benefits", "الفوائد"),
     stack: l("Technology stack", "التقنيات المستخدمة"),
     industries: l("Industries", "القطاعات"),
     client: l("Client", "العميل"),

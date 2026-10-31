@@ -64,6 +64,27 @@ export default function SolutionDetail() {
               <p className="text-lg leading-relaxed text-muted-foreground">{t(solution.overview)}</p>
             </div>
 
+            {solution.monitors && (
+              <div>
+                <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.monitors)}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {solution.monitors.map((m) => (
+                    <div key={m.group.en} className="p-5 rounded-lg border border-border bg-card">
+                      <h3 className="font-serif font-bold mb-3 text-primary">{t(m.group)}</h3>
+                      <ul className="space-y-1.5 text-sm">
+                        {m.items.map((item) => (
+                          <li key={item.en} className="flex gap-2">
+                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--teal)] shrink-0" aria-hidden />
+                            <span>{t(item)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div>
               <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.features)}</h2>
               <ul className="space-y-3">
@@ -75,6 +96,20 @@ export default function SolutionDetail() {
                 ))}
               </ul>
             </div>
+
+            {solution.benefits && (
+              <div>
+                <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.benefits)}</h2>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {solution.benefits.map((b) => (
+                    <li key={b.en} className="flex gap-3 p-4 rounded-lg bg-accent/60 border border-border">
+                      <CheckCircle2 className="w-5 h-5 text-[var(--teal)] shrink-0 mt-0.5" aria-hidden />
+                      <span>{t(b)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {cs && (
               <div id="case-study" className="space-y-8 scroll-mt-24">

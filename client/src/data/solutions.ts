@@ -29,9 +29,34 @@ export interface Solution {
   gallery?: string[];
   caseStudy?: CaseStudy;
   featured?: boolean;
+  /** Equipment groups the product monitors (monitoring products). */
+  monitors?: { group: Localized; items: Localized[] }[];
+  benefits?: Localized[];
 }
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
+
+// Shared by the datacenter and telecom power-monitoring products.
+const powerMonitoringFeatures: Localized[] = [
+  l("Multi-protocol collection through SNMP (polling and traps) and Modbus TCP/RTU", "جمع البيانات عبر بروتوكولات متعددة: بروتوكول SNMP بالاستطلاع والتنبيهات، وبروتوكول Modbus TCP/RTU"),
+  l("Live dashboard with real-time telemetry and an equipment topology map", "لوحة متابعة مباشرة بقياسات لحظية وخريطة لطوبولوجيا المعدات"),
+  l("Threshold alerts and instant notifications", "تنبيهات عند تجاوز العتبات وإشعارات فورية"),
+  l("AI anomaly detection that correlates signals such as a voltage drop, temperature rise and load spike to find the root cause", "كشف الحالات الشاذة بالذكاء الاصطناعي عبر ربط الإشارات، مثل انخفاض الجهد وارتفاع الحرارة وذروة الحمل، لتحديد السبب الجذري"),
+  l("Predictive insight into gradual failures such as battery degradation", "رؤى تنبؤية للأعطال التدريجية مثل تدهور البطاريات"),
+  l("Historical reporting and trend analysis", "تقارير تاريخية وتحليل للاتجاهات"),
+];
+
+const powerMonitoringBenefits: Localized[] = [
+  l("Less downtime and faster incident resolution", "تقليل فترات التوقف وتسريع معالجة الحوادث"),
+  l("Proactive maintenance instead of reactive repairs", "صيانة استباقية بدلاً من الإصلاح بعد العطل"),
+  l("One view across multiple sites", "رؤية موحّدة لعدة مواقع"),
+  l("Can be hosted on-premise, in line with data-localization rules", "إمكانية الاستضافة داخل المؤسسة بما يتوافق مع متطلبات توطين البيانات"),
+];
+
+const powerMonitoringStack = [
+  "Django REST", "TimescaleDB", "Celery", "Django Channels + Redis (WebSocket)",
+  "Isolation Forest / LSTM", "React dashboard", "Grafana", "SNMP", "Modbus TCP/RTU",
+];
 
 export const solutions: Solution[] = [
   {
@@ -180,6 +205,54 @@ export const solutions: Solution[] = [
     industries: ["logistics"],
     services: ["mobile-apps", "backend-enterprise-platforms"],
     image: "/images/lamana.svg",
+  },
+  {
+    slug: "datacenter-power-monitoring",
+    category: "IoT",
+    name: "Datacenter Power & Environment Monitoring",
+    tagline: l(
+      "Real-time power and environment monitoring for datacenters, with AI-driven root cause detection",
+      "مراقبة لحظية للطاقة والبيئة في مراكز البيانات مع كشف السبب الجذري بالذكاء الاصطناعي",
+    ),
+    overview: l(
+      "A centralized platform that monitors critical datacenter power and environment infrastructure in real time. It detects anomalies before they become outages and pinpoints their root cause.",
+      "منصة مركزية تراقب البنية التحتية الحرجة للطاقة والبيئة في مراكز البيانات لحظياً، وتكشف الحالات الشاذة قبل أن تتحول إلى انقطاعات، وتحدد سببها الجذري بدقة.",
+    ),
+    monitors: [
+      { group: l("Power", "الطاقة"), items: [l("UPS", "أنظمة UPS"), l("PDUs", "وحدات توزيع الطاقة PDU"), l("Diesel generators", "مولدات الديزل")] },
+      { group: l("Environment", "البيئة"), items: [l("Temperature", "درجة الحرارة"), l("Humidity", "الرطوبة"), l("Precision cooling (CRAC/CRAH)", "التبريد الدقيق (CRAC/CRAH)")] },
+      { group: l("Network equipment", "معدات الشبكة"), items: [l("Switches", "المبدّلات (Switches)"), l("SNMP-enabled devices", "الأجهزة الداعمة لـ SNMP")] },
+    ],
+    features: powerMonitoringFeatures,
+    benefits: powerMonitoringBenefits,
+    stack: powerMonitoringStack,
+    industries: ["datacenters-enterprise-it", "energy"],
+    services: ["iot-connected-systems", "ai-agents-llm", "devops-sovereign-hosting"],
+    image: "/images/datacenter-power.svg",
+  },
+  {
+    slug: "telecom-power-monitoring",
+    category: "IoT",
+    name: "Telecom Power Systems Monitoring",
+    tagline: l(
+      "Real-time monitoring of telecom-site power, with AI-driven root cause detection",
+      "مراقبة لحظية لأنظمة الطاقة في مواقع الاتصالات مع كشف السبب الجذري بالذكاء الاصطناعي",
+    ),
+    overview: l(
+      "A centralized platform that monitors the power infrastructure of telecom sites in real time — from rectifiers and battery banks to backup generators. It detects anomalies before they become outages and pinpoints their root cause, across every site from one view.",
+      "منصة مركزية تراقب البنية التحتية للطاقة في مواقع الاتصالات لحظياً — من المقوّمات وبنوك البطاريات إلى المولدات الاحتياطية. تكشف الحالات الشاذة قبل أن تتحول إلى انقطاعات وتحدد سببها الجذري، لجميع المواقع من واجهة واحدة.",
+    ),
+    monitors: [
+      { group: l("Power", "الطاقة"), items: [l("Rectifiers", "المقوّمات (Rectifiers)"), l("Battery banks", "بنوك البطاريات"), l("Diesel generators", "مولدات الديزل")] },
+      { group: l("Environment", "البيئة"), items: [l("Site temperature", "حرارة الموقع"), l("Humidity", "الرطوبة")] },
+      { group: l("Network equipment", "معدات الشبكة"), items: [l("SNMP-enabled site equipment", "معدات الموقع الداعمة لـ SNMP")] },
+    ],
+    features: powerMonitoringFeatures,
+    benefits: powerMonitoringBenefits,
+    stack: powerMonitoringStack,
+    industries: ["telecom-satellite", "energy"],
+    services: ["iot-connected-systems", "ai-agents-llm", "devops-sovereign-hosting"],
+    image: "/images/telecom-power.svg",
   },
 ];
 

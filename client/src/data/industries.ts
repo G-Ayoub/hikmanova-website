@@ -1,6 +1,6 @@
 import type { Localized } from "@/lib/i18n";
 
-export type IndustryIcon = "satellite" | "hotel" | "landmark" | "truck" | "trophy" | "building";
+export type IndustryIcon = "satellite" | "hotel" | "landmark" | "truck" | "trophy" | "building" | "server" | "zap";
 
 export interface Industry {
   slug: string;
@@ -19,10 +19,30 @@ export const industries: Industry[] = [
     icon: "satellite",
     name: l("Telecom & satellite", "الاتصالات والأقمار الصناعية"),
     description: l(
-      "AI agents that turn CRM and technical data into answers and reports for commercial and engineering teams.",
-      "وكلاء ذكاء اصطناعي يحوّلون بيانات CRM والبيانات الفنية إلى إجابات وتقارير للفرق التجارية والهندسية.",
+      "AI agents that turn CRM and technical data into answers and reports, and real-time monitoring of telecom-site power.",
+      "وكلاء ذكاء اصطناعي يحوّلون بيانات CRM والبيانات الفنية إلى إجابات وتقارير، ومراقبة لحظية لأنظمة الطاقة في مواقع الاتصالات.",
     ),
-    services: ["ai-agents-llm", "backend-enterprise-platforms"],
+    services: ["ai-agents-llm", "backend-enterprise-platforms", "iot-connected-systems"],
+  },
+  {
+    slug: "datacenters-enterprise-it",
+    icon: "server",
+    name: l("Datacenters & enterprise IT", "مراكز البيانات وتقنية المعلومات المؤسسية"),
+    description: l(
+      "Real-time monitoring of power, cooling and network equipment, with AI that finds the root cause before an outage.",
+      "مراقبة لحظية للطاقة والتبريد ومعدات الشبكة، مع ذكاء اصطناعي يحدد السبب الجذري قبل حدوث الانقطاع.",
+    ),
+    services: ["iot-connected-systems", "devops-sovereign-hosting", "backend-enterprise-platforms"],
+  },
+  {
+    slug: "energy",
+    icon: "zap",
+    name: l("Energy", "الطاقة"),
+    description: l(
+      "Telemetry from rectifiers, batteries and generators turned into alerts and predictive maintenance.",
+      "تحويل قياسات المقوّمات والبطاريات والمولدات إلى تنبيهات وصيانة تنبؤية.",
+    ),
+    services: ["iot-connected-systems", "ai-agents-llm"],
   },
   {
     slug: "hospitality",

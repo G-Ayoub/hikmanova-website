@@ -57,6 +57,13 @@ cross-references exist and images are local.
 1. Add `'fr'` to `Language` and `LANGUAGES` in `client/src/contexts/LanguageContext.tsx`.
 2. Fill the optional `fr` field on `Localized` values (missing ones fall back to English).
 
+## Contact form
+
+The Contact page form posts to [Formspree](https://formspree.io), which emails each message to the
+address set on the form (the reply-to is the visitor's email). The form ID is `FORMSPREE_FORM_ID` in
+`client/src/const.ts`; to move to another Formspree form, change that one line. A hidden `_gotcha`
+field filters basic spam bots.
+
 ## Project layout
 
 ```

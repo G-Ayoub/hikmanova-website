@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Download, Linkedin, Mail, MapPin, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
@@ -9,8 +9,9 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { pageDescriptions } from "@/data/routes";
 import { company } from "@/data/company";
 import { asset } from "@/lib/asset";
+import { FORMSPREE_FORM_ID } from "@/const";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mkglzgqd";
+const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
@@ -76,6 +77,8 @@ export default function Contact() {
   usePageMeta(t(ui.nav.contact), t(copy.subtitle));
   const [formData, setFormData] = useState<FormData>(empty);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Hidden spam trap: people never see or fill it, bots usually do; Formspree discards those submissions.
+  const gotchaRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -94,7 +97,11 @@ export default function Contact() {
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          _subject: `Website: ${formData.subject.trim()}`,
+          _gotcha: gotchaRef.current?.value ?? "",
+        }),
       });
       if (!response.ok) throw new Error(String(response.status));
       toast.success(t(copy.success));
@@ -168,6 +175,7 @@ export default function Contact() {
             <p className="text-muted-foreground mb-8">{t(copy.form.subtitle)}</p>
 
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              <input ref={gotchaRef} type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" className="sr-only" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold mb-2">{t(copy.form.name)}</label>

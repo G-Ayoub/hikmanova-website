@@ -10,7 +10,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import path from "node:path";
-import { allPaths, hasArabicVersion, HOME_TITLE, pageMeta, type PageMeta } from "../client/src/data/routes";
+import { allPaths, hasArabicVersion, HOME_TITLE, ogImage, pageMeta, type PageMeta } from "../client/src/data/routes";
 import { withLang } from "../client/src/lib/langPath";
 import { SITE_NAME, SITE_URL } from "../client/src/const";
 
@@ -41,7 +41,7 @@ const setMeta = (html: string, attr: "name" | "property", key: string, value: st
 
 function jsonLd(route: string, lang: Lang, meta: PageMeta, description: string): object[] {
   const url = urlFor(route, lang);
-  const image = SITE_URL + meta.image;
+  const image = SITE_URL + ogImage(meta, lang);
   const title = meta.title[lang];
   const inLanguage = lang;
   const publisher = { "@type": "Organization", name: SITE_NAME, url: urlFor("/") };
@@ -78,7 +78,7 @@ function renderPage(route: string, lang: Lang, body: string): string {
   const title = meta.title[lang] ? `${meta.title[lang]} | ${SITE_NAME}` : HOME_TITLE[lang];
   const description = clip(meta.description[lang]);
   const canonical = indexable ? urlFor(route, lang) : urlFor(route, "en");
-  const image = SITE_URL + meta.image;
+  const image = SITE_URL + ogImage(meta, lang);
 
   let html = template;
   html = setTag(html, /<html lang="[^"]*">/, `<html lang="${lang}" dir="${lang === "ar" ? "rtl" : "ltr"}">`);

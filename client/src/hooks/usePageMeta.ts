@@ -19,12 +19,15 @@ function setMeta(attr: "name" | "property", key: string, content: string) {
 export function usePageMeta(
   title: string,
   description?: string,
-  /** canonicalPath: site path (without base) of the preferred version; noindex: keep this page out of search. */
-  options: { canonicalPath?: string; noindex?: boolean } = {},
+  /**
+   * canonicalPath: site path (without base) of the preferred version; noindex: keep this page out of search;
+   * fullTitle: complete title used as-is (no " | HikmaNova" suffix), e.g. for Home.
+   */
+  options: { canonicalPath?: string; noindex?: boolean; fullTitle?: string } = {},
 ) {
-  const { canonicalPath, noindex = false } = options;
+  const { canonicalPath, noindex = false, fullTitle: fixedTitle } = options;
   useEffect(() => {
-    const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+    const fullTitle = fixedTitle ?? (title ? `${title} | ${SITE_NAME}` : SITE_NAME);
     document.title = fullTitle;
     setMeta("property", "og:title", fullTitle);
 
@@ -48,5 +51,5 @@ export function usePageMeta(
       document.head.appendChild(canonical);
     }
     canonical.href = url;
-  }, [title, description, canonicalPath, noindex]);
+  }, [title, description, canonicalPath, noindex, fixedTitle]);
 }

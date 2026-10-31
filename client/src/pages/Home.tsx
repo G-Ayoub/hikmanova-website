@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ClientLogoGrid, CTA, defaultCta, Eyebrow, ForwardArrow, industryIcons, SectionHeading, SolutionCard } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { pageDescriptions } from "@/data/routes";
+import { HOME_TITLE, pageDescriptions } from "@/data/routes";
 import { asset } from "@/lib/asset";
 import { Reveal } from "@/components/motion";
 import { solutions } from "@/data/solutions";
@@ -39,7 +39,8 @@ const copy = {
 
 export default function Home() {
   const { t } = useI18n();
-  usePageMeta(t(copy.eyebrow), t(copy.subtitle));
+  // Same title as the pre-rendered page (scripts/gen-sitemap.ts), so search engines see one title.
+  usePageMeta("", t(copy.subtitle), { fullTitle: t(HOME_TITLE) });
 
   // Featured solutions on Home, by slug: three cards on top, two wide cards below.
   const pick = (slugs: string[]) => slugs.map((slug) => solutions.find((s) => s.slug === slug)).filter((s) => s !== undefined);

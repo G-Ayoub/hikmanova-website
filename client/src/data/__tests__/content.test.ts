@@ -6,7 +6,7 @@ import { industries } from "../industries";
 import { posts } from "../posts";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { allPaths, HOME_TITLE, pageMeta, staticRoutes } from "../routes";
+import { allPaths, HOME_TITLE, ogImage, pageMeta, staticRoutes } from "../routes";
 
 /** Recursively collect every Localized value in an object. */
 function localizedValues(value: unknown, out: Localized[] = []): Localized[] {
@@ -85,6 +85,8 @@ describe("content data", () => {
       expect(meta!.description.en.trim(), route).not.toBe("");
       expect(meta!.description.ar.trim(), route).not.toBe("");
       expect(existsSync(path.join(publicDir, meta!.image)), `${route}: missing ${meta!.image}`).toBe(true);
+      const ar = ogImage(meta!, "ar");
+      expect(existsSync(path.join(publicDir, ar)), `${route}: missing ${ar}`).toBe(true);
     }
   });
 
@@ -93,6 +95,9 @@ describe("content data", () => {
       const meta = pageMeta(route)!;
       const title = meta.title.en ? `${meta.title.en} | HikmaNova` : HOME_TITLE.en;
       expect(title.length, `${route}: "${title}"`).toBeLessThanOrEqual(60);
+      // Arabic glyphs are narrower in search results, so allow a little more.
+      const titleAr = meta.title.ar ? `${meta.title.ar} | HikmaNova` : HOME_TITLE.ar;
+      expect(titleAr.length, `${route} (ar): "${titleAr}"`).toBeLessThanOrEqual(70);
       expect(meta.description.en.length, `${route}: description too short`).toBeGreaterThanOrEqual(70);
     }
   });

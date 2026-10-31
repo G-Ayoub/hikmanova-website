@@ -1,5 +1,6 @@
 /**
- * Generates the 1200x630 share images (Open Graph / Twitter cards) in client/public/og/.
+ * Generates the 1200x630 share images (Open Graph / Twitter cards): English in client/public/og/, Arabic
+ * (right to left, Noto Kufi Arabic embedded so any machine renders it) in client/public/og/ar/.
  * Not part of `pnpm build` because CI has no browser: run it after adding or renaming a
  * solution, service or article, then commit the PNGs.
  *
@@ -15,17 +16,27 @@ const root = path.resolve(import.meta.dirname, "..");
 const outDir = path.join(root, "client", "public", "og");
 const logo = `data:image/png;base64,${readFileSync(path.join(root, "client", "public", "hikmanova-logo.png")).toString("base64")}`;
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const kufi = (weight: number) =>
+  readFileSync(path.join(root, "node_modules", "@fontsource", "noto-kufi-arabic", "files", `noto-kufi-arabic-arabic-${weight}-normal.woff2`)).toString("base64");
+const arabicFonts = [400, 600].map((w) => `@font-face { font-family: "Kufi"; font-weight: ${w}; src: url(data:font/woff2;base64,${kufi(w)}) format("woff2"); }`).join("\n");
 
-const kindLabel = { page: "", solution: ui.nav.solutions.en, service: ui.nav.services.en, post: ui.nav.insights.en };
+type Lang = "en" | "ar";
+const kindLabel = (kind: "page" | "solution" | "service" | "post", lang: Lang) =>
+  ({ page: "", solution: ui.nav.solutions[lang], service: ui.nav.services[lang], post: ui.nav.insights[lang] })[kind];
 
-function card(eyebrow: string, title: string, subtitle: string) {
+function card(eyebrow: string, title: string, subtitle: string, lang: Lang = "en") {
   const size = title.length > 60 ? 56 : title.length > 36 ? 66 : 80;
-  return `<!doctype html><html><head><meta charset="utf-8"><style>
+  const ar = lang === "ar";
+  return `<!doctype html><html lang="${lang}" dir="${ar ? "rtl" : "ltr"}"><head><meta charset="utf-8"><style>
+  ${ar ? arabicFonts : ""}
   * { margin: 0; box-sizing: border-box; }
   body { width: 1200px; height: 630px; font-family: -apple-system, "SF Pro Display", Inter, "Segoe UI", system-ui, sans-serif;
     color: #1D1D1F; -webkit-font-smoothing: antialiased;
     background: radial-gradient(70% 70% at 50% -15%, rgb(29 95 255 / 0.16), transparent 70%), #F5F5F7;
     padding: 72px 80px; display: flex; flex-direction: column; }
+  ${ar ? `body { font-family: "Kufi", -apple-system, Inter, "Segoe UI", system-ui, sans-serif; }
+  h1, p, .eyebrow { letter-spacing: 0 !important; } h1 { line-height: 1.35; } p { line-height: 1.6; }
+  .brand { direction: ltr; justify-content: flex-end; }` : ""}
   .brand { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
   .brand img { width: 52px; height: 52px; }
   .main { margin-top: auto; }
@@ -51,20 +62,26 @@ async function main() {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 
+  mkdirSync(path.join(outDir, "ar"), { recursive: true });
   const jobs: [string, string][] = [];
   jobs.push(["default", card("AI + IoT for North Africa & the Gulf", "Intelligent systems, built and hosted where your data lives", "")]);
+  jobs.push(["ar/default", card("الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج", "أنظمة ذكية تُبنى وتُستضاف حيث تقيم بياناتك", "", "ar")]);
   for (const route of allPaths()) {
     const meta = pageMeta(route);
     if (!meta || meta.kind === "page") continue;
-    // Solution titles are "Name — tagline"; split at the first dash only (taglines may contain one).
-    const cut = meta.title.en.indexOf(" — ");
-    const [name, tagline] = meta.kind === "solution" && cut > 0
-      ? [meta.title.en.slice(0, cut), meta.title.en.slice(cut + 3)]
-      : [meta.title.en, meta.description.en];
-    jobs.push([meta.ogKey, card(kindLabel[meta.kind], name, tagline)]);
+    for (const lang of ["en", "ar"] as Lang[]) {
+      // Solution titles are "Name — tagline"; split at the first dash only (taglines may contain one).
+      const title = meta.title[lang];
+      const cut = title.indexOf(" — ");
+      const [name, tagline] = meta.kind === "solution" && cut > 0
+        ? [title.slice(0, cut), title.slice(cut + 3)]
+        : [title, meta.description[lang]];
+      jobs.push([`${lang === "ar" ? "ar/" : ""}${meta.ogKey}`, card(kindLabel(meta.kind, lang), name, tagline, lang)]);
+    }
   }
   for (const [key, html] of jobs) {
     await page.setContent(html, { waitUntil: "load" });
+    await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: path.join(outDir, `${key}.png`) });
   }
   await browser.close();

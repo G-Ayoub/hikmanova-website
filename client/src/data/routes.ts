@@ -133,7 +133,7 @@ export interface PageMeta {
 
 export const HOME_TITLE = l(
   "HikmaNova — AI & IoT Solutions for North Africa & the Gulf",
-  "HikmaNova — حلول الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج",
+  "HikmaNova — الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج",
 );
 
 const og = (key: string) => `/og/${key}.png`;
@@ -185,4 +185,9 @@ export function hasArabicVersion(path: string): boolean {
   const [, section, slug] = path.split("/");
   if (section === "blog" && slug) return !!posts.find((p) => p.slug === slug)?.contentAr;
   return true;
+}
+
+/** Share image for a page in a language: Arabic cards live in /og/ar/ (see scripts/gen-og-images.ts). */
+export function ogImage(meta: PageMeta, lang: "en" | "ar"): string {
+  return lang === "ar" ? `/og/ar/${meta.ogKey}.png` : meta.image;
 }

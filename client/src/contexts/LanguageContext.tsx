@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { BASE } from '@/lib/asset';
+import { splitLangPath, withLang } from '@/lib/langPath';
 
 /** To add French: add 'fr' here and to LANGUAGES, then fill the `fr` fields in content. */
 export type Language = 'en' | 'ar';
@@ -16,23 +18,17 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const isSupported = (value: string | null): value is Language =>
-  LANGUAGES.some((l) => l.code === value);
+/** Current site path without the base, e.g. "/ar/solutions". */
+const currentPath = () => window.location.pathname.slice(BASE.length) || '/';
 
-function initialLanguage(): Language {
-  if (typeof window === 'undefined') return 'en'; // pre-rendering at build time
-  try {
-    const saved = localStorage.getItem('language');
-    if (isSupported(saved)) return saved;
-  } catch {
-    /* storage unavailable */
-  }
-  const browser = navigator.language.slice(0, 2);
-  return isSupported(browser) ? browser : 'en';
-}
-
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(initialLanguage);
+/**
+ * The language comes from the URL: English pages at /…, Arabic pages at /ar/…, so each language has its
+ * own indexable address. Switching language moves to the same page in the other language.
+ */
+export function LanguageProvider({ children, initial }: { children: React.ReactNode; initial?: Language }) {
+  const [language, setLanguageState] = useState<Language>(
+    () => initial ?? (typeof window === 'undefined' ? 'en' : splitLangPath(currentPath()).language),
+  );
   const isRTL = LANGUAGES.find((l) => l.code === language)?.rtl ?? false;
 
   useEffect(() => {
@@ -40,13 +36,26 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
   }, [language, isRTL]);
 
+  // Back/forward (and any other history change) can cross languages: follow the URL.
+  useEffect(() => {
+    const sync = () => setLanguageState(splitLangPath(currentPath()).language);
+    const events = ['popstate', 'pushState', 'replaceState'];
+    events.forEach((e) => window.addEventListener(e, sync));
+    return () => events.forEach((e) => window.removeEventListener(e, sync));
+  }, []);
+
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
     try {
       localStorage.setItem('language', lang);
     } catch {
       /* storage unavailable */
     }
+    const { path } = splitLangPath(currentPath());
+    const target = BASE + withLang(path, lang) + window.location.search + window.location.hash;
+    if (target !== window.location.pathname + window.location.search + window.location.hash) {
+      window.history.pushState(null, '', target);
+    }
+    setLanguageState(lang);
   };
 
   return (
@@ -59,7 +68,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage must be used within LanguageProvider');
+    throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
 }

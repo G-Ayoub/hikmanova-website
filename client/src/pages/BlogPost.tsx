@@ -13,7 +13,12 @@ export default function BlogPost() {
   const { slug = "" } = useParams<{ slug: string }>();
   const post = getPost(slug);
   const { t, language } = useI18n();
-  usePageMeta(post ? t(post.title) : t(ui.blog.notFound), post && t(post.excerpt));
+  // An Arabic page whose article body is still English points search engines at the English article.
+  const untranslated = !!post && language !== "en" && !post.contentAr;
+  usePageMeta(post ? t(post.title) : t(ui.blog.notFound), post && t(post.excerpt), {
+    canonicalPath: untranslated ? `/blog/${slug}` : undefined,
+    noindex: untranslated,
+  });
 
   if (!post) return <NotFound />;
 

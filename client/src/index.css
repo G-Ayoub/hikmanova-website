@@ -305,9 +305,6 @@
   .pressable:active { opacity: 0.6; transition-duration: 0ms; }
 }
 
-/* Arabic visitors: hide the pre-rendered English page until the app has rendered in Arabic. */
-.hn-wait #root { visibility: hidden; }
-
 /* Accessibility: three independent signals. */
 @media (prefers-reduced-motion: reduce) {
   .card-hover, .card-hover:hover, .card-hover:active { transform: none !important; }

@@ -16,7 +16,13 @@ function setMeta(attr: "name" | "property", key: string, content: string) {
  * Sets the document title, description, canonical URL and Open Graph tags
  * for the current page. Call once at the top of every page component.
  */
-export function usePageMeta(title: string, description?: string) {
+export function usePageMeta(
+  title: string,
+  description?: string,
+  /** canonicalPath: site path (without base) of the preferred version; noindex: keep this page out of search. */
+  options: { canonicalPath?: string; noindex?: boolean } = {},
+) {
+  const { canonicalPath, noindex = false } = options;
   useEffect(() => {
     const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
     document.title = fullTitle;
@@ -28,9 +34,13 @@ export function usePageMeta(title: string, description?: string) {
     }
 
     // Same form as the pre-rendered pages: GitHub Pages serves each page at "<route>/".
-    const path = window.location.pathname.slice(BASE.length).replace(/\/$/, "");
-    const url = SITE_URL + (path ? `${path}/` : "/");
+    const toUrl = (p: string) => {
+      const trimmed = p.replace(/\/$/, "");
+      return SITE_URL + (trimmed ? `${trimmed}/` : "/");
+    };
+    const url = toUrl(canonicalPath ?? window.location.pathname.slice(BASE.length));
     setMeta("property", "og:url", url);
+    setMeta("name", "robots", noindex ? "noindex, follow" : "index, follow");
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
@@ -38,5 +48,5 @@ export function usePageMeta(title: string, description?: string) {
       document.head.appendChild(canonical);
     }
     canonical.href = url;
-  }, [title, description]);
+  }, [title, description, canonicalPath, noindex]);
 }

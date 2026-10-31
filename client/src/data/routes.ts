@@ -176,3 +176,13 @@ export function pageMeta(path: string): PageMeta | undefined {
   };
 }
 
+
+/**
+ * Whether a page has a real Arabic version worth indexing. Articles whose body is still English-only get an
+ * Arabic page for browsing, but it is noindex and points search engines at the English article.
+ */
+export function hasArabicVersion(path: string): boolean {
+  const [, section, slug] = path.split("/");
+  if (section === "blog" && slug) return !!posts.find((p) => p.slug === slug)?.contentAr;
+  return true;
+}

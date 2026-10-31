@@ -4,7 +4,8 @@ import { Redirect, Route, Switch, Router as WouterRouter } from "wouter";
 import { BASE } from "./lib/asset";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { LanguageProvider } from "./contexts/LanguageContext";
+import { LanguageProvider, useLanguage, type Language } from "./contexts/LanguageContext";
+import { AR_PREFIX } from "./lib/langPath";
 import { hasClientProof } from "./data/company";
 import { lazyPage, type LazyPage } from "./lib/lazyPage";
 
@@ -97,18 +98,26 @@ function Router() {
   );
 }
 
-/** `ssrPath` is set when pre-rendering a page at build time (scripts/gen-sitemap.ts). */
-function App({ ssrPath }: { ssrPath?: string }) {
+/** Routes are the same in both languages; Arabic ones are served under the /ar prefix. */
+function LocalizedRouter({ ssrPath }: { ssrPath?: string }) {
+  const { language } = useLanguage();
+  return (
+    <WouterRouter base={BASE + (language === "ar" ? AR_PREFIX : "")} ssrPath={ssrPath}>
+      <Suspense fallback={null}>
+        <Router />
+      </Suspense>
+    </WouterRouter>
+  );
+}
+
+/** `ssrPath` and `lang` are set when pre-rendering a page at build time (scripts/gen-sitemap.ts). */
+function App({ ssrPath, lang }: { ssrPath?: string; lang?: Language }) {
   return (
     <ErrorBoundary>
-      <LanguageProvider>
+      <LanguageProvider initial={lang}>
         <ThemeProvider defaultTheme="light" switchable>
           <MotionConfig reducedMotion="user">
-            <WouterRouter base={BASE} ssrPath={ssrPath}>
-              <Suspense fallback={null}>
-                <Router />
-              </Suspense>
-            </WouterRouter>
+            <LocalizedRouter ssrPath={ssrPath} />
           </MotionConfig>
         </ThemeProvider>
       </LanguageProvider>

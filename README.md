@@ -9,7 +9,9 @@ The site is served from the `/hikmanova-website/` sub-path: `base` in `vite.conf
 set `base: "/"` and update `SITE_URL`.
 
 Built with React 18, TypeScript, Vite, Tailwind CSS v4 and [wouter](https://github.com/molefrog/wouter) for routing.
-Bilingual (English / Arabic with RTL), with French planned.
+Bilingual, with French planned: English pages live at `/…` and Arabic pages (right-to-left) at `/ar/…`.
+Every page is pre-rendered in both languages at build time, with `hreflang` links between the two versions
+and both listed in `sitemap.xml`. The language switch moves to the same page in the other language.
 
 ## Development
 
@@ -52,10 +54,16 @@ the page's own `<head>` (title, description, share tags, JSON-LD) are generated 
 `pnpm og` to render its share image into `client/public/og/` and commit it (needs Playwright locally). `pnpm test` checks that every entry has English and Arabic text, slugs are unique,
 cross-references exist and images are local.
 
+Articles have an English `content` and an Arabic `contentAr` body (`client/src/data/posts.ts`). An article
+without `contentAr` still gets an Arabic page, but it shows the English body and is kept out of search
+(`noindex`, canonical to the English article). `pnpm test` currently requires every article to have one.
+
 ### Adding French
 
 1. Add `'fr'` to `Language` and `LANGUAGES` in `client/src/contexts/LanguageContext.tsx`.
-2. Fill the optional `fr` field on `Localized` values (missing ones fall back to English).
+2. Add a `/fr` prefix next to `AR_PREFIX` in `client/src/lib/langPath.ts` and handle it in `splitLangPath` /
+   `withLang`, then add `"fr"` to `LANGS` in `scripts/gen-sitemap.ts`.
+3. Fill the optional `fr` field on `Localized` values (missing ones fall back to English).
 
 ## Contact form
 

@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
-      // Apply saved theme and language before first paint (the HTML is pre-rendered in light English).
+      // Before first paint: apply the saved theme, and send visitors who chose Arabic on an English
+      // page to its Arabic version (/ar/…). Search engines have no saved choice, so they are never redirected.
       (function () {
         var d = document.documentElement, t = null, l = null;
         try { t = localStorage.getItem("theme"); l = localStorage.getItem("language"); } catch (e) {}
         if (t === "dark") d.classList.add("dark");
-        if (!l) l = (navigator.language || "en").slice(0, 2) === "ar" ? "ar" : "en";
-        if (l === "ar") { d.lang = "ar"; d.dir = "rtl"; d.classList.add("hn-wait"); }
+        var base = "%BASE_URL%".replace(/\/$/, ""), rel = location.pathname.slice(base.length) || "/";
+        var onArabic = rel === "/ar" || rel.indexOf("/ar/") === 0;
+        if (l === "ar" && !onArabic) location.replace(base + "/ar" + rel + location.search + location.hash);
       })();
     </script>
     <title>HikmaNova — AI & IoT Solutions for North Africa and the Gulf</title>

@@ -96,4 +96,14 @@ describe("content data", () => {
       expect(meta.description.en.length, `${route}: description too short`).toBeGreaterThanOrEqual(70);
     }
   });
+
+  it("every article has an Arabic body with the same sections as the English one", () => {
+    const count = (html: string, tag: string) => (html.match(new RegExp(`<${tag}>`, "g")) ?? []).length;
+    for (const post of posts) {
+      expect(post.contentAr, `${post.slug}: missing contentAr`).toBeTruthy();
+      for (const tag of ["h2", "li"]) {
+        expect(count(post.contentAr!, tag), `${post.slug}: <${tag}> count differs`).toBe(count(post.content, tag));
+      }
+    }
+  });
 });

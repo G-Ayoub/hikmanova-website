@@ -3,14 +3,12 @@ import Layout from "@/components/Layout";
 import { CTA, defaultCta, PageHero, SectionHeading, TagList } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
 const copy = {
-  subtitle: l(
-    "A proven, open stack — deployed on-premises or in national data centres, with security built in from the first line of code.",
-    "تقنيات مفتوحة ومجرّبة — تُنشر داخل المؤسسة أو في مراكز البيانات الوطنية، مع أمان مدمج منذ السطر الأول من الشيفرة.",
-  ),
+  subtitle: pageDescriptions["/technology"],
   stackTitle: l("Our stack", "التقنيات التي نعتمدها"),
   sovereignTitle: l("Data sovereignty & localisation", "سيادة البيانات وتوطينها"),
   sovereignSubtitle: l(

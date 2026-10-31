@@ -2,8 +2,8 @@ import type { Localized } from "@/lib/i18n";
 import { CONTACT_EMAIL } from "@/const";
 
 /**
- * Company facts. Anything set to `null` or an empty list renders a visible
- * "Coming soon" placeholder on the site; fill it in and the section appears.
+ * Company facts. Anything set to `null` or an empty list is simply not shown on the site;
+ * fill it in and the section appears.
  */
 
 export interface Stat { value: string; label: Localized }
@@ -59,3 +59,8 @@ export const company = {
   /** Path under client/public, e.g. "/hikmanova-company-profile.pdf" */
   profilePdf: null as string | null,
 };
+
+/** The Clients page is shown (nav, footer, sitemap) only once there are logos or testimonials. */
+export function hasClientProof() {
+  return company.clientLogos.length > 0 || company.testimonials.length > 0;
+}

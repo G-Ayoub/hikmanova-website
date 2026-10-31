@@ -26,11 +26,6 @@ const l = (en: string, ar: string): Localized => ({ en, ar });
 /** Interface strings shared across pages (navigation, buttons, headings). */
 export const ui = {
   brandTagline: l("AI & IoT solutions for North Africa and the Gulf", "حلول الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج"),
-  comingSoon: l("Coming soon", "قريباً"),
-  comingSoonNote: l(
-    "We are preparing this content and will publish it shortly.",
-    "نعمل على إعداد هذا المحتوى وسننشره قريباً.",
-  ),
   learnMore: l("Learn more", "اعرف المزيد"),
   viewAll: l("View all", "عرض الكل"),
   back: l("Back", "رجوع"),
@@ -85,7 +80,6 @@ export const ui = {
     challenge: l("The challenge", "التحدي"),
     solution: l("Our solution", "الحل"),
     results: l("Results", "النتائج"),
-    metrics: l("Detailed metrics", "المؤشرات التفصيلية"),
     related: l("Related services", "خدمات ذات صلة"),
     caseStudyBadge: l("Case study", "دراسة حالة"),
     readCaseStudy: l("Read the case study", "اقرأ دراسة الحالة"),

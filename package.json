@@ -10,7 +10,8 @@
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "og": "tsx scripts/gen-og-images.ts"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

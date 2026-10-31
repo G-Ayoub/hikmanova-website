@@ -26,6 +26,7 @@ import Terms from "./pages/Terms";
 import Cookies from "./pages/Cookies";
 import Sitemap from "./pages/Sitemap";
 import NotFound from "./pages/NotFound";
+import { hasClientProof } from "./data/company";
 
 /** Old URLs from the previous site, kept so existing links keep working. */
 const legacyProjects: Record<string, string> = {
@@ -48,7 +49,10 @@ function Router() {
       <Route path="/industries" component={Industries} />
       <Route path="/technology" component={Technology} />
       <Route path="/innovation" component={Innovation} />
-      <Route path="/clients" component={Clients} />
+      <Route path="/clients">
+        {/* Until there are client logos or testimonials, send visitors to the case studies instead. */}
+        {hasClientProof() ? <Clients /> : <Redirect to="/case-studies" replace />}
+      </Route>
       <Route path="/about" component={About} />
       <Route path="/careers" component={Careers} />
       <Route path="/blog" component={Blog} />

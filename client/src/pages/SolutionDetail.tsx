@@ -2,7 +2,7 @@ import { Link, useParams } from "wouter";
 import { CheckCircle2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { BackArrow, ComingSoon, CTA, defaultCta, ForwardArrow, SectionHeading, serviceIcons, TagList } from "@/components/site";
+import { BackArrow, CTA, defaultCta, ForwardArrow, SectionHeading, serviceIcons, TagList } from "@/components/site";
 import { ui, useI18n } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { getSolution } from "@/data/solutions";
@@ -123,7 +123,7 @@ export default function SolutionDetail() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.results)}</h2>
-                  <ul className="space-y-3 mb-6">
+                  <ul className="space-y-3">
                     {cs.results.map((r) => (
                       <li key={r.en} className="flex gap-3 p-4 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
                         <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" aria-hidden />
@@ -131,7 +131,6 @@ export default function SolutionDetail() {
                       </li>
                     ))}
                   </ul>
-                  <ComingSoon title={`${t(ui.solution.metrics)} — ${t(ui.comingSoon)}`} />
                 </div>
               </div>
             )}

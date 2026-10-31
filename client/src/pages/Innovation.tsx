@@ -4,16 +4,14 @@ import Layout from "@/components/Layout";
 import { CTA, defaultCta, ForwardArrow, PageHero, SectionHeading } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { getSolution } from "@/data/solutions";
 import { asset } from "@/lib/asset";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
 
 const copy = {
-  subtitle: l(
-    "We turn field problems into original products — and protect the ideas behind them.",
-    "نحوّل التحديات الميدانية إلى منتجات أصيلة — ونحمي الأفكار التي تقف خلفها.",
-  ),
+  subtitle: pageDescriptions["/innovation"],
   ipTitle: l("Registered intellectual property", "ملكية فكرية مسجّلة"),
   nusukText: l(
     "Our Smart BLE Nusuk Card for Hajj and Umrah crowd management is registered as intellectual property in the Kingdom of Saudi Arabia.",

@@ -3,14 +3,12 @@ import Layout from "@/components/Layout";
 import { CTA, defaultCta, ForwardArrow, PageHero } from "@/components/site";
 import { ui, useI18n } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { solutions } from "@/data/solutions";
 import { asset } from "@/lib/asset";
 
 const copy = {
-  subtitle: {
-    en: "How we approached real challenges: the problem, the solution, the stack and the results.",
-    ar: "كيف تعاملنا مع تحديات حقيقية: المشكلة والحل والتقنيات والنتائج.",
-  },
+  subtitle: pageDescriptions["/case-studies"],
 };
 
 export default function CaseStudies() {

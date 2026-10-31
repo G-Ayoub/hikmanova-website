@@ -3,13 +3,11 @@ import Layout from "@/components/Layout";
 import { CTA, defaultCta, ForwardArrow, PageHero, serviceIcons } from "@/components/site";
 import { ui, useI18n } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { services } from "@/data/services";
 
 const copy = {
-  subtitle: {
-    en: "End-to-end engineering for AI, connected devices and enterprise platforms — delivered on your infrastructure.",
-    ar: "هندسة متكاملة للذكاء الاصطناعي والأجهزة المتصلة ومنصات المؤسسات — تُنفَّذ على بنيتك التحتية.",
-  },
+  subtitle: pageDescriptions["/services"],
 };
 
 export default function Services() {

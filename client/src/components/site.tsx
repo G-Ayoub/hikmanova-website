@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import {
-  ArrowLeft, ArrowRight, Brain, Building2, Clock, Hotel, Landmark, Presentation, Radio,
+  ArrowLeft, ArrowRight, Brain, Building2, Hotel, Landmark, Presentation, Radio,
   Satellite, Server, ShieldCheck, Zap, Smartphone, Trophy, Truck, type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -81,18 +81,6 @@ export function SectionHeading({ title, subtitle, eyebrow, center = false }: { t
       <h2 className={`text-[2rem] md:text-[3rem] font-serif font-semibold ${subtitle ? "mb-4" : ""} ${center ? "mx-auto max-w-[20em]" : "max-w-[18em]"}`}>{title}</h2>
       {subtitle && <p className={`text-lg md:text-xl text-muted-foreground max-w-2xl ${center ? "mx-auto" : ""}`}>{subtitle}</p>}
     </Reveal>
-  );
-}
-
-/** Visible placeholder for content that is not available yet. */
-export function ComingSoon({ title, note }: { title?: string; note?: string }) {
-  const { t } = useI18n();
-  return (
-    <div className="rounded-lg border border-dashed border-input bg-card/60 p-8 text-center">
-      <Clock className="w-7 h-7 mx-auto mb-3 text-muted-foreground" strokeWidth={1.75} aria-hidden />
-      <p className="font-semibold mb-1">{title ?? t(ui.comingSoon)}</p>
-      <p className="text-sm text-muted-foreground">{note ?? t(ui.comingSoonNote)}</p>
-    </div>
   );
 }
 

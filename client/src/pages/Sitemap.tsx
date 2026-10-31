@@ -1,3 +1,4 @@
+import { pageDescriptions } from "@/data/routes";
 import { Link } from "wouter";
 import Layout from "@/components/Layout";
 import { PageHero } from "@/components/site";
@@ -10,7 +11,7 @@ import { posts } from "@/data/posts";
 
 export default function Sitemap() {
   const { t } = useI18n();
-  usePageMeta(t(ui.nav.sitemap));
+  usePageMeta(t(ui.nav.sitemap), t(pageDescriptions["/sitemap"]));
 
   const groups: { title: Localized; links: { href: string; label: string }[] }[] = [
     { title: { en: "Pages", ar: "الصفحات" }, links: staticRoutes.map((r) => ({ href: r.path, label: t(r.label) })) },

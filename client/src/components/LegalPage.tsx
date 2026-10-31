@@ -11,9 +11,9 @@ export interface LegalSection {
 
 const updatedLabel: Localized = { en: "Last updated", ar: "آخر تحديث" };
 
-export default function LegalPage({ title, updated, sections }: { title: Localized; updated: Localized; sections: LegalSection[] }) {
+export default function LegalPage({ title, description, updated, sections }: { title: Localized; description: Localized; updated: Localized; sections: LegalSection[] }) {
   const { t } = useI18n();
-  usePageMeta(t(title));
+  usePageMeta(t(title), t(description));
 
   return (
     <Layout>

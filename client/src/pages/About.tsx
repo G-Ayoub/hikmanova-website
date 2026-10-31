@@ -1,8 +1,9 @@
 import { Compass, Eye, MapPin, Target } from "lucide-react";
 import Layout from "@/components/Layout";
-import { ComingSoon, CTA, defaultCta, PageHero, SectionHeading } from "@/components/site";
+import { CTA, defaultCta, PageHero, SectionHeading } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { pageDescriptions } from "@/data/routes";
 import { company } from "@/data/company";
 import { asset } from "@/lib/asset";
 
@@ -10,10 +11,7 @@ const l = (en: string, ar: string): Localized => ({ en, ar });
 
 const copy = {
   title: l("About HikmaNova", "عن HikmaNova"),
-  subtitle: l(
-    "An Algerian technology company building AI and IoT systems for North Africa and the Gulf.",
-    "شركة تقنية جزائرية تبني أنظمة الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج.",
-  ),
+  subtitle: pageDescriptions["/about"],
   storyTitle: l("Our story", "قصتنا"),
   story: [
     l(
@@ -81,10 +79,11 @@ export default function About() {
         </div>
       </section>
 
+      {company.leadership.length > 0 && (
       <section className="py-16 md:py-24 bg-card">
         <div className="container">
           <SectionHeading title={t(copy.leadershipTitle)} />
-          {company.leadership.length > 0 ? (
+          {(
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {company.leadership.map((p) => (
                 <div key={p.name} className="p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)] text-center">
@@ -100,11 +99,10 @@ export default function About() {
                 </div>
               ))}
             </div>
-          ) : (
-            <ComingSoon />
           )}
         </div>
       </section>
+      )}
 
       <CTA {...defaultCta} />
     </Layout>

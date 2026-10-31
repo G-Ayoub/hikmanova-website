@@ -24,9 +24,6 @@ export interface Solution {
   image: string;
   /** Named client, only when the client has agreed to be named. */
   client?: Localized;
-  /** Optional media; a "coming soon" slot is shown while these are missing. */
-  video?: string;
-  gallery?: string[];
   caseStudy?: CaseStudy;
   featured?: boolean;
   /** Equipment groups the product monitors (monitoring products). */

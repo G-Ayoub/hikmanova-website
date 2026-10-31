@@ -39,9 +39,10 @@ export default function Home() {
   const { t } = useI18n();
   usePageMeta(t(copy.eyebrow), t(copy.subtitle));
 
-  // Case studies in the first row, illustrated products as wide cards below.
-  const topRow = solutions.filter((s) => s.caseStudy).slice(0, 3);
-  const wideRow = solutions.filter((s) => !topRow.includes(s)).slice(0, 2);
+  // Featured solutions on Home, by slug: three cards on top, two wide cards below.
+  const pick = (slugs: string[]) => slugs.map((slug) => solutions.find((s) => s.slug === slug)).filter((s) => s !== undefined);
+  const topRow = pick(["orbix", "teammonitor", "telecom-power-monitoring"]);
+  const wideRow = pick(["iot-cold-chain", "nusuk-card"]);
 
   return (
     <Layout>

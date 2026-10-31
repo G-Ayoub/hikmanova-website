@@ -135,21 +135,6 @@ export default function SolutionDetail() {
                 </div>
               </div>
             )}
-
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.media)}</h2>
-              {solution.video ? (
-                <video src={asset(solution.video)} controls className="w-full rounded-lg border border-border" />
-              ) : solution.gallery?.length ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {solution.gallery.map((src) => (
-                    <img key={src} src={asset(src)} alt="" loading="lazy" className="rounded-lg border border-border" />
-                  ))}
-                </div>
-              ) : (
-                <ComingSoon />
-              )}
-            </div>
           </div>
 
           <aside className="space-y-8">

@@ -85,7 +85,6 @@ export const ui = {
     challenge: l("The challenge", "التحدي"),
     solution: l("Our solution", "الحل"),
     results: l("Results", "النتائج"),
-    media: l("Screenshots & demo video", "لقطات الشاشة وفيديو العرض"),
     metrics: l("Detailed metrics", "المؤشرات التفصيلية"),
     related: l("Related services", "خدمات ذات صلة"),
     caseStudyBadge: l("Case study", "دراسة حالة"),

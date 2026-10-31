@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Download, Linkedin, Mail, MapPin, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { PageHero, SectionHeading } from "@/components/site";
@@ -118,6 +119,8 @@ export default function Contact() {
 
   return (
     <Layout>
+      {/* Toasts are only used by the contact form, so they load with this page. */}
+      <Toaster />
       <PageHero title={t(copy.title)} subtitle={t(copy.subtitle)} />
 
       <section className="py-16 md:py-24">

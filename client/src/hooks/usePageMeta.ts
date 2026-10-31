@@ -27,8 +27,9 @@ export function usePageMeta(title: string, description?: string) {
       setMeta("property", "og:description", description);
     }
 
+    // Same form as the pre-rendered pages: GitHub Pages serves each page at "<route>/".
     const path = window.location.pathname.slice(BASE.length).replace(/\/$/, "");
-    const url = SITE_URL + (path || "/");
+    const url = SITE_URL + (path ? `${path}/` : "/");
     setMeta("property", "og:url", url);
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {

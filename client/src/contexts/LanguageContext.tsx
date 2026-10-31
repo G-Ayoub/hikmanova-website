@@ -20,6 +20,7 @@ const isSupported = (value: string | null): value is Language =>
   LANGUAGES.some((l) => l.code === value);
 
 function initialLanguage(): Language {
+  if (typeof window === 'undefined') return 'en'; // pre-rendering at build time
   try {
     const saved = localStorage.getItem('language');
     if (isSupported(saved)) return saved;

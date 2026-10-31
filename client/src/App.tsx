@@ -1,32 +1,50 @@
 import { MotionConfig } from "framer-motion";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Suspense } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter } from "wouter";
 import { BASE } from "./lib/asset";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Solutions from "./pages/Solutions";
-import SolutionDetail from "./pages/SolutionDetail";
-import Services from "./pages/Services";
-import ServiceDetail from "./pages/ServiceDetail";
-import CaseStudies from "./pages/CaseStudies";
-import Industries from "./pages/Industries";
-import Technology from "./pages/Technology";
-import Innovation from "./pages/Innovation";
-import Clients from "./pages/Clients";
-import Careers from "./pages/Careers";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import Contact from "./pages/Contact";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Cookies from "./pages/Cookies";
-import Sitemap from "./pages/Sitemap";
-import NotFound from "./pages/NotFound";
 import { hasClientProof } from "./data/company";
+import { lazyPage, type LazyPage } from "./lib/lazyPage";
+
+// Each page is its own chunk, so a visitor downloads only the code for the pages they open.
+const Home = lazyPage(() => import("./pages/Home"));
+const About = lazyPage(() => import("./pages/About"));
+const Solutions = lazyPage(() => import("./pages/Solutions"));
+const SolutionDetail = lazyPage(() => import("./pages/SolutionDetail"));
+const Services = lazyPage(() => import("./pages/Services"));
+const ServiceDetail = lazyPage(() => import("./pages/ServiceDetail"));
+const CaseStudies = lazyPage(() => import("./pages/CaseStudies"));
+const Industries = lazyPage(() => import("./pages/Industries"));
+const Technology = lazyPage(() => import("./pages/Technology"));
+const Innovation = lazyPage(() => import("./pages/Innovation"));
+const Clients = lazyPage(() => import("./pages/Clients"));
+const Careers = lazyPage(() => import("./pages/Careers"));
+const Blog = lazyPage(() => import("./pages/Blog"));
+const BlogPost = lazyPage(() => import("./pages/BlogPost"));
+const Contact = lazyPage(() => import("./pages/Contact"));
+const Privacy = lazyPage(() => import("./pages/Privacy"));
+const Terms = lazyPage(() => import("./pages/Terms"));
+const Cookies = lazyPage(() => import("./pages/Cookies"));
+const Sitemap = lazyPage(() => import("./pages/Sitemap"));
+const NotFound = lazyPage(() => import("./pages/NotFound"));
+
+/** Page that will render for a path (without the base), so it can be loaded before the app mounts. */
+export function pageFor(path: string): LazyPage {
+  const p = path.replace(/\/+$/, "") || "/";
+  const exact: Record<string, LazyPage> = {
+    "/": Home, "/solutions": Solutions, "/services": Services, "/case-studies": CaseStudies,
+    "/industries": Industries, "/technology": Technology, "/innovation": Innovation,
+    "/clients": hasClientProof() ? Clients : CaseStudies, "/about": About, "/careers": Careers,
+    "/blog": Blog, "/contact": Contact, "/privacy": Privacy, "/terms": Terms, "/cookies": Cookies, "/sitemap": Sitemap,
+  };
+  if (exact[p]) return exact[p];
+  if (p.startsWith("/solutions/")) return SolutionDetail;
+  if (p.startsWith("/services/")) return ServiceDetail;
+  if (p.startsWith("/blog/")) return BlogPost;
+  return NotFound;
+}
 
 /** Old URLs from the previous site, kept so existing links keep working. */
 const legacyProjects: Record<string, string> = {
@@ -79,18 +97,18 @@ function Router() {
   );
 }
 
-function App() {
+/** `ssrPath` is set when pre-rendering a page at build time (scripts/gen-sitemap.ts). */
+function App({ ssrPath }: { ssrPath?: string }) {
   return (
     <ErrorBoundary>
       <LanguageProvider>
         <ThemeProvider defaultTheme="light" switchable>
           <MotionConfig reducedMotion="user">
-            <TooltipProvider>
-              <Toaster />
-              <WouterRouter base={BASE}>
+            <WouterRouter base={BASE} ssrPath={ssrPath}>
+              <Suspense fallback={null}>
                 <Router />
-              </WouterRouter>
-            </TooltipProvider>
+              </Suspense>
+            </WouterRouter>
           </MotionConfig>
         </ThemeProvider>
       </LanguageProvider>

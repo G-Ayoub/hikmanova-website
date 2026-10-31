@@ -33,7 +33,7 @@ export const services: Service[] = [
       l("On-premises deployment of open models", "نشر النماذج المفتوحة داخل مقر المؤسسة"),
     ],
     technologies: ["Python", "Django", "LLMs", "LangChain", "PostgreSQL", "SQL Server"],
-    image: "/images/abstract-7.jpg",
+    image: "/images/abstract-7.webp",
   },
   {
     slug: "iot-connected-systems",
@@ -52,7 +52,7 @@ export const services: Service[] = [
       l("Real-time monitoring dashboards", "لوحات مراقبة لحظية"),
     ],
     technologies: ["BLE", "NFC", "iBeacon", "MQTT", "Embedded sensors", "Flutter"],
-    image: "/images/abstract-4.jpg",
+    image: "/images/abstract-4.webp",
   },
   {
     slug: "mobile-apps",
@@ -71,7 +71,7 @@ export const services: Service[] = [
       l("App attestation and secure authentication", "التحقق من سلامة التطبيق والمصادقة الآمنة"),
     ],
     technologies: ["Flutter", "Dart", "Kotlin", "Swift", "Firebase", "Keycloak"],
-    image: "/images/abstract-1.jpg",
+    image: "/images/abstract-1.webp",
   },
   {
     slug: "backend-enterprise-platforms",
@@ -90,7 +90,7 @@ export const services: Service[] = [
       l("Performance, testing and documentation", "الأداء والاختبار والتوثيق"),
     ],
     technologies: ["Django", "Python", "PostgreSQL", "SQL Server", "REST", "Redis"],
-    image: "/images/abstract-8.jpg",
+    image: "/images/abstract-8.webp",
   },
   {
     slug: "devops-sovereign-hosting",
@@ -109,7 +109,7 @@ export const services: Service[] = [
       l("Monitoring, backups and managed operations", "المراقبة والنسخ الاحتياطي والتشغيل المُدار"),
     ],
     technologies: ["Docker", "Kubernetes", "Harbor", "API gateway", "Keycloak", "Prometheus"],
-    image: "/images/abstract-3.jpg",
+    image: "/images/abstract-3.webp",
   },
   {
     slug: "consulting-poc-workshops",
@@ -128,7 +128,7 @@ export const services: Service[] = [
       l("Team training and hand-over", "تدريب الفرق والتسليم"),
     ],
     technologies: ["Workshops", "Architecture reviews", "Roadmapping"],
-    image: "/images/abstract-10.jpg",
+    image: "/images/abstract-10.webp",
   },
 ];
 

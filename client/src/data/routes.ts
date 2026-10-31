@@ -55,28 +55,28 @@ export const pageDescriptions = {
     "انضم إلى فريق صغير يطوّر أنظمة ذكاء اصطناعي وإنترنت أشياء تعمل في الملاعب والمشاعر المقدسة ومراكز البيانات الوطنية.",
   ),
   "/blog": l(
-    "Notes from the field on AI agents, IoT and sovereign cloud.",
-    "ملاحظات من الميدان حول وكلاء الذكاء الاصطناعي وإنترنت الأشياء والسحابة السيادية.",
+    "Notes from the field on AI agents, IoT, data platforms and sovereign cloud, from the engineers who build and run these systems.",
+    "ملاحظات من الميدان حول وكلاء الذكاء الاصطناعي وإنترنت الأشياء ومنصات البيانات والسحابة السيادية، من المهندسين الذين يبنون هذه الأنظمة ويشغّلونها.",
   ),
   "/contact": l(
     "Tell us about your project, or book a proof-of-concept workshop with our team.",
     "أخبرنا عن مشروعك، أو احجز ورشة إثبات مفهوم مع فريقنا.",
   ),
   "/privacy": l(
-    "How HikmaNova collects, uses and protects personal data.",
-    "كيف تجمع HikmaNova البيانات الشخصية وتستخدمها وتحميها.",
+    "How HikmaNova Ltd collects, uses and protects personal data under the UK GDPR, how long we keep it, and how to exercise your rights.",
+    "كيف تجمع HikmaNova Ltd البيانات الشخصية وتستخدمها وتحميها وفق اللائحة العامة لحماية البيانات في المملكة المتحدة، ومدة الاحتفاظ بها، وكيفية ممارسة حقوقك.",
   ),
   "/terms": l(
-    "Terms of use for the HikmaNova website.",
-    "شروط استخدام موقع HikmaNova.",
+    "Terms of use for the HikmaNova website: use of content, trademarks, liability, and the law of England and Wales that governs them.",
+    "شروط استخدام موقع HikmaNova: استخدام المحتوى والعلامات التجارية والمسؤولية، وقانون إنجلترا وويلز الذي يحكمها.",
   ),
   "/cookies": l(
-    "How the HikmaNova website uses cookies and local storage.",
-    "كيف يستخدم موقع HikmaNova ملفات تعريف الارتباط والتخزين المحلي.",
+    "The HikmaNova website sets no tracking or advertising cookies. See what is stored in your browser and how to clear it.",
+    "لا يضع موقع HikmaNova أي ملفات تعريف ارتباط للتتبّع أو الإعلانات. تعرّف على ما يُحفظ في متصفحك وكيفية مسحه.",
   ),
   "/sitemap": l(
-    "Every page on the HikmaNova website.",
-    "جميع صفحات موقع HikmaNova.",
+    "Every page on the HikmaNova website: solutions, services, industries, case studies, insights, company and legal pages.",
+    "جميع صفحات موقع HikmaNova: الحلول والخدمات والقطاعات ودراسات الحالة والرؤى وصفحات الشركة والصفحات القانونية.",
   ),
 } satisfies Record<string, Localized>;
 
@@ -127,10 +127,12 @@ export interface PageMeta {
   parent?: { path: string; label: Localized };
   date?: string;
   author?: string;
+  /** Product name, for structured data. */
+  name?: string;
 }
 
 export const HOME_TITLE = l(
-  "HikmaNova — AI & IoT Solutions for North Africa and the Gulf",
+  "HikmaNova — AI & IoT Solutions for North Africa & the Gulf",
   "HikmaNova — حلول الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج",
 );
 
@@ -143,8 +145,8 @@ export function pageMeta(path: string): PageMeta | undefined {
     if (section === "solutions") {
       const s = solutions.find((x) => x.slug === slug);
       return s && {
-        kind: "solution", ogKey: `solution-${s.slug}`, image: og(`solution-${s.slug}`),
-        title: { en: `${s.name} — ${s.tagline.en}`, ar: `${s.name} — ${s.tagline.ar}` }, description: s.overview,
+        kind: "solution", ogKey: `solution-${s.slug}`, image: og(`solution-${s.slug}`), name: s.name,
+        title: s.seoTitle, description: s.overview,
         parent: { path: "/solutions", label: ui.nav.solutions },
       };
     }
@@ -152,7 +154,7 @@ export function pageMeta(path: string): PageMeta | undefined {
       const s = services.find((x) => x.slug === slug);
       return s && {
         kind: "service", ogKey: `service-${s.slug}`, image: og(`service-${s.slug}`),
-        title: s.name, description: s.summary, parent: { path: "/services", label: ui.nav.services },
+        title: s.name, description: s.description, parent: { path: "/services", label: ui.nav.services },
       };
     }
     if (section === "blog") {

@@ -55,7 +55,7 @@ export default function About() {
               <p key={p.en} className="text-lg text-muted-foreground leading-relaxed mb-4">{t(p)}</p>
             ))}
           </div>
-          <img src={asset("/images/abstract-6.jpg")} alt="" loading="lazy" className="rounded-xl ring-1 ring-[var(--hairline)] w-full aspect-video object-cover" />
+          <img src={asset("/images/abstract-6.webp")} alt="" loading="lazy" className="rounded-xl ring-1 ring-[var(--hairline)] w-full aspect-video object-cover" />
         </div>
       </section>
 

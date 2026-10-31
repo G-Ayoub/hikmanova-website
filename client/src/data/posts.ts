@@ -23,7 +23,7 @@ export const posts: Post[] = [
     date: "2025-10-20",
     readMinutes: 8,
     author: "HikmaNova Team",
-    image: "/images/future-of-ai-in-enterprise.jpg",
+    image: "/images/future-of-ai-in-enterprise.webp",
     content: `<h2>Introduction</h2>
 <p>Artificial intelligence is no longer a futuristic concept—it's reshaping how enterprises operate today. From automating routine tasks to enabling data-driven decision making, AI is becoming essential for competitive advantage.</p>
 <h2>Current State of Enterprise AI</h2>
@@ -54,7 +54,7 @@ export const posts: Post[] = [
     date: "2025-10-15",
     readMinutes: 10,
     author: "HikmaNova Team",
-    image: "/images/abstract-12.jpg",
+    image: "/images/abstract-12.webp",
     content: `<h2>Introduction</h2>
 <p>Scalable data pipelines are the backbone of modern data-driven organizations. In this post, we'll explore the key principles and technologies that enable building pipelines capable of processing millions of events per second.</p>
 <h2>Key Principles</h2>
@@ -86,7 +86,7 @@ export const posts: Post[] = [
     date: "2025-10-10",
     readMinutes: 7,
     author: "HikmaNova Team",
-    image: "/images/abstract-6.jpg",
+    image: "/images/abstract-6.webp",
     content: `<h2>Introduction</h2>
 <p>Cloud costs can spiral out of control if not managed properly. We've helped dozens of companies reduce their cloud spending by 30-50% through strategic optimization. Here's what we've learned.</p>
 <h2>Common Cost Drivers</h2>
@@ -117,7 +117,7 @@ export const posts: Post[] = [
     date: "2025-10-05",
     readMinutes: 12,
     author: "HikmaNova Team",
-    image: "/images/machine-learning-production.jpg",
+    image: "/images/machine-learning-production.webp",
     content: `<h2>Introduction</h2>
 <p>Deploying machine learning models to production is fundamentally different from building models in notebooks. In this comprehensive guide, we'll cover the key challenges and proven solutions.</p>
 <h2>The ML Lifecycle</h2>
@@ -160,7 +160,7 @@ export const posts: Post[] = [
     date: "2025-09-30",
     readMinutes: 9,
     author: "HikmaNova Team",
-    image: "/images/abstract-9.jpg",
+    image: "/images/abstract-9.webp",
     content: `<h2>Introduction</h2>
 <p>Real-time analytics has become critical for businesses that need to make decisions based on current data. This post explores the technologies and architectures that enable real-time insights.</p>
 <h2>Real-Time vs Batch Analytics</h2>
@@ -196,7 +196,7 @@ export const posts: Post[] = [
     date: "2025-09-25",
     readMinutes: 11,
     author: "HikmaNova Team",
-    image: "/images/kubernetes-best-practices.jpg",
+    image: "/images/kubernetes-best-practices.webp",
     content: `<h2>Introduction</h2>
 <p>Kubernetes is powerful but complex. Getting it right requires understanding best practices for security, reliability, and operations. Let's dive into the key practices we recommend.</p>
 <h2>Security Best Practices</h2>

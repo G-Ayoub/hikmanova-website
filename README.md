@@ -18,7 +18,7 @@ pnpm install
 pnpm dev        # http://localhost:3000
 pnpm check      # type-check
 pnpm test       # content integrity tests
-pnpm build      # production build into dist/public (+ sitemap.xml, robots.txt)
+pnpm build      # production build into dist/public: every page pre-rendered, plus sitemap.xml, robots.txt
 pnpm preview    # serve the production build
 ```
 
@@ -71,12 +71,14 @@ client/
   index.html            # meta tags, fonts
   public/               # static files (logo, images)
   src/
-    App.tsx             # routes + legacy redirects
+    App.tsx             # routes (each page code-split) + legacy redirects
+    main.tsx            # browser entry: loads the current page, then mounts over the pre-rendered HTML
+    entry-server.tsx    # build-time renderer used by scripts/gen-sitemap.ts
     components/         # Layout, shared blocks (site.tsx), LegalPage, shadcn/ui
     data/               # all site content + tests
     hooks/usePageMeta   # per-page title / description / canonical
     lib/i18n.ts         # Localized type, useI18n(), shared UI strings
     pages/              # one file per route
-scripts/gen-sitemap.ts  # writes sitemap.xml + robots.txt after build
+scripts/gen-sitemap.ts  # pre-renders every page (HTML + per-page head), writes sitemap.xml + robots.txt
 server/index.ts         # optional Node server for non-GitHub hosting
 ```

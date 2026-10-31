@@ -12,7 +12,7 @@ export default function ServiceDetail() {
   const { slug = "" } = useParams<{ slug: string }>();
   const service = getService(slug);
   const { t } = useI18n();
-  usePageMeta(service ? t(service.name) : t(ui.service.notFound), service && t(service.summary));
+  usePageMeta(service ? t(service.name) : t(ui.service.notFound), service && t(service.description));
 
   if (!service) return <NotFound />;
 

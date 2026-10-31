@@ -13,6 +13,8 @@ export interface Solution {
   slug: string;
   category: SolutionCategory;
   name: string;
+  /** Title for search results and browser tabs (≤ 47 characters in English; " | HikmaNova" is added). */
+  seoTitle: Localized;
   tagline: Localized;
   overview: Localized;
   features: Localized[];
@@ -61,6 +63,7 @@ export const solutions: Solution[] = [
     category: "AI",
     name: "Orbix",
     featured: true,
+    seoTitle: l("Orbix — AI CRM Agent for Data Warehouses", "أوربكس — وكيل ذكاء اصطناعي لإدارة علاقات العملاء"),
     tagline: l("AI CRM agent — ask your data warehouse in plain language", "وكيل ذكاء اصطناعي لإدارة علاقات العملاء — اسأل مستودع بياناتك بلغة طبيعية"),
     overview: l(
       "Orbix is a text-to-SQL AI agent that lets business teams query a CRM data warehouse in natural language. It routes each question to the right database, computes revenue analytics and produces ready-to-share PDF reports — without writing SQL.",
@@ -78,7 +81,7 @@ export const solutions: Solution[] = [
     stack: ["Python", "Django", "LLM agents", "Text-to-SQL", "SQL Server", "PostgreSQL", "PDF generation"],
     industries: ["telecom-satellite"],
     services: ["ai-agents-llm", "backend-enterprise-platforms", "consulting-poc-workshops"],
-    image: "/images/abstract-2.jpg",
+    image: "/images/abstract-2.webp",
     benefits: [
       l("Sales and marketing optimisation", "تحسين المبيعات والتسويق"),
       l("Data-driven decision support for managers", "دعم القرار المبني على البيانات للمديرين"),
@@ -106,6 +109,7 @@ export const solutions: Solution[] = [
     category: "AI",
     name: "TeamMonitor",
     featured: true,
+    seoTitle: l("TeamMonitor — AI Workforce Tracking for Events", "TeamMonitor — تتبّع ذكي للفرق في الفعاليات"),
     tagline: l("AI workforce tracking for large events and venues", "تتبّع ذكي للفرق الميدانية في الفعاليات والملاعب الكبرى"),
     overview: l(
       "TeamMonitor tracks and coordinates field and stadium teams in real time. IoT sensors, Bluetooth and iBeacon proximity automate presence and location, so supervisors see who is where without manual check-ins.",
@@ -123,7 +127,7 @@ export const solutions: Solution[] = [
     stack: ["IoT", "Bluetooth Low Energy", "iBeacon", "AI analytics", "Mobile apps"],
     industries: ["sports-stadiums", "religious-tourism-events"],
     services: ["iot-connected-systems", "mobile-apps", "ai-agents-llm"],
-    image: "/images/qatar-world-cup.jpg",
+    image: "/images/qatar-world-cup.webp",
     caseStudy: {
       challenge: l(
         "During the FIFA World Cup Qatar 2022, field and stadium teams were spread across several venues. Supervisors needed to know where each team was and whether every zone was covered, without relying on manual check-ins.",
@@ -144,6 +148,7 @@ export const solutions: Solution[] = [
     category: "IoT",
     name: "Smart BLE Nusuk Card",
     featured: true,
+    seoTitle: l("Nusuk Card — Hajj & Umrah Crowd Intelligence", "بطاقة نسك — ذكاء الحشود في الحج والعمرة"),
     tagline: l("Smart BLE card for Hajj and Umrah crowd management", "بطاقة نسك الذكية بتقنية BLE لإدارة الحشود في الحج والعمرة"),
     overview: l(
       "A smart Bluetooth Low Energy card and crowd-intelligence platform that helps authorities and service providers manage pilgrim crowds during Hajj and Umrah. Low-energy signals and location data — rather than camera-heavy AI — power movement prediction, congestion forecasting and smart routing. Registered as intellectual property in the Kingdom of Saudi Arabia (deposit no. 1607864).",
@@ -167,7 +172,7 @@ export const solutions: Solution[] = [
     stack: ["Bluetooth Low Energy", "IoT gateways", "Mobile apps", "Dashboards"],
     industries: ["religious-tourism-events", "public-sector"],
     services: ["iot-connected-systems", "mobile-apps"],
-    image: "/images/nusuk-card.jpg",
+    image: "/images/nusuk-card.webp",
     caseStudy: {
       challenge: l(
         "Hajj and Umrah bring millions of pilgrims to the same sites within a short period. Organisers need reliable, low-friction ways to understand crowd movement and support pilgrims on the ground.",
@@ -186,6 +191,7 @@ export const solutions: Solution[] = [
     slug: "iot-cold-chain",
     category: "IoT",
     name: "Refrigerator IoT Monitoring",
+    seoTitle: l("Refrigerator IoT Cold-Chain Monitoring", "مراقبة سلسلة التبريد بإنترنت الأشياء"),
     tagline: l("Remote cold-chain and temperature monitoring", "مراقبة سلسلة التبريد ودرجات الحرارة عن بُعد"),
     overview: l(
       "Connected sensors monitor refrigerators and cold rooms around the clock. Temperatures stream to a central dashboard, and staff are alerted the moment a unit drifts out of range.",
@@ -207,6 +213,7 @@ export const solutions: Solution[] = [
     category: "Platform",
     name: "Lamana",
     featured: true,
+    seoTitle: l("Lamana — France–Algeria Parcel Delivery", "لامانة — توصيل الطرود بين فرنسا والجزائر"),
     tagline: l("Cross-border parcel delivery for the France–Algeria corridor", "توصيل الطرود عبر الحدود بين فرنسا والجزائر"),
     overview: l(
       "Lamana is a logistics platform built for the diaspora, making it simple to send parcels between France and Algeria — from booking to hand-over and tracking.",
@@ -226,6 +233,7 @@ export const solutions: Solution[] = [
     slug: "datacenter-power-monitoring",
     category: "IoT",
     name: "Datacenter Power & Environment Monitoring",
+    seoTitle: l("AI Data Centre Power & Environment Monitoring", "مراقبة الطاقة والبيئة في مراكز البيانات بالذكاء الاصطناعي"),
     tagline: l(
       "Real-time power and environment monitoring for datacenters, with AI-driven root cause detection",
       "مراقبة لحظية للطاقة والبيئة في مراكز البيانات مع كشف السبب الجذري بالذكاء الاصطناعي",
@@ -257,6 +265,7 @@ export const solutions: Solution[] = [
     slug: "telecom-power-monitoring",
     category: "IoT",
     name: "Telecom Power Systems Monitoring",
+    seoTitle: l("Telecom Site Power Monitoring with AI", "مراقبة طاقة مواقع الاتصالات بالذكاء الاصطناعي"),
     tagline: l(
       "Real-time monitoring of telecom-site power, with AI-driven root cause detection",
       "مراقبة لحظية لأنظمة الطاقة في مواقع الاتصالات مع كشف السبب الجذري بالذكاء الاصطناعي",

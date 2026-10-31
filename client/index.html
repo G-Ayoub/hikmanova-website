@@ -3,6 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Apply saved theme and language before first paint (the HTML is pre-rendered in light English).
+      (function () {
+        var d = document.documentElement, t = null, l = null;
+        try { t = localStorage.getItem("theme"); l = localStorage.getItem("language"); } catch (e) {}
+        if (t === "dark") d.classList.add("dark");
+        if (!l) l = (navigator.language || "en").slice(0, 2) === "ar" ? "ar" : "en";
+        if (l === "ar") { d.lang = "ar"; d.dir = "rtl"; d.classList.add("hn-wait"); }
+      })();
+    </script>
     <title>HikmaNova — AI & IoT Solutions for North Africa and the Gulf</title>
     <meta name="description" content="HikmaNova builds AI agents, IoT systems and sovereign enterprise platforms for organisations across North Africa and the Gulf." />
     <meta name="author" content="HikmaNova" />

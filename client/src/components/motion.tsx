@@ -1,6 +1,7 @@
 import { motion, type Transition } from "framer-motion";
 import { useId } from "react";
 import { cn } from "@/lib/utils";
+import { mountingOverPrerender } from "@/lib/prerender";
 
 /**
  * Springs, in Apple's terms: damping ratio 1.0 (bounce 0) = critically damped, no overshoot.
@@ -32,7 +33,7 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
+      initial={mountingOverPrerender ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -8% 0px" }}
       transition={{ ...spring.ui, visualDuration: 0.6, delay }}

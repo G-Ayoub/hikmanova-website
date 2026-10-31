@@ -1,12 +1,14 @@
 /**
  * Runs after `vite build`. Using the same route and content lists the app renders from, it:
  * - writes <route>/index.html for every page with that page's own title, description, canonical URL,
- *   Open Graph / Twitter tags and JSON-LD, so crawlers and link previews (WhatsApp, LinkedIn, X) see
- *   the right page without running JavaScript, and GitHub Pages answers deep links with HTTP 200;
+ *   Open Graph / Twitter tags and JSON-LD, plus the page content pre-rendered by dist/server
+ *   (client/src/entry-server.tsx), so crawlers and link previews (WhatsApp, LinkedIn, X) see the full
+ *   page without running JavaScript, and GitHub Pages answers deep links with HTTP 200;
  * - writes 404.html (noindex) for unknown URLs;
  * - writes sitemap.xml and robots.txt.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 import path from "node:path";
 import { allPaths, HOME_TITLE, pageMeta, type PageMeta } from "../client/src/data/routes";
 import { SITE_NAME, SITE_URL } from "../client/src/const";
@@ -17,7 +19,8 @@ const template = readFileSync(path.join(outDir, "index.html"), "utf8");
 
 const escapeAttr = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const escapeText = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const urlFor = (p: string) => SITE_URL + (p === "/" ? "/" : p);
+/** Public URL of a page. GitHub Pages serves <route>/index.html at "<route>/" (it redirects the bare path there). */
+const urlFor = (p: string) => SITE_URL + (p === "/" ? "/" : `${p}/`);
 /** Meta descriptions are cut around 160 characters by search engines. */
 const clip = (s: string, max = 160) => (s.length <= max ? s : s.slice(0, s.lastIndexOf(" ", max - 1)) + "…");
 
@@ -42,7 +45,7 @@ function jsonLd(route: string, meta: PageMeta, title: string, description: strin
   } else if (meta.kind === "service") {
     items.push({ "@context": "https://schema.org", "@type": "Service", name: meta.title.en, description, url, image, provider: publisher, areaServed: ["DZ", "SA", "QA", "FR"] });
   } else if (meta.kind === "solution") {
-    items.push({ "@context": "https://schema.org", "@type": "SoftwareApplication", name: title.split(" — ")[0], description, url, image, applicationCategory: "BusinessApplication", publisher });
+    items.push({ "@context": "https://schema.org", "@type": "SoftwareApplication", name: meta.name ?? title, description, url, image, applicationCategory: "BusinessApplication", publisher });
   }
   if (meta.parent) {
     items.push({
@@ -57,7 +60,7 @@ function jsonLd(route: string, meta: PageMeta, title: string, description: strin
   return items;
 }
 
-function renderHead(route: string): string {
+function renderHead(route: string, body: string): string {
   const meta = pageMeta(route);
   if (!meta) throw new Error(`No page meta for ${route}`);
   const title = meta.title.en ? `${meta.title.en} | ${SITE_NAME}` : HOME_TITLE.en;
@@ -81,15 +84,20 @@ function renderHead(route: string): string {
     .map((o) => `    <script type="application/ld+json">${JSON.stringify(o).replace(/</g, "\\u003c")}</script>`)
     .join("\n");
   if (ld) html = html.replace("</head>", `${ld}\n  </head>`);
+  html = setTag(html, /<div id="root"><\/div>/, `<div id="root">${body}</div>`);
   return html;
 }
 
-function main() {
+async function main() {
+  const serverEntry = path.resolve(import.meta.dirname, "..", "dist", "server", "entry-server.js");
+  const { render } = (await import(pathToFileURL(serverEntry).href)) as { render: (p: string) => Promise<string> };
   const paths = allPaths();
   for (const route of paths) {
+    const body = await render(route);
+    if (!body.includes("<h1")) throw new Error(`Pre-rendered ${route} has no <h1>; check the route renders`);
     const dir = route === "/" ? outDir : path.join(outDir, route);
     mkdirSync(dir, { recursive: true });
-    writeFileSync(path.join(dir, "index.html"), renderHead(route));
+    writeFileSync(path.join(dir, "index.html"), renderHead(route, body));
   }
   writeFileSync(
     path.join(outDir, "404.html"),
@@ -105,7 +113,10 @@ function main() {
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
   );
   writeFileSync(path.join(outDir, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
-  console.log(`wrote ${paths.length} pages with per-page meta; sitemap.xml: ${paths.length - 1} URLs`);
+  console.log(`pre-rendered ${paths.length} pages with per-page meta; sitemap.xml: ${paths.length - 1} URLs`);
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

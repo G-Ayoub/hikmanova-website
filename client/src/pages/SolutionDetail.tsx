@@ -15,7 +15,7 @@ export default function SolutionDetail() {
   const { slug = "" } = useParams<{ slug: string }>();
   const solution = getSolution(slug);
   const { t } = useI18n();
-  usePageMeta(solution ? `${solution.name} — ${t(solution.tagline)}` : t(ui.solution.notFound), solution && t(solution.overview));
+  usePageMeta(solution ? t(solution.seoTitle) : t(ui.solution.notFound), solution && t(solution.overview));
 
   if (!solution) return <NotFound />;
 

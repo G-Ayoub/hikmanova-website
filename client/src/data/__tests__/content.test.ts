@@ -6,7 +6,7 @@ import { industries } from "../industries";
 import { posts } from "../posts";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { allPaths, pageMeta, staticRoutes } from "../routes";
+import { allPaths, HOME_TITLE, pageMeta, staticRoutes } from "../routes";
 
 /** Recursively collect every Localized value in an object. */
 function localizedValues(value: unknown, out: Localized[] = []): Localized[] {
@@ -85,6 +85,15 @@ describe("content data", () => {
       expect(meta!.description.en.trim(), route).not.toBe("");
       expect(meta!.description.ar.trim(), route).not.toBe("");
       expect(existsSync(path.join(publicDir, meta!.image)), `${route}: missing ${meta!.image}`).toBe(true);
+    }
+  });
+
+  it("search titles fit in 60 characters and descriptions have at least 70", () => {
+    for (const route of allPaths()) {
+      const meta = pageMeta(route)!;
+      const title = meta.title.en ? `${meta.title.en} | HikmaNova` : HOME_TITLE.en;
+      expect(title.length, `${route}: "${title}"`).toBeLessThanOrEqual(60);
+      expect(meta.description.en.length, `${route}: description too short`).toBeGreaterThanOrEqual(70);
     }
   });
 });

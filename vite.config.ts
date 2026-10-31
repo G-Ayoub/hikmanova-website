@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 
 const plugins = [react(), tailwindcss()];
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   // Served from https://g-ayoub.github.io/hikmanova-website/
   base: '/hikmanova-website/',
   plugins,
@@ -19,6 +19,17 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // The build-time renderer (dist/server) needs no copy of client/public.
+    copyPublicDir: !isSsrBuild,
+    rollupOptions: isSsrBuild ? {} : {
+      output: {
+        // Libraries change rarely: separate files stay cached across site updates.
+        manualChunks: {
+          react: ["react", "react-dom", "wouter"],
+          motion: ["framer-motion"],
+        },
+      },
+    },
   },
   server: {
     port: 3000,
@@ -29,4 +40,4 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
-});
+}));

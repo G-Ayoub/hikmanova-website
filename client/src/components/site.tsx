@@ -9,6 +9,7 @@ import type { Solution } from "@/data/solutions";
 import type { ServiceIcon } from "@/data/services";
 import type { IndustryIcon } from "@/data/industries";
 import { asset } from "@/lib/asset";
+import { Reveal } from "@/components/motion";
 
 export const serviceIcons: Record<ServiceIcon, LucideIcon> = {
   brain: Brain,
@@ -42,23 +43,23 @@ export function BackArrow({ className = "w-4 h-4" }: { className?: string }) {
 
 export function PageHero({ title, subtitle, eyebrow }: { title: string; subtitle?: string; eyebrow?: string }) {
   return (
-    <section className="signal-hero">
-      <div className="container py-16 md:py-24">
-        <div className="max-w-3xl">
+    <section className="hero">
+      <div className="container pt-16 pb-14 md:pt-28 md:pb-20">
+        <Reveal className="max-w-3xl">
           {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-[1.05]">{title}</h1>
-          {subtitle && <p className="text-lg md:text-xl leading-relaxed text-[var(--on-navy-muted)]">{subtitle}</p>}
-        </div>
+          <h1 className="text-[2.75rem] md:text-[4.5rem] font-serif font-semibold mb-5">{title}</h1>
+          {subtitle && <p className="text-xl md:text-[1.5rem] md:leading-[1.4] tracking-[-0.012em] text-muted-foreground">{subtitle}</p>}
+        </Reveal>
       </div>
     </section>
   );
 }
 
-/** Pill with a teal dot, used above headings on navy sections. */
+/** Accent label above a hero headline. */
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.08] px-3.5 py-2 text-sm font-medium text-[var(--on-navy-muted)]">
-      <span className="h-2 w-2 rounded-full bg-[var(--teal)]" aria-hidden />
+    <p className="eyebrow mb-4 inline-flex items-center gap-2">
+      <span className="h-1.5 w-1.5 rounded-full bg-teal" aria-hidden />
       {children}
     </p>
   );
@@ -70,16 +71,16 @@ export function Chip({ children, tone = "blue" }: { children: React.ReactNode; t
     blue: "bg-secondary text-secondary-foreground",
     teal: "bg-accent text-accent-foreground",
   };
-  return <span className={`inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${tones[tone]}`}>{children}</span>;
+  return <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${tones[tone]}`}>{children}</span>;
 }
 
 export function SectionHeading({ title, subtitle, eyebrow, center = false }: { title: string; subtitle?: string; eyebrow?: string; center?: boolean }) {
   return (
-    <div className={`mb-10 ${center ? "text-center" : ""}`}>
-      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-      <h2 className={`text-3xl md:text-[2.75rem] md:leading-[1.1] font-serif font-bold ${subtitle ? "mb-4" : ""} ${center ? "" : "max-w-[18em]"}`}>{title}</h2>
-      {subtitle && <p className={`text-lg text-muted-foreground max-w-2xl ${center ? "mx-auto" : ""}`}>{subtitle}</p>}
-    </div>
+    <Reveal className={`mb-10 md:mb-14 ${center ? "text-center" : ""}`}>
+      {eyebrow && <p className="eyebrow mb-2">{eyebrow}</p>}
+      <h2 className={`text-[2rem] md:text-[3rem] font-serif font-semibold ${subtitle ? "mb-4" : ""} ${center ? "mx-auto max-w-[20em]" : "max-w-[18em]"}`}>{title}</h2>
+      {subtitle && <p className={`text-lg md:text-xl text-muted-foreground max-w-2xl ${center ? "mx-auto" : ""}`}>{subtitle}</p>}
+    </Reveal>
   );
 }
 
@@ -87,8 +88,8 @@ export function SectionHeading({ title, subtitle, eyebrow, center = false }: { t
 export function ComingSoon({ title, note }: { title?: string; note?: string }) {
   const { t } = useI18n();
   return (
-    <div className="rounded-lg border-2 border-dashed border-border bg-card/60 p-8 text-center">
-      <Clock className="w-8 h-8 mx-auto mb-3 text-muted-foreground" aria-hidden />
+    <div className="rounded-lg border border-dashed border-input bg-card/60 p-8 text-center">
+      <Clock className="w-7 h-7 mx-auto mb-3 text-muted-foreground" strokeWidth={1.75} aria-hidden />
       <p className="font-semibold mb-1">{title ?? t(ui.comingSoon)}</p>
       <p className="text-sm text-muted-foreground">{note ?? t(ui.comingSoonNote)}</p>
     </div>
@@ -100,18 +101,18 @@ export function SolutionCard({ solution }: { solution: Solution }) {
   return (
     <Link
       href={`/solutions/${solution.slug}`}
-      className="group card-hover rounded-lg overflow-hidden bg-card border border-border h-full flex flex-col"
+      className="group card-hover rounded-xl overflow-hidden bg-card h-full flex flex-col shadow-[0_0_0_1px_var(--hairline)]"
     >
-      <div className="overflow-hidden aspect-video bg-[#F4F7FF]">
+      <div className="overflow-hidden aspect-video bg-muted">
         <img
           src={asset(solution.image)}
           alt=""
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+          className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
         />
       </div>
-      <div className="p-6 flex-1 flex flex-col gap-2.5">
-        <div className="flex flex-wrap gap-2">
+      <div className="p-6 md:p-7 flex-1 flex flex-col gap-2">
+        <div className="flex flex-wrap gap-1.5">
           <Chip>{t(ui.categories[solution.category])}</Chip>
           {solution.caseStudy && (
             <Chip tone="teal">
@@ -120,10 +121,10 @@ export function SolutionCard({ solution }: { solution: Solution }) {
             </Chip>
           )}
         </div>
-        <h3 className="mt-1 font-serif text-2xl font-bold group-hover:text-primary transition-colors">{solution.name}</h3>
+        <h3 className="mt-2 font-serif text-[1.5rem] font-semibold">{solution.name}</h3>
         <p className="text-muted-foreground flex-1">{t(solution.tagline)}</p>
-        <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-primary">
-          {t(ui.learnMore)} <ForwardArrow />
+        <span className="mt-3 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-primary">
+          {t(ui.learnMore)} <ForwardArrow className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
         </span>
       </div>
     </Link>
@@ -132,9 +133,9 @@ export function SolutionCard({ solution }: { solution: Solution }) {
 
 export function TagList({ items }: { items: string[] }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5">
       {items.map((item) => (
-        <span key={item} className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm" dir="ltr">
+        <span key={item} className="px-3 py-1 rounded-full bg-muted text-foreground/80 text-sm" dir="ltr">
           {item}
         </span>
       ))}
@@ -142,20 +143,27 @@ export function TagList({ items }: { items: string[] }) {
   );
 }
 
+/** Closing call to action: a dark showcase tile, centered, one clear action. */
 export function CTA({ title, subtitle }: { title: Localized; subtitle: Localized }) {
   const { t } = useI18n();
   return (
-    <section className="signal-hero">
-      <div className="container py-16 md:py-24 flex flex-col md:flex-row md:items-center justify-between gap-8">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-[2.75rem] md:leading-[1.1] font-serif font-bold mb-4">{t(title)}</h2>
-          <p className="text-lg leading-relaxed text-[var(--on-navy-muted)]">{t(subtitle)}</p>
-        </div>
-        <Button asChild size="lg" className="h-14 px-7 gap-2.5 bg-white text-[var(--navy)] hover:bg-white/90 font-bold text-base shrink-0">
-          <Link href="/contact">
-            {t(ui.bookWorkshop)} <ForwardArrow />
-          </Link>
-        </Button>
+    <section className="py-12 md:py-20">
+      <div className="container">
+        <Reveal className="relative overflow-hidden rounded-2xl bg-tile text-on-tile px-6 py-16 md:px-16 md:py-24 text-center dark:shadow-[inset_0_0_0_1px_var(--hairline)]">
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_50%_120%,color-mix(in_oklab,var(--primary)_45%,transparent),transparent_70%)]"
+            aria-hidden
+          />
+          <div className="relative mx-auto max-w-2xl">
+            <h2 className="text-[2rem] md:text-[3rem] font-serif font-semibold mb-4">{t(title)}</h2>
+            <p className="text-lg md:text-xl text-on-tile-muted mb-9">{t(subtitle)}</p>
+            <Button asChild size="lg" className="gap-2">
+              <Link href="/contact">
+                {t(ui.bookWorkshop)} <ForwardArrow />
+              </Link>
+            </Button>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

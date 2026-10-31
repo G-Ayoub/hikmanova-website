@@ -41,9 +41,9 @@ export default function Careers() {
           <SectionHeading title={t(copy.cultureTitle)} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {copy.culture.map(({ icon: Icon, title, text }) => (
-              <div key={title.en} className="p-6 rounded-lg border border-border bg-card">
+              <div key={title.en} className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
                 <Icon className="w-8 h-8 text-primary mb-3" aria-hidden />
-                <h3 className="font-serif font-bold mb-2">{t(title)}</h3>
+                <h3 className="font-serif font-semibold mb-2">{t(title)}</h3>
                 <p className="text-sm text-muted-foreground">{t(text)}</p>
               </div>
             ))}
@@ -57,9 +57,9 @@ export default function Careers() {
           {company.openRoles.length > 0 ? (
             <ul className="space-y-4">
               {company.openRoles.map((role) => (
-                <li key={role.title.en} className="p-6 rounded-lg border border-border bg-background flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <li key={role.title.en} className="p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <h3 className="font-serif font-bold">{t(role.title)}</h3>
+                    <h3 className="font-serif font-semibold">{t(role.title)}</h3>
                     <p className="text-sm text-muted-foreground">{t(role.location)} · {t(role.type)}</p>
                   </div>
                   <Button asChild>

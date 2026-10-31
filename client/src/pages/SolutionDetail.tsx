@@ -25,9 +25,9 @@ export default function SolutionDetail() {
 
   return (
     <Layout>
-      <section className="signal-hero">
+      <section className="hero">
         <div className="container py-12 md:py-16">
-          <Link href="/solutions" className="inline-flex items-center gap-2 text-sm text-[var(--on-navy-muted)] hover:text-white mb-6">
+          <Link href="/solutions" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6">
             <BackArrow /> {t(ui.nav.solutions)}
           </Link>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -42,16 +42,16 @@ export default function SolutionDetail() {
                   </span>
                 )}
               </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold leading-[1.05] mb-4">{solution.name}</h1>
-              <p className="text-xl text-[var(--on-navy-muted)] mb-6">{t(solution.tagline)}</p>
+              <h1 className="text-[2.75rem] md:text-[4.25rem] font-serif font-semibold mb-4">{solution.name}</h1>
+              <p className="text-xl text-muted-foreground mb-6">{t(solution.tagline)}</p>
               {solution.client && (
                 <p className="text-sm">
-                  <span className="text-[var(--on-navy-muted)]">{t(ui.solution.client)}: </span>
+                  <span className="text-muted-foreground">{t(ui.solution.client)}: </span>
                   <strong>{t(solution.client)}</strong>
                 </p>
               )}
             </div>
-            <img src={asset(solution.image)} alt="" className="w-full rounded-2xl border border-white/10 aspect-video object-cover bg-[#F4F7FF] shadow-[0_30px_60px_rgba(0,0,0,0.35)]" />
+            <img src={asset(solution.image)} alt="" className="w-full rounded-xl aspect-video object-cover bg-card surface-shadow ring-1 ring-[var(--hairline)]" />
           </div>
         </div>
       </section>
@@ -60,21 +60,21 @@ export default function SolutionDetail() {
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.overview)}</h2>
+              <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.overview)}</h2>
               <p className="text-lg leading-relaxed text-muted-foreground">{t(solution.overview)}</p>
             </div>
 
             {solution.monitors && (
               <div>
-                <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.monitors)}</h2>
+                <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.monitors)}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {solution.monitors.map((m) => (
-                    <div key={m.group.en} className="p-5 rounded-lg border border-border bg-card">
-                      <h3 className="font-serif font-bold mb-3 text-primary">{t(m.group)}</h3>
+                    <div key={m.group.en} className="p-5 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+                      <h3 className="font-serif font-semibold mb-3 text-primary">{t(m.group)}</h3>
                       <ul className="space-y-1.5 text-sm">
                         {m.items.map((item) => (
                           <li key={item.en} className="flex gap-2">
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--teal)] shrink-0" aria-hidden />
+                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal shrink-0" aria-hidden />
                             <span>{t(item)}</span>
                           </li>
                         ))}
@@ -86,7 +86,7 @@ export default function SolutionDetail() {
             )}
 
             <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.features)}</h2>
+              <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.features)}</h2>
               <ul className="space-y-3">
                 {solution.features.map((f) => (
                   <li key={f.en} className="flex gap-3">
@@ -99,11 +99,11 @@ export default function SolutionDetail() {
 
             {solution.benefits && (
               <div>
-                <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.benefits)}</h2>
+                <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.benefits)}</h2>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {solution.benefits.map((b) => (
-                    <li key={b.en} className="flex gap-3 p-4 rounded-lg bg-accent/60 border border-border">
-                      <CheckCircle2 className="w-5 h-5 text-[var(--teal)] shrink-0 mt-0.5" aria-hidden />
+                    <li key={b.en} className="flex gap-3 p-4 rounded-xl bg-accent/60">
+                      <CheckCircle2 className="w-5 h-5 text-teal shrink-0 mt-0.5" aria-hidden />
                       <span>{t(b)}</span>
                     </li>
                   ))}
@@ -114,18 +114,18 @@ export default function SolutionDetail() {
             {cs && (
               <div id="case-study" className="space-y-8 scroll-mt-24">
                 <div>
-                  <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.challenge)}</h2>
+                  <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.challenge)}</h2>
                   <p className="leading-relaxed text-muted-foreground">{t(cs.challenge)}</p>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.solution)}</h2>
+                  <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.solution)}</h2>
                   <p className="leading-relaxed text-muted-foreground">{t(cs.solution)}</p>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-serif font-bold mb-4">{t(ui.solution.results)}</h2>
+                  <h2 className="text-2xl font-serif font-semibold mb-4">{t(ui.solution.results)}</h2>
                   <ul className="space-y-3 mb-6">
                     {cs.results.map((r) => (
-                      <li key={r.en} className="flex gap-3 p-4 rounded-lg bg-card border border-border">
+                      <li key={r.en} className="flex gap-3 p-4 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
                         <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" aria-hidden />
                         <span>{t(r)}</span>
                       </li>
@@ -138,12 +138,12 @@ export default function SolutionDetail() {
           </div>
 
           <aside className="space-y-8">
-            <div className="p-6 rounded-lg border border-border bg-card">
-              <h2 className="font-serif font-bold mb-4">{t(ui.solution.stack)}</h2>
+            <div className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+              <h2 className="font-serif font-semibold mb-4">{t(ui.solution.stack)}</h2>
               <TagList items={solution.stack} />
             </div>
-            <div className="p-6 rounded-lg border border-border bg-card">
-              <h2 className="font-serif font-bold mb-4">{t(ui.solution.industries)}</h2>
+            <div className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+              <h2 className="font-serif font-semibold mb-4">{t(ui.solution.industries)}</h2>
               <ul className="space-y-2 text-sm">
                 {solutionIndustries.map((i) => (
                   <li key={i.slug}>
@@ -168,9 +168,9 @@ export default function SolutionDetail() {
             {relatedServices.map((s) => {
               const Icon = serviceIcons[s.icon];
               return (
-                <Link key={s.slug} href={`/services/${s.slug}`} className="group p-6 rounded-lg border border-border bg-background hover:border-primary transition-colors">
+                <Link key={s.slug} href={`/services/${s.slug}`} className="group p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)] hover:ring-primary transition-colors">
                   <Icon className="w-7 h-7 text-primary mb-3" aria-hidden />
-                  <h3 className="font-serif font-bold mb-2 group-hover:text-primary">{t(s.name)}</h3>
+                  <h3 className="font-serif font-semibold mb-2 group-hover:text-primary">{t(s.name)}</h3>
                   <p className="text-sm text-muted-foreground">{t(s.summary)}</p>
                 </Link>
               );

@@ -22,7 +22,7 @@ export default function LegalPage({ title, updated, sections }: { title: Localiz
         <div className="container max-w-3xl space-y-10">
           {sections.map((s, i) => (
             <div key={s.heading.en}>
-              <h2 className="text-2xl font-serif font-bold mb-4">
+              <h2 className="text-2xl font-serif font-semibold mb-4">
                 {i + 1}. {t(s.heading)}
               </h2>
               {s.paragraphs?.map((p) => (

@@ -29,7 +29,7 @@ export default function BlogPost() {
             <BackArrow /> {t(ui.blog.backToInsights)}
           </Link>
           <p className="text-sm font-semibold text-primary mb-3">{t(post.category)}</p>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6 leading-tight">{t(post.title)}</h1>
+          <h1 className="text-4xl md:text-5xl font-serif font-semibold mb-6 leading-tight">{t(post.title)}</h1>
           <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-1"><User className="w-4 h-4" aria-hidden /> {post.author}</span>
             <span className="flex items-center gap-1"><Calendar className="w-4 h-4" aria-hidden /> {formatDate(post.date, language)}</span>
@@ -38,7 +38,7 @@ export default function BlogPost() {
         </header>
 
         <div className="container max-w-4xl mb-10">
-          <img src={asset(post.image)} alt="" className="w-full rounded-lg border border-border aspect-[2/1] object-cover" />
+          <img src={asset(post.image)} alt="" className="w-full rounded-xl ring-1 ring-[var(--hairline)] aspect-[2/1] object-cover" />
         </div>
 
         <div className="container max-w-3xl pb-16">
@@ -56,12 +56,12 @@ export default function BlogPost() {
 
       <section className="py-12 bg-card">
         <div className="container">
-          <h2 className="text-2xl font-serif font-bold mb-6">{t(ui.blog.more)}</h2>
+          <h2 className="text-2xl font-serif font-semibold mb-6">{t(ui.blog.more)}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {more.map((p) => (
-              <Link key={p.slug} href={`/blog/${p.slug}`} className="group p-6 rounded-lg border border-border bg-background hover:border-primary">
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="group p-6 rounded-xl bg-background ring-1 ring-[var(--hairline)] hover:ring-primary">
                 <p className="text-xs font-semibold text-primary mb-2">{t(p.category)}</p>
-                <h3 className="font-serif font-bold group-hover:text-primary">{t(p.title)}</h3>
+                <h3 className="font-serif font-semibold group-hover:text-primary">{t(p.title)}</h3>
               </Link>
             ))}
           </div>

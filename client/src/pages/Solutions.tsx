@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
+import { Segmented, spring } from "@/components/motion";
 import { CTA, defaultCta, PageHero, SolutionCard } from "@/components/site";
 import { ui, useI18n } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -27,25 +28,30 @@ export default function Solutions() {
 
       <section className="py-16 md:py-24">
         <div className="container">
-          <div className="flex flex-wrap gap-2 justify-center mb-10" role="group" aria-label={t(ui.nav.solutions)}>
-            {filters.map((f) => (
-              <Button
-                key={f}
-                variant={filter === f ? "default" : "outline"}
-                size="sm"
-                onClick={() => setFilter(f)}
-                aria-pressed={filter === f}
-                className="rounded-full"
-              >
-                {t(ui.categories[f])}
-              </Button>
-            ))}
+          <div className="flex justify-center mb-10 md:mb-14">
+            <Segmented
+              label={t(ui.nav.solutions)}
+              value={filter}
+              onChange={setFilter}
+              options={filters.map((f) => ({ value: f, label: t(ui.categories[f]) }))}
+            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {shown.map((s) => (
-              <SolutionCard key={s.slug} solution={s} />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <AnimatePresence initial={false} mode="popLayout">
+              {shown.map((s) => (
+                <motion.div
+                  key={s.slug}
+                  layout
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={spring.ui}
+                >
+                  <SolutionCard solution={s} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </section>

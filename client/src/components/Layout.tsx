@@ -1,12 +1,14 @@
 import { Link, useLocation } from "wouter";
 import { useEffect, useState } from "react";
-import { Moon, Sun, Menu, X, Mail, MapPin, Linkedin } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Moon, Sun, Mail, MapPin, Linkedin } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { LANGUAGES, useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { ui, useI18n } from "@/lib/i18n";
 import { company } from "@/data/company";
 import { asset } from "@/lib/asset";
+import { Segmented, spring } from "@/components/motion";
 
 const mainNav = [
   { label: ui.nav.solutions, href: "/solutions" },
@@ -55,6 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { t } = useI18n();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const scrolled = useScrolled();
 
   // Close the mobile menu on navigation; scroll to the #anchor if any, else to the top.
   useEffect(() => {
@@ -64,6 +67,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     else window.scrollTo(0, 0);
   }, [location]);
 
+  // While the mobile menu is open: Escape closes it and the page underneath does not scroll.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMobileMenuOpen(false);
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = overflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobileMenuOpen]);
+
   const isActive = (href: string) => location === href || location.startsWith(href + "/");
 
   return (
@@ -72,47 +88,48 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         Skip to content
       </a>
 
-      <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-        <div className="container flex items-center justify-between gap-4 py-3">
-          <Link href="/" className="flex items-center gap-2.5 font-serif text-[1.375rem] font-bold hover:opacity-80 transition-opacity shrink-0">
-            <img src={asset("/hikmanova-logo.png")} alt="" className="w-10 h-10 object-contain" />
+      {/* Translucent bar: content scrolls underneath. The hairline appears only once content meets it. */}
+      <header
+        className={`material sticky top-0 z-50 transition-[box-shadow] duration-300 ${
+          scrolled || mobileMenuOpen ? "shadow-[0_1px_0_var(--hairline)]" : "shadow-[0_1px_0_transparent]"
+        }`}
+        style={mobileMenuOpen ? { backgroundColor: "var(--material-strong)" } : undefined}
+      >
+        <div className="container flex h-14 items-center justify-between gap-4">
+          <Link href="/" className="pressable flex items-center gap-2 font-serif text-[1.1875rem] font-semibold tracking-[-0.02em] shrink-0">
+            <img src={asset("/hikmanova-logo.png")} alt="" className="w-8 h-8 object-contain" />
             <span className="hidden sm:inline" dir="ltr">HikmaNova</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-7" aria-label="Main">
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
             {mainNav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[0.9375rem] font-medium transition-colors hover:text-primary ${isActive(link.href) ? "text-primary" : ""}`}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`pressable rounded-full px-3 py-1.5 text-sm transition-colors duration-200 ${
+                  isActive(link.href) ? "text-foreground font-medium" : "text-foreground/70 hover:text-foreground"
+                }`}
               >
                 {t(link.label)}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 bg-card rounded-full p-1 border border-border" role="group" aria-label="Language">
-              {LANGUAGES.map((lang) => (
-                <Button
-                  key={lang.code}
-                  variant={language === lang.code ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setLanguage(lang.code)}
-                  className="rounded-full text-xs font-medium px-3 h-7"
-                  title={lang.name}
-                  aria-pressed={language === lang.code}
-                >
-                  {lang.label}
-                </Button>
-              ))}
-            </div>
+          <div className="flex items-center gap-1.5">
+            <Segmented
+              size="sm"
+              label="Language"
+              value={language}
+              onChange={setLanguage}
+              options={LANGUAGES.map((lang) => ({ value: lang.code, label: lang.label, title: lang.name }))}
+            />
 
-            <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t(ui.nav.theme)} className="rounded-full">
-              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t(ui.nav.theme)} className="size-9">
+              {theme === "dark" ? <Sun className="w-[18px] h-[18px]" /> : <Moon className="w-[18px] h-[18px]" />}
             </Button>
 
-            <Button asChild className="hidden sm:inline-flex h-11 px-5 font-semibold">
+            <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-4">
               <Link href="/contact">{t(ui.contactUs)}</Link>
             </Button>
 
@@ -120,52 +137,82 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen((open) => !open)}
-              className="lg:hidden rounded-full"
+              className="lg:hidden size-9"
               aria-label={t(ui.nav.menu)}
               aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <MenuGlyph open={mobileMenuOpen} />
             </Button>
           </div>
         </div>
 
-        {mobileMenuOpen && (
-          <nav className="lg:hidden border-t border-border bg-card" aria-label="Mobile">
-            <div className="container py-4 flex flex-col">
-              {[...mainNav, { label: ui.nav.contact, href: "/contact" }].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-base font-medium py-3 border-b border-border last:border-0 hover:text-primary ${isActive(link.href) ? "text-primary" : ""}`}
-                >
-                  {t(link.label)}
-                </Link>
-              ))}
-            </div>
-          </nav>
-        )}
+        {/* Mobile menu grows down out of the bar and folds back up the same way. Interruptible: tapping
+            the toggle mid-animation reverses it from where it is. */}
+        <AnimatePresence initial={false}>
+          {mobileMenuOpen && (
+            <motion.nav
+              id="mobile-nav"
+              key="mobile-nav"
+              aria-label="Mobile"
+              className="lg:hidden overflow-hidden"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "calc(100dvh - 3.5rem)", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={spring.ui}
+            >
+              <motion.ul
+                className="container flex flex-col pt-4 pb-10"
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={{ open: { transition: { staggerChildren: 0.03, delayChildren: 0.05 } }, closed: {} }}
+              >
+                {[...mainNav, { label: ui.nav.contact, href: "/contact" }].map((link) => (
+                  <motion.li
+                    key={link.href}
+                    variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: -8 } }}
+                    transition={spring.snappy}
+                  >
+                    <Link
+                      href={link.href}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                      className={`pressable block py-2.5 font-serif text-[1.75rem] font-semibold tracking-[-0.02em] ${
+                        isActive(link.href) ? "text-primary" : ""
+                      }`}
+                    >
+                      {t(link.label)}
+                    </Link>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </header>
 
       <main id="main" className="flex-1">{children}</main>
 
-      <footer className="bg-[var(--navy-deep)] text-[#B9C6E4]">
-        <div className="container py-12">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
+      <footer className="border-t border-[var(--hairline)] text-[0.8125rem] leading-relaxed text-muted-foreground">
+        <div className="container pt-12 pb-10">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-x-8 gap-y-10 mb-10">
             <div className="col-span-2">
-              <p className="font-serif font-bold text-xl mb-3 text-white" dir="ltr">HikmaNova</p>
-              <p className="text-sm mb-4 max-w-xs">{t(ui.brandTagline)}</p>
-              <div className="space-y-2 text-sm">
-                <a href={`mailto:${company.email}`} className="flex items-center gap-2 hover:text-white">
-                  <Mail className="w-4 h-4" /> <span dir="ltr">{company.email}</span>
+              <p className="flex items-center gap-2 font-serif font-semibold text-[1.0625rem] tracking-[-0.015em] mb-2 text-foreground" dir="ltr">
+                <img src={asset("/hikmanova-logo.png")} alt="" className="w-6 h-6 object-contain" /> HikmaNova
+              </p>
+              <p className="mb-4 max-w-xs">{t(ui.brandTagline)}</p>
+              <div className="space-y-1.5">
+                <a href={`mailto:${company.email}`} className="pressable flex items-center gap-2 hover:text-foreground">
+                  <Mail className="w-3.5 h-3.5" /> <span dir="ltr">{company.email}</span>
                 </a>
                 {company.social.linkedin && (
-                  <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-                    <Linkedin className="w-4 h-4" /> LinkedIn
+                  <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="pressable flex items-center gap-2 hover:text-foreground">
+                    <Linkedin className="w-3.5 h-3.5" /> LinkedIn
                   </a>
                 )}
                 {company.offices.map((office) => (
                   <p key={office.city.en} className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4" /> {t(office.city)}, {t(office.country)}
+                    <MapPin className="w-3.5 h-3.5" /> {t(office.city)}, {t(office.country)}
                   </p>
                 ))}
               </div>
@@ -173,11 +220,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {footerColumns.map((column) => (
               <div key={column.title.en}>
-                <p className="font-serif font-bold mb-4 text-white">{t(column.title)}</p>
-                <ul className="space-y-2 text-sm">
+                <p className="font-semibold mb-3 text-foreground">{t(column.title)}</p>
+                <ul className="space-y-2">
                   {column.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="hover:text-white transition-colors">
+                      <Link href={link.href} className="pressable hover:text-foreground transition-colors">
                         {t(link.label)}
                       </Link>
                     </li>
@@ -187,7 +234,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </div>
 
-          <div className="border-t border-white/10 pt-8 text-center text-sm">
+          <div className="border-t border-[var(--hairline)] pt-6">
             <p>
               &copy; {new Date().getFullYear()} <span dir="ltr">HikmaNova</span>. {t(ui.footer.rights)}
             </p>
@@ -195,5 +242,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
     </div>
+  );
+}
+
+/** True once the page has scrolled under the header (drives the scroll-edge hairline). */
+function useScrolled(threshold = 4) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > threshold);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [threshold]);
+  return scrolled;
+}
+
+/** Two bars that rotate into an X: the icon morphs on the same spring as the menu instead of swapping. */
+function MenuGlyph({ open }: { open: boolean }) {
+  const bar = "absolute left-0 h-[1.5px] w-full rounded-full bg-current";
+  return (
+    <span className="relative block w-[18px] h-3" aria-hidden>
+      <motion.span className={bar} initial={false} animate={open ? { top: 5.25, rotate: 45 } : { top: 1.5, rotate: 0 }} transition={spring.snappy} />
+      <motion.span className={bar} initial={false} animate={open ? { top: 5.25, rotate: -45 } : { top: 9, rotate: 0 }} transition={spring.snappy} />
+    </span>
   );
 }

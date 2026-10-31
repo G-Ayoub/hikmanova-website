@@ -21,15 +21,15 @@ export default function ServiceDetail() {
 
   return (
     <Layout>
-      <section className="signal-hero">
+      <section className="hero">
         <div className="container py-12 md:py-16">
-          <Link href="/services" className="inline-flex items-center gap-2 text-sm text-[var(--on-navy-muted)] hover:text-white mb-6">
+          <Link href="/services" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6">
             <BackArrow /> {t(ui.nav.services)}
           </Link>
           <div className="max-w-3xl">
-            <Icon className="w-12 h-12 text-[var(--teal)] mb-4" aria-hidden />
-            <h1 className="text-4xl md:text-6xl font-serif font-bold leading-[1.05] mb-4">{t(service.name)}</h1>
-            <p className="text-xl text-[var(--on-navy-muted)]">{t(service.description)}</p>
+            <Icon className="w-12 h-12 text-teal mb-4" aria-hidden />
+            <h1 className="text-[2.75rem] md:text-[4.25rem] font-serif font-semibold mb-4">{t(service.name)}</h1>
+            <p className="text-xl text-muted-foreground">{t(service.description)}</p>
           </div>
         </div>
       </section>
@@ -37,10 +37,10 @@ export default function ServiceDetail() {
       <section className="py-12 md:py-16">
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
-            <h2 className="text-2xl font-serif font-bold mb-6">{t(ui.service.capabilities)}</h2>
+            <h2 className="text-2xl font-serif font-semibold mb-6">{t(ui.service.capabilities)}</h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {service.capabilities.map((c) => (
-                <li key={c.en} className="flex gap-3 p-4 rounded-lg border border-border bg-card">
+                <li key={c.en} className="flex gap-3 p-4 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
                   <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" aria-hidden />
                   <span>{t(c)}</span>
                 </li>
@@ -48,8 +48,8 @@ export default function ServiceDetail() {
             </ul>
           </div>
           <aside>
-            <div className="p-6 rounded-lg border border-border bg-card">
-              <h2 className="font-serif font-bold mb-4">{t(ui.service.technologies)}</h2>
+            <div className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)]">
+              <h2 className="font-serif font-semibold mb-4">{t(ui.service.technologies)}</h2>
               <TagList items={service.technologies} />
             </div>
           </aside>

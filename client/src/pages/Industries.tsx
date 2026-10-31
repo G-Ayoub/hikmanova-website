@@ -28,9 +28,9 @@ export default function Industries() {
             const sectorSolutions = solutions.filter((s) => s.industries.includes(industry.slug));
             const sectorServices = services.filter((s) => industry.services.includes(s.slug));
             return (
-              <article id={industry.slug} key={industry.slug} className="p-6 rounded-lg border border-border bg-card scroll-mt-24 flex flex-col">
+              <article id={industry.slug} key={industry.slug} className="p-6 rounded-xl bg-card ring-1 ring-[var(--hairline)] scroll-mt-24 flex flex-col">
                 <Icon className="w-10 h-10 text-primary mb-4" aria-hidden />
-                <h2 className="text-xl font-serif font-bold mb-2">{t(industry.name)}</h2>
+                <h2 className="text-xl font-serif font-semibold mb-2">{t(industry.name)}</h2>
                 <p className="text-muted-foreground mb-4 flex-1">{t(industry.description)}</p>
                 {sectorSolutions.length > 0 && (
                   <div className="mb-3">

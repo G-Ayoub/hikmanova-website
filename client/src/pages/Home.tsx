@@ -1,11 +1,14 @@
+import { useRef } from "react";
 import { Link } from "wouter";
-import { Cpu, Radio, ShieldCheck } from "lucide-react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ChevronRight, Cpu, Radio, ShieldCheck } from "lucide-react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { CTA, defaultCta, Eyebrow, ForwardArrow, industryIcons, SectionHeading, SolutionCard } from "@/components/site";
 import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { asset } from "@/lib/asset";
+import { Reveal } from "@/components/motion";
 import { solutions } from "@/data/solutions";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
@@ -47,129 +50,121 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="signal-hero">
-        <div className="container pt-16 md:pt-24 pb-14">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-14 items-center">
-            <div>
-              <Eyebrow>{t(copy.eyebrow)}</Eyebrow>
-              <h1 className="text-[2.5rem] md:text-6xl lg:text-[4rem] font-serif font-bold leading-[1.04] mb-6">{t(copy.title)}</h1>
-              <p className="text-lg md:text-xl leading-relaxed text-[var(--on-navy-muted)] mb-9 max-w-[34em]">{t(copy.subtitle)}</p>
-              <div className="flex flex-col sm:flex-row gap-3.5">
-                <Button asChild size="lg" className="h-[3.25rem] px-6 gap-2.5 text-base font-semibold">
-                  <Link href="/solutions">
-                    {t(copy.ctaPrimary)} <ForwardArrow />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="h-[3.25rem] px-6 text-base font-semibold bg-transparent text-white border-white/30 hover:bg-white/10 hover:text-white">
-                  <Link href="/contact">{t(ui.bookWorkshop)}</Link>
-                </Button>
-              </div>
+      <section className="hero overflow-hidden">
+        <div className="container pt-16 md:pt-28 pb-16 md:pb-24">
+          <Reveal className="mx-auto max-w-4xl text-center">
+            <Eyebrow>{t(copy.eyebrow)}</Eyebrow>
+            <h1 className="text-[2.75rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.25rem] font-serif font-semibold mb-6">{t(copy.title)}</h1>
+            <p className="mx-auto max-w-[36em] text-xl md:text-[1.375rem] md:leading-[1.45] tracking-[-0.012em] text-muted-foreground mb-10">{t(copy.subtitle)}</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <Button asChild size="lg" className="gap-2">
+                <Link href="/solutions">
+                  {t(copy.ctaPrimary)} <ForwardArrow />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/contact">{t(ui.bookWorkshop)}</Link>
+              </Button>
             </div>
+          </Reveal>
 
-            <div className="relative min-h-[280px] sm:min-h-[380px] lg:min-h-[420px]">
-              <img
-                src={asset("/images/iot-cold-chain.svg")}
-                alt={t(copy.heroArtIot)}
-                className="absolute top-0 end-0 w-[86%] rounded-2xl border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.35)]"
-              />
-              <img
-                src={asset("/images/lamana.svg")}
-                alt={t(copy.heroArtLamana)}
-                className="absolute bottom-0 start-0 w-[70%] rounded-2xl border-4 border-[var(--navy)] shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
-              />
-            </div>
-          </div>
+          <HeroStage iotAlt={t(copy.heroArtIot)} lamanaAlt={t(copy.heroArtLamana)} />
 
           {company.stats.length > 0 && (
-            <>
+            <Reveal>
               <h2 className="sr-only">{t(copy.numbersTitle)}</h2>
-              <dl className="mt-16 pt-9 border-t border-white/15 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+              <dl className="mx-auto mt-16 md:mt-24 max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 text-center">
                 {company.stats.map((stat) => (
-                  <div key={stat.label.en} className="flex flex-col-reverse justify-end gap-1.5">
-                    <dt className="text-[0.9375rem] text-[var(--on-navy-muted)]">{t(stat.label)}</dt>
-                    <dd className="font-serif text-4xl md:text-[2.75rem] font-bold">
+                  <div key={stat.label.en} className="flex flex-col-reverse justify-end gap-1">
+                    <dt className="text-[0.9375rem] text-muted-foreground">{t(stat.label)}</dt>
+                    <dd className="font-serif text-[2.5rem] md:text-[3.25rem] font-semibold tracking-[-0.03em] leading-none">
                       <span dir="ltr" className="inline-block">{stat.value}</span>
                     </dd>
                   </div>
                 ))}
               </dl>
-            </>
+            </Reveal>
           )}
         </div>
       </section>
 
       {/* Solutions */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-28">
         <div className="container">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 md:mb-14">
             <div className="[&>div]:mb-0">
               <SectionHeading eyebrow={t(ui.nav.solutions)} title={t(copy.solutionsTitle)} />
             </div>
-            <Link href="/solutions" className="inline-flex items-center gap-2 min-h-11 font-semibold text-primary hover:underline shrink-0">
-              {t(copy.viewAllSolutions)} <ForwardArrow />
+            <Link href="/solutions" className="pressable group inline-flex items-center gap-1.5 min-h-11 font-medium text-primary shrink-0">
+              {t(copy.viewAllSolutions)} <ForwardArrow className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
-            {topRow.map((s) => (
-              <div key={s.slug} className="md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-5">
+            {topRow.map((s, i) => (
+              <Reveal key={s.slug} className="md:col-span-2" delay={i * 0.06}>
                 <SolutionCard solution={s} />
-              </div>
+              </Reveal>
             ))}
-            {wideRow.map((s) => (
-              <div key={s.slug} className="md:col-span-3">
+            {wideRow.map((s, i) => (
+              <Reveal key={s.slug} className="md:col-span-3" delay={i * 0.06}>
                 <SolutionCard solution={s} />
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Services */}
-      <section className="py-16 md:py-24 bg-card border-y border-border">
+      {/* Services: an inset grouped list */}
+      <section className="py-16 md:py-28 bg-card">
         <div className="container">
           <SectionHeading eyebrow={t(ui.nav.services)} title={t(copy.servicesTitle)} />
-          <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-            {services.map((service, i) => (
-              <li key={service.slug}>
-                <Link href={`/services/${service.slug}`} className="group flex gap-5 py-6 border-t border-border">
-                  <span className="font-serif font-semibold text-primary min-w-7" dir="ltr">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="flex flex-col gap-1.5">
-                    <span className="font-serif text-xl font-bold group-hover:text-primary transition-colors">{t(service.name)}</span>
-                    <span className="text-muted-foreground">{t(service.summary)}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ol>
+          <Reveal>
+            <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
+              {services.map((service, i) => (
+                <li key={service.slug}>
+                  <Link href={`/services/${service.slug}`} className="pressable group flex items-start gap-5 py-6 border-t border-[var(--hairline)]">
+                    <span className="font-serif text-[0.9375rem] font-medium text-muted-foreground min-w-7 pt-1 tabular-nums" dir="ltr">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="flex flex-1 flex-col gap-1">
+                      <span className="font-serif text-[1.3125rem] font-semibold tracking-[-0.015em] transition-colors group-hover:text-primary">{t(service.name)}</span>
+                      <span className="text-muted-foreground">{t(service.summary)}</span>
+                    </span>
+                    <ChevronRight className="mt-1.5 w-5 h-5 shrink-0 text-muted-foreground/60 transition-transform duration-300 group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
       </section>
 
       {/* Industries */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-28">
         <div className="container">
           <SectionHeading eyebrow={t(ui.nav.industries)} title={t(copy.industriesTitle)} />
-          <div className="flex flex-wrap gap-3">
+          <Reveal className="flex flex-wrap gap-2.5">
             {industries.map((industry) => {
               const Icon = industryIcons[industry.icon];
               return (
                 <Link
                   key={industry.slug}
                   href={`/industries#${industry.slug}`}
-                  className="inline-flex items-center gap-2.5 min-h-12 px-5 rounded-full bg-card border border-border font-medium hover:border-primary hover:text-primary transition-colors"
+                  className="inline-flex items-center gap-2 min-h-11 px-[1.125rem] rounded-full bg-card shadow-[0_0_0_1px_var(--hairline)] font-medium transition-[color,box-shadow,transform] duration-200 hover:text-primary hover:shadow-[0_0_0_1px_var(--primary)] active:scale-[0.97] active:duration-75"
                 >
                   <Icon className="w-4 h-4 text-primary" aria-hidden />
                   {t(industry.name)}
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
-            {copy.pillars.map(({ icon: Icon, title, text }) => (
-              <div key={title.en} className="p-7 rounded-lg bg-card border border-border">
-                <Icon className="w-8 h-8 text-primary" strokeWidth={1.8} aria-hidden />
-                <h3 className="font-serif text-xl font-bold mt-4 mb-2">{t(title)}</h3>
+            {copy.pillars.map(({ icon: Icon, title, text }, i) => (
+              <Reveal key={title.en} delay={i * 0.06} className="p-7 md:p-8 rounded-xl bg-card shadow-[0_0_0_1px_var(--hairline)]">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-[0.875rem] bg-secondary text-primary">
+                  <Icon className="w-[22px] h-[22px]" strokeWidth={1.8} aria-hidden />
+                </span>
+                <h3 className="font-serif text-[1.3125rem] font-semibold mt-5 mb-2">{t(title)}</h3>
                 <p className="text-muted-foreground">{t(text)}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -177,5 +172,36 @@ export default function Home() {
 
       <CTA {...defaultCta} />
     </Layout>
+  );
+}
+
+/**
+ * Product illustrations on a soft stage. As the stage scrolls into view it settles from slightly
+ * smaller and lower to full size, tied 1:1 to scroll position (no timer), and stays put with reduced motion.
+ */
+function HeroStage({ iotAlt, lamanaAlt }: { iotAlt: string; lamanaAlt: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
+  const lift = useTransform(scrollYProgress, [0, 1], [40, 0]);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={reduce ? undefined : { scale, y: lift }}
+      className="relative mx-auto mt-14 md:mt-20 max-w-5xl aspect-[16/11] sm:aspect-[16/10]"
+    >
+      <img
+        src={asset("/images/iot-cold-chain.svg")}
+        alt={iotAlt}
+        className="absolute top-0 end-0 w-[82%] rounded-xl bg-card surface-shadow ring-1 ring-[var(--hairline)]"
+      />
+      <img
+        src={asset("/images/lamana.svg")}
+        alt={lamanaAlt}
+        className="absolute bottom-0 start-0 w-[60%] rounded-xl bg-card surface-shadow ring-4 ring-background"
+      />
+    </motion.div>
   );
 }

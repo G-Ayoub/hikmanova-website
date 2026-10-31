@@ -1,3 +1,4 @@
+import { MotionConfig } from "framer-motion";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Redirect, Route, Switch, Router as WouterRouter } from "wouter";
@@ -79,12 +80,14 @@ function App() {
     <ErrorBoundary>
       <LanguageProvider>
         <ThemeProvider defaultTheme="light" switchable>
-          <TooltipProvider>
-            <Toaster />
-            <WouterRouter base={BASE}>
-              <Router />
-            </WouterRouter>
-          </TooltipProvider>
+          <MotionConfig reducedMotion="user">
+            <TooltipProvider>
+              <Toaster />
+              <WouterRouter base={BASE}>
+                <Router />
+              </WouterRouter>
+            </TooltipProvider>
+          </MotionConfig>
         </ThemeProvider>
       </LanguageProvider>
     </ErrorBoundary>

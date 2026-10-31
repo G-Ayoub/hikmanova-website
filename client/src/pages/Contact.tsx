@@ -1,264 +1,226 @@
-import Layout from "@/components/Layout";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Download, Linkedin, Mail, MapPin, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useTranslation } from "@/lib/translations";
+import Layout from "@/components/Layout";
+import { Button } from "@/components/ui/button";
+import { PageHero, SectionHeading } from "@/components/site";
+import { ui, useI18n, type Localized } from "@/lib/i18n";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { company } from "@/data/company";
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mkglzgqd";
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const l = (en: string, ar: string): Localized => ({ en, ar });
+
+const copy = {
+  title: l("Get in touch", "تواصل معنا"),
+  subtitle: l(
+    "Tell us about your project, or book a proof-of-concept workshop with our team.",
+    "أخبرنا عن مشروعك، أو احجز ورشة إثبات مفهوم مع فريقنا.",
+  ),
+  email: l("Email", "البريد الإلكتروني"),
+  offices: l("Offices", "المكاتب"),
+  moreOffices: l("Additional offices (KSA / UK)", "مكاتب إضافية (السعودية / المملكة المتحدة)"),
+  whatsapp: l("WhatsApp", "واتساب"),
+  linkedin: l("LinkedIn", "لينكدإن"),
+  form: {
+    title: l("Send us a message", "أرسل لنا رسالة"),
+    subtitle: l("We will get back to you as soon as possible.", "سنرد عليك في أقرب وقت ممكن."),
+    name: l("Name", "الاسم"),
+    namePh: l("Your name", "اسمك"),
+    email: l("Email", "البريد الإلكتروني"),
+    subject: l("Subject", "الموضوع"),
+    subjectPh: l("How can we help?", "كيف يمكننا مساعدتك؟"),
+    message: l("Message", "الرسالة"),
+    messagePh: l("Tell us about your project…", "أخبرنا عن مشروعك…"),
+    send: l("Send message", "إرسال الرسالة"),
+    sending: l("Sending…", "جارٍ الإرسال…"),
+  },
+  validation: {
+    name: l("Please enter your name", "يرجى إدخال اسمك"),
+    email: l("Please enter a valid email", "يرجى إدخال بريد إلكتروني صحيح"),
+    subject: l("Please enter a subject", "يرجى إدخال الموضوع"),
+    message: l("Please enter your message", "يرجى إدخال رسالتك"),
+  },
+  success: l("Message sent! We'll be in touch soon.", "تم إرسال الرسالة! سنتواصل معك قريباً."),
+  error: l("Your message could not be sent. Please try again or email us.", "تعذّر إرسال رسالتك. يرجى المحاولة مجدداً أو مراسلتنا عبر البريد."),
+  faqTitle: l("Frequently asked questions", "الأسئلة الشائعة"),
+  faqs: [
+    {
+      q: l("How do projects usually start?", "كيف تبدأ المشاريع عادةً؟"),
+      a: l("Most engagements start with a short proof-of-concept workshop on your data and infrastructure, followed by a scoped delivery plan.", "تبدأ معظم المشاريع بورشة قصيرة لإثبات المفهوم على بياناتك وبنيتك التحتية، تليها خطة تنفيذ محددة النطاق."),
+    },
+    {
+      q: l("Can you host everything on our premises?", "هل يمكنكم استضافة كل شيء داخل مؤسستنا؟"),
+      a: l("Yes. Our products and the systems we build can run on-premises or in a national cloud to meet data-localisation rules.", "نعم. يمكن تشغيل منتجاتنا والأنظمة التي نبنيها داخل المؤسسة أو على سحابة وطنية بما يلبي متطلبات توطين البيانات."),
+    },
+    {
+      q: l("Which languages do your systems support?", "ما اللغات التي تدعمها أنظمتكم؟"),
+      a: l("Arabic (right-to-left), French and English, in the interfaces and in our AI agents.", "العربية (من اليمين إلى اليسار) والفرنسية والإنجليزية، في الواجهات وفي وكلاء الذكاء الاصطناعي."),
+    },
+    {
+      q: l("Do you provide support after launch?", "هل تقدمون دعماً بعد الإطلاق؟"),
+      a: l("Yes. We offer maintenance and managed operations, and we train your teams for hand-over.", "نعم. نقدم الصيانة والتشغيل المُدار، وندرّب فرقكم على الاستلام."),
+    },
+    {
+      q: l("How do you handle confidentiality?", "كيف تتعاملون مع السرية؟"),
+      a: l("We sign NDAs and only show client names, logos or results with written permission.", "نوقّع اتفاقيات عدم الإفصاح، ولا نعرض أسماء العملاء أو شعاراتهم أو نتائجهم إلا بإذن مكتوب."),
+    },
+  ],
+};
+
+type FormData = { name: string; email: string; subject: string; message: string };
+const empty: FormData = { name: "", email: "", subject: "", message: "" };
 
 export default function Contact() {
-  const { language } = useLanguage();
-  const { t } = useTranslation(language);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const { t } = useI18n();
+  usePageMeta(t(ui.nav.contact), t(copy.subtitle));
+  const [formData, setFormData] = useState<FormData>(empty);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Validation
-    if (!formData.name.trim()) {
-      toast.error(t('contact.validation.name'));
-      return;
-    }
-    if (!formData.email.trim() || !formData.email.includes("@")) {
-      toast.error(t('contact.validation.email'));
-      return;
-    }
-    if (!formData.subject.trim()) {
-      toast.error(t('contact.validation.subject'));
-      return;
-    }
-    if (!formData.message.trim()) {
-      toast.error(t('contact.validation.message'));
-      return;
-    }
+    if (!formData.name.trim()) return toast.error(t(copy.validation.name));
+    if (!EMAIL_RE.test(formData.email.trim())) return toast.error(t(copy.validation.email));
+    if (!formData.subject.trim()) return toast.error(t(copy.validation.subject));
+    if (!formData.message.trim()) return toast.error(t(copy.validation.message));
 
     setIsSubmitting(true);
-
     try {
-      const response = await fetch("https://formspree.io/f/mkglzgqd", {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
-        toast.success(t('contact.success'));
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      } else {
-        toast.error(t('contact.error'));
-      }
-    } catch (error) {
-      toast.error(t('contact.errorOccurred'));
+      if (!response.ok) throw new Error(String(response.status));
+      toast.success(t(copy.success));
+      setFormData(empty);
+    } catch {
+      toast.error(t(copy.error));
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const faqs = [
-    { qKey: "contact.faq.timeline.q", aKey: "contact.faq.timeline.a" },
-    { qKey: "contact.faq.support.q", aKey: "contact.faq.support.a" },
-    { qKey: "contact.faq.technologies.q", aKey: "contact.faq.technologies.a" },
-    { qKey: "contact.faq.confidentiality.q", aKey: "contact.faq.confidentiality.a" },
-    { qKey: "contact.faq.pricing.q", aKey: "contact.faq.pricing.a" },
-    { qKey: "contact.faq.remote.q", aKey: "contact.faq.remote.a" },
-  ];
+  const inputClass =
+    "w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary";
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="py-16 md:py-24 bg-card">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6">{t('contact.hero.title')}</h1>
-            <p className="text-lg text-muted-foreground">
-              {t('contact.hero.subtitle')}
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero title={t(copy.title)} subtitle={t(copy.subtitle)} />
 
-      {/* Contact Info */}
-      <section className="py-16 md:py-24 border-b border-border">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-                <Mail className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-serif font-bold text-lg mb-2">{t('contact.info.email.label')}</h3>
-              <a
-                href="mailto:info@hikmanova.com"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                info@hikmanova.com
+      <section className="pb-16 md:pb-24">
+        <div className="container grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <aside className="space-y-6">
+            <div className="p-6 rounded-lg border border-border bg-card">
+              <h2 className="font-serif font-bold mb-3 flex items-center gap-2">
+                <Mail className="w-5 h-5 text-primary" aria-hidden /> {t(copy.email)}
+              </h2>
+              <a href={`mailto:${company.email}`} className="text-muted-foreground hover:text-primary" dir="ltr">
+                {company.email}
               </a>
             </div>
 
-            {/* Phone section commented out
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-                <Phone className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-serif font-bold text-lg mb-2">{t('contact.info.phone.label')}</h3>
-              <a
-                href="tel:+213553843333"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                +213 553 84 33 33
-              </a>
-            </div>
-            */}
-
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-                <MapPin className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-serif font-bold text-lg mb-2">{t('contact.info.location.label')}</h3>
-              <p className="text-muted-foreground">
-                {t('contact.info.location.city')}<br />
-                {t('contact.info.location.country')}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form */}
-      <section className="py-16 md:py-24">
-        <div className="container max-w-2xl">
-          <div className="mb-12">
-            <h2 className="text-3xl font-serif font-bold mb-4">{t('contact.form.title')}</h2>
-            <p className="text-muted-foreground">
-              {t('contact.form.subtitle')}
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold mb-2">
-                  {t('contact.form.name')}
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder={t('contact.form.namePlaceholder')}
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-semibold mb-2">
-                  {t('contact.form.email')}
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder={t('contact.form.emailPlaceholder')}
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-            </div>
-          
-            <div>
-              <label htmlFor="subject" className="block text-sm font-semibold mb-2">
-                {t('contact.form.subject')}
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                placeholder={t('contact.form.subjectPlaceholder')}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
+            <div className="p-6 rounded-lg border border-border bg-card">
+              <h2 className="font-serif font-bold mb-3 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-primary" aria-hidden /> {t(copy.offices)}
+              </h2>
+              <ul className="space-y-1 text-muted-foreground">
+                {company.offices.map((o) => (
+                  <li key={o.city.en}>
+                    {t(o.city)}, {t(o.country)}
+                    {o.address && <span className="block text-sm">{t(o.address)}</span>}
+                  </li>
+                ))}
+                <li className="text-sm italic">
+                  {t(copy.moreOffices)}: {t(ui.comingSoon)}
+                </li>
+              </ul>
             </div>
 
-            <div>
-              <label htmlFor="message" className="block text-sm font-semibold mb-2">
-                {t('contact.form.message')}
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder={t('contact.form.messagePlaceholder')}
-                rows={6}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                required
-              />
-            </div>
-
-            <Button
-              type="submit"
-              size="lg"
-              disabled={isSubmitting}
-              className="w-full gap-2"
-            >
-              {isSubmitting ? (
-                <>
-                  <span>{t('contact.form.sending')}</span>
-                </>
+            <div className="p-6 rounded-lg border border-border bg-card space-y-3">
+              {company.social.whatsapp ? (
+                <a href={`https://wa.me/${company.social.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary">
+                  <MessageCircle className="w-5 h-5 text-primary" aria-hidden /> {t(copy.whatsapp)}
+                </a>
               ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  {t('contact.form.send')}
-                </>
+                <p className="flex items-center gap-2 text-muted-foreground">
+                  <MessageCircle className="w-5 h-5" aria-hidden /> {t(copy.whatsapp)} — {t(ui.comingSoon)}
+                </p>
               )}
-            </Button>
-          </form>
+              {company.social.linkedin ? (
+                <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary">
+                  <Linkedin className="w-5 h-5 text-primary" aria-hidden /> {t(copy.linkedin)}
+                </a>
+              ) : (
+                <p className="flex items-center gap-2 text-muted-foreground">
+                  <Linkedin className="w-5 h-5" aria-hidden /> {t(copy.linkedin)} — {t(ui.comingSoon)}
+                </p>
+              )}
+            </div>
+
+            {company.profilePdf ? (
+              <Button asChild variant="outline" className="w-full gap-2">
+                <a href={company.profilePdf} download>
+                  <Download className="w-4 h-4" aria-hidden /> {t(ui.downloadProfile)}
+                </a>
+              </Button>
+            ) : (
+              <Button variant="outline" className="w-full gap-2 h-auto whitespace-normal py-2" disabled>
+                <Download className="w-4 h-4 shrink-0" aria-hidden /> {t(ui.downloadProfile)} — {t(ui.comingSoon)}
+              </Button>
+            )}
+          </aside>
+
+          <div className="lg:col-span-2">
+            <h2 className="text-3xl font-serif font-bold mb-2">{t(copy.form.title)}</h2>
+            <p className="text-muted-foreground mb-8">{t(copy.form.subtitle)}</p>
+
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-semibold mb-2">{t(copy.form.name)}</label>
+                  <input id="name" name="name" type="text" autoComplete="name" value={formData.name} onChange={handleChange} placeholder={t(copy.form.namePh)} className={inputClass} required />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold mb-2">{t(copy.form.email)}</label>
+                  <input id="email" name="email" type="email" autoComplete="email" dir="ltr" value={formData.email} onChange={handleChange} placeholder="you@company.com" className={inputClass} required />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="subject" className="block text-sm font-semibold mb-2">{t(copy.form.subject)}</label>
+                <input id="subject" name="subject" type="text" value={formData.subject} onChange={handleChange} placeholder={t(copy.form.subjectPh)} className={inputClass} required />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-semibold mb-2">{t(copy.form.message)}</label>
+                <textarea id="message" name="message" rows={6} value={formData.message} onChange={handleChange} placeholder={t(copy.form.messagePh)} className={`${inputClass} resize-y`} required />
+              </div>
+              <Button type="submit" size="lg" disabled={isSubmitting} className="w-full gap-2">
+                {isSubmitting ? t(copy.form.sending) : <><Send className="w-4 h-4 rtl:-scale-x-100" aria-hidden /> {t(copy.form.send)}</>}
+              </Button>
+            </form>
+          </div>
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="py-16 md:py-24 bg-card">
         <div className="container max-w-3xl">
-          <h2 className="text-3xl font-serif font-bold mb-8">{t('contact.faq.title')}</h2>
-
-          <div className="space-y-6">
-            {faqs.map((item, idx) => (
-              <div key={idx} className="p-6 rounded-lg border border-border bg-background">
-                <h3 className="font-serif font-bold text-lg mb-3">{t(item.qKey)}</h3>
-                <p className="text-muted-foreground">{t(item.aKey)}</p>
-              </div>
+          <SectionHeading title={t(copy.faqTitle)} />
+          <div className="space-y-4">
+            {copy.faqs.map((item) => (
+              <details key={item.q.en} className="group p-6 rounded-lg border border-border bg-background">
+                <summary className="font-serif font-bold text-lg cursor-pointer list-none flex justify-between gap-4">
+                  {t(item.q)}
+                  <span className="text-primary transition-transform group-open:rotate-45" aria-hidden>+</span>
+                </summary>
+                <p className="text-muted-foreground mt-3">{t(item.a)}</p>
+              </details>
             ))}
           </div>
         </div>

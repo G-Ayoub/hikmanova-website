@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+/** To add French: add 'fr' here and to LANGUAGES, then fill the `fr` fields in content. */
 export type Language = 'en' | 'ar';
+
+export const LANGUAGES: { code: Language; label: string; name: string; rtl: boolean }[] = [
+  { code: 'en', label: 'EN', name: 'English', rtl: false },
+  { code: 'ar', label: 'AR', name: 'العربية', rtl: true },
+];
 
 interface LanguageContextType {
   language: Language;
@@ -10,28 +16,36 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
-  const [isRTL, setIsRTL] = useState(false);
+const isSupported = (value: string | null): value is Language =>
+  LANGUAGES.some((l) => l.code === value);
 
-  // Initialize language from localStorage or browser preference
+function initialLanguage(): Language {
+  try {
+    const saved = localStorage.getItem('language');
+    if (isSupported(saved)) return saved;
+  } catch {
+    /* storage unavailable */
+  }
+  const browser = navigator.language.slice(0, 2);
+  return isSupported(browser) ? browser : 'en';
+}
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguageState] = useState<Language>(initialLanguage);
+  const isRTL = LANGUAGES.find((l) => l.code === language)?.rtl ?? false;
+
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language | null;
-    const browserLanguage = navigator.language.startsWith('ar') ? 'ar' : 'en';
-    const initialLanguage = savedLanguage || browserLanguage;
-    
-    setLanguageState(initialLanguage);
-    setIsRTL(initialLanguage === 'ar');
-    document.documentElement.lang = initialLanguage;
-    document.documentElement.dir = initialLanguage === 'ar' ? 'rtl' : 'ltr';
-  }, []);
+    document.documentElement.lang = language;
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+  }, [language, isRTL]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    setIsRTL(lang === 'ar');
-    localStorage.setItem('language', lang);
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    try {
+      localStorage.setItem('language', lang);
+    } catch {
+      /* storage unavailable */
+    }
   };
 
   return (

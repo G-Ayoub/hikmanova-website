@@ -1,91 +1,54 @@
-import Layout from "@/components/Layout";
-import { Link } from "wouter";
-import { ArrowLeft } from "lucide-react";
+import LegalPage, { type LegalSection } from "@/components/LegalPage";
+import { ui, type Localized } from "@/lib/i18n";
+import { CONTACT_EMAIL } from "@/const";
+
+const l = (en: string, ar: string): Localized => ({ en, ar });
+
+const sections: LegalSection[] = [
+  {
+    heading: l("Who we are", "من نحن"),
+    paragraphs: [l(
+      "This website is operated by HikmaNova, Algiers, Algeria. This policy explains what personal data we collect through the website and how we use it.",
+      "يُدار هذا الموقع من قِبل HikmaNova، الجزائر العاصمة، الجزائر. توضح هذه السياسة البيانات الشخصية التي نجمعها عبر الموقع وكيفية استخدامها.",
+    )],
+  },
+  {
+    heading: l("Data we collect", "البيانات التي نجمعها"),
+    list: [
+      l("Contact form: your name, email address, subject and message, which you choose to send us.", "نموذج التواصل: اسمك وبريدك الإلكتروني والموضوع والرسالة التي تختار إرسالها إلينا."),
+      l("Preferences: your chosen language and colour theme, stored only in your browser's local storage.", "التفضيلات: اللغة والمظهر اللذان تختارهما، ويُحفظان في التخزين المحلي لمتصفحك فقط."),
+      l("Technical data: like any website, our hosting and font providers receive your IP address and browser information when pages load.", "البيانات التقنية: كأي موقع، يتلقى مزودو الاستضافة والخطوط عنوان IP ومعلومات المتصفح عند تحميل الصفحات."),
+    ],
+    paragraphs: [l("We do not use analytics or advertising trackers.", "لا نستخدم أدوات تحليلات أو تتبّع إعلاني.")],
+  },
+  {
+    heading: l("How we use it", "كيف نستخدمها"),
+    paragraphs: [l(
+      "We use contact-form messages only to reply to you and to follow up on your request. We do not sell or share your data for marketing.",
+      "نستخدم رسائل نموذج التواصل فقط للرد عليك ومتابعة طلبك. ولا نبيع بياناتك ولا نشاركها لأغراض تسويقية.",
+    )],
+  },
+  {
+    heading: l("Service providers", "مزودو الخدمات"),
+    list: [
+      l("GitHub Pages — website hosting.", "GitHub Pages — استضافة الموقع."),
+      l("Formspree — delivers contact-form messages to our inbox.", "Formspree — يوصل رسائل نموذج التواصل إلى بريدنا."),
+      l("Google Fonts — serves the typefaces used on the site.", "Google Fonts — يوفر الخطوط المستخدمة في الموقع."),
+    ],
+  },
+  {
+    heading: l("Retention and your rights", "مدة الاحتفاظ وحقوقك"),
+    paragraphs: [l(
+      `We keep messages only as long as needed to handle your request. You can ask us to access, correct or delete your data at any time by writing to ${CONTACT_EMAIL}.`,
+      `نحتفظ بالرسائل فقط للمدة اللازمة لمعالجة طلبك. ويمكنك في أي وقت طلب الاطلاع على بياناتك أو تصحيحها أو حذفها بمراسلتنا على ${CONTACT_EMAIL}.`,
+    )],
+  },
+  {
+    heading: l("Changes", "التعديلات"),
+    paragraphs: [l("We may update this policy; the date above shows the latest version.", "قد نحدّث هذه السياسة، ويشير التاريخ أعلاه إلى آخر نسخة.")],
+  },
+];
 
 export default function Privacy() {
-  return (
-    <Layout>
-      {/* Hero */}
-      <section className="py-12 md:py-16 border-b border-border">
-        <div className="container max-w-3xl">
-          <Link href="/">
-            <a className="inline-flex items-center gap-2 text-primary hover:opacity-80 transition-opacity mb-6">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </a>
-          </Link>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Privacy Policy</h1>
-          <p className="text-lg text-muted-foreground">Last updated: May 2025</p>
-        </div>
-      </section>
-
-      {/* Content */}
-      <section className="py-16 md:py-24">
-        <div className="container max-w-3xl">
-          <div className="prose prose-invert max-w-none space-y-6">
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">1. Introduction</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                HikmaNova ("we", "us", "our") operates the hikmanova.com website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">2. Information Collection and Use</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                We collect several different types of information for various purposes to provide and improve our Service to you.
-              </p>
-              <h3 className="text-xl font-semibold mb-2">Types of Data Collected:</h3>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                <li>Personal Data: Name, email address, phone number, and other contact information</li>
-                <li>Usage Data: Browser type, IP address, pages visited, and time spent on pages</li>
-                <li>Cookies and Tracking: Information collected through cookies and similar technologies</li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">3. Use of Data</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                HikmaNova uses the collected data for various purposes:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                <li>To provide and maintain our Service</li>
-                <li>To notify you about changes to our Service</li>
-                <li>To provide customer support</li>
-                <li>To gather analysis or valuable information so that we can improve our Service</li>
-                <li>To monitor the usage of our Service</li>
-                <li>To detect, prevent and address technical issues</li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">4. Security of Data</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                The security of your data is important to us but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">5. Changes to This Privacy Policy</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date at the top of this Privacy Policy.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-4">6. Contact Us</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                If you have any questions about this Privacy Policy, please contact us at:
-              </p>
-              <div className="mt-4 text-muted-foreground">
-                <p>Email: info@hikmanova.com</p>
-                {/* <p>Phone: +213 553 84 33 33</p> */}
-                <p>Address: Algiers, Algeria</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </Layout>
-  );
+  return <LegalPage title={ui.nav.privacy} updated={l("October 2026", "أكتوبر 2026")} sections={sections} />;
 }

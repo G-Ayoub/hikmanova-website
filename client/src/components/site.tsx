@@ -10,6 +10,7 @@ import type { ServiceIcon } from "@/data/services";
 import type { IndustryIcon } from "@/data/industries";
 import { asset } from "@/lib/asset";
 import { Reveal } from "@/components/motion";
+import { company } from "@/data/company";
 
 export const serviceIcons: Record<ServiceIcon, LucideIcon> = {
   brain: Brain,
@@ -81,6 +82,22 @@ export function SectionHeading({ title, subtitle, eyebrow, center = false }: { t
       <h2 className={`text-[2rem] md:text-[3rem] font-serif font-semibold ${subtitle ? "mb-4" : ""} ${center ? "mx-auto max-w-[20em]" : "max-w-[18em]"}`}>{title}</h2>
       {subtitle && <p className={`text-lg md:text-xl text-muted-foreground max-w-2xl ${center ? "mx-auto" : ""}`}>{subtitle}</p>}
     </Reveal>
+  );
+}
+
+/** Client logos on white tiles, so brand colours stay true in light and dark mode. */
+export function ClientLogoGrid({ compact = false }: { compact?: boolean }) {
+  return (
+    <ul className={`grid gap-4 ${compact ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2 md:grid-cols-4 gap-5"}`}>
+      {company.clientLogos.map((c) => (
+        <li
+          key={c.name}
+          className={`flex items-center justify-center rounded-xl bg-white ring-1 ring-[var(--hairline)] ${compact ? "h-24 p-4" : "h-36 p-6"}`}
+        >
+          <img src={asset(c.logo)} alt={c.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+        </li>
+      ))}
+    </ul>
   );
 }
 

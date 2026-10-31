@@ -6,6 +6,7 @@ import { ui, useI18n, type Localized } from "@/lib/i18n";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { pageDescriptions } from "@/data/routes";
 import { getSolution } from "@/data/solutions";
+import { company } from "@/data/company";
 import { asset } from "@/lib/asset";
 
 const l = (en: string, ar: string): Localized => ({ en, ar });
@@ -14,10 +15,11 @@ const copy = {
   subtitle: pageDescriptions["/innovation"],
   ipTitle: l("Registered intellectual property", "ملكية فكرية مسجّلة"),
   nusukText: l(
-    "Our Smart BLE Nusuk Card for Hajj and Umrah crowd management is registered as intellectual property in the Kingdom of Saudi Arabia.",
-    "بطاقة نسك الذكية بتقنية BLE لإدارة حشود الحج والعمرة مسجّلة ملكيةً فكرية في المملكة العربية السعودية.",
+    "Our Smart Hajj & Umrah crowd intelligence — low-energy-signal location intelligence combining movement prediction, congestion forecasting and smart routing — is registered as intellectual property in the Kingdom of Saudi Arabia.",
+    "نظامنا الذكي لإدارة حشود الحج والعمرة — ذكاء مكاني قائم على إشارات منخفضة الطاقة يجمع بين التنبؤ بالحركة وتوقّع الازدحام والتوجيه الذكي — مسجّل ملكيةً فكرية في المملكة العربية السعودية.",
   ),
   registered: l("Registered in Saudi Arabia", "مسجّلة في المملكة العربية السعودية"),
+  deposit: l("Deposit no.", "رقم الإيداع"),
   approachTitle: l("How we innovate", "كيف نبتكر"),
   approach: [
     { icon: Lightbulb, title: l("Start from the field", "ننطلق من الميدان"), text: l("Ideas come from real operations — stadiums, holy sites, hotels and warehouses.", "تنبع الأفكار من عمليات حقيقية — الملاعب والمشاعر المقدسة والفنادق والمستودعات.") },
@@ -45,7 +47,8 @@ export default function Innovation() {
                 <Award className="w-4 h-4" aria-hidden /> {t(copy.registered)}
               </span>
               <h3 className="text-2xl font-serif font-semibold mb-3">{nusuk.name}</h3>
-              <p className="text-muted-foreground mb-6">{t(copy.nusukText)}</p>
+              <p className="text-muted-foreground mb-3">{t(copy.nusukText)}</p>
+              <p className="text-sm text-muted-foreground mb-6">{t(copy.deposit)}: <span dir="ltr" className="font-semibold text-foreground tabular-nums">{company.saudiIpDeposit}</span></p>
               <Link href={`/solutions/${nusuk.slug}`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline">
                 {t(ui.learnMore)} <ForwardArrow />
               </Link>

@@ -7,8 +7,9 @@ import { CONTACT_EMAIL } from "@/const";
  */
 
 export interface Stat { value: string; label: Localized }
-export interface Leader { name: string; role: Localized; photo?: string; linkedin?: string }
-export interface Office { city: Localized; country: Localized; address?: Localized }
+export interface Leader { name: string; role: Localized; bio?: Localized; photo?: string; linkedin?: string }
+export interface Advisor { name: string; focus: Localized; country: Localized }
+export interface Office { city: Localized; country: Localized; address?: Localized; headquarters?: boolean }
 export interface ClientLogo { name: string; logo: string; url?: string }
 export interface Testimonial { quote: Localized; author: string; role: Localized; company: string }
 export interface OpenRole { title: Localized; location: Localized; type: Localized; applyUrl?: string }
@@ -18,31 +19,79 @@ const l = (en: string, ar: string): Localized => ({ en, ar });
 export const company = {
   email: CONTACT_EMAIL,
 
+  /** UK-registered company (company deck, Oct 2026). */
+  registeredIn: l("United Kingdom", "المملكة المتحدة"),
+
   /** Key numbers for the Home page, e.g. { value: "10+", label: l("Years of experience", "...") } */
   stats: [
-    { value: "8+", label: l("Years of experience", "سنوات من الخبرة") },
-    { value: "4", label: l("Countries served", "دول نخدمها") },
+    { value: "20+", label: l("Specialists in R&D, engineering, product and business", "متخصصاً في البحث والتطوير والهندسة والمنتجات والأعمال") },
+    { value: "3", label: l("Regions: Europe, Africa and the Middle East", "مناطق: أوروبا وأفريقيا والشرق الأوسط") },
     { value: "100+", label: l("Stadium staff tracked at FIFA World Cup Qatar 2022", "موظف في الملاعب تم تتبّعهم خلال كأس العالم FIFA قطر 2022") },
     { value: "5", label: l("Patents & registered IP", "براءات اختراع وملكية فكرية مسجّلة") },
   ] as Stat[],
 
-  /** CEO, COO, ... (names and roles carried over from the previous site) */
+  /** Founders, from the company deck. Add `photo` (path under client/public) to show a headshot. */
   leadership: [
-    { name: "Khalil.L", role: l("Founder & CEO", "المؤسس والرئيس التنفيذي") },
-    { name: "Hichem.B", role: l("CTO", "المدير التقني") },
-    { name: "Ayoub.G", role: l("Lead Data Engineer", "كبير مهندسي البيانات") },
+    {
+      name: "Hicham Bourak",
+      role: l("CEO & Co-Founder", "الرئيس التنفيذي والمؤسس المشارك"),
+      bio: l(
+        "Business development leader in digital transformation and AI innovation, driving modernisation across the public and private sectors.",
+        "قائد في تطوير الأعمال متخصص في التحول الرقمي وابتكار الذكاء الاصطناعي، يقود مبادرات التحديث في القطاعين العام والخاص.",
+      ),
+    },
+    {
+      name: "Ayoub Ghafour",
+      role: l("COO & Co-Founder", "الرئيس التنفيذي للعمليات والمؤسس المشارك"),
+      bio: l(
+        "Technology and operations leader delivering large-scale AI and IoT solutions for enterprise and public-sector organisations.",
+        "قائد في التقنية والعمليات ينفّذ حلول ذكاء اصطناعي وإنترنت أشياء واسعة النطاق للمؤسسات والقطاع العام.",
+      ),
+    },
+    {
+      name: "Ibrahim Lassouani",
+      role: l("CTO & Founder", "المدير التقني والمؤسس"),
+      bio: l(
+        "Innovation leader and AIoT expert with 10+ years in IoT, smart cities and digital transformation; inventor and technology strategist.",
+        "قائد ابتكار وخبير في الذكاء الاصطناعي لإنترنت الأشياء بخبرة تتجاوز 10 سنوات في إنترنت الأشياء والمدن الذكية والتحول الرقمي؛ مخترع واستراتيجي تقني.",
+      ),
+    },
+    {
+      name: "Mohamed Tounsi",
+      role: l("Co-Founder", "مؤسس مشارك"),
+      bio: l(
+        "Full Professor of Artificial Intelligence at Prince Sultan University, with 22+ years in AI research, data analytics and technology transfer.",
+        "أستاذ دكتور في الذكاء الاصطناعي بجامعة الأمير سلطان، بخبرة تتجاوز 22 عاماً في أبحاث الذكاء الاصطناعي وتحليل البيانات ونقل التقنية.",
+      ),
+    },
   ] as Leader[],
 
+  /** Board & advisory, from the company deck. */
+  advisors: [
+    { name: "Nadjia Drici", focus: l("Market access, adoption & international deployment", "النفاذ إلى الأسواق والتبنّي والانتشار الدولي"), country: l("Switzerland", "سويسرا") },
+    { name: "Maha Ammouche", focus: l("Market adoption & MENA execution", "تبنّي الأسواق والتنفيذ في منطقة الشرق الأوسط وشمال أفريقيا"), country: l("Algeria", "الجزائر") },
+    { name: "Zara Zaghoui", focus: l("Pharma AI, data science & scientific credibility", "الذكاء الاصطناعي في الصناعة الدوائية وعلوم البيانات والمصداقية العلمية"), country: l("United Kingdom", "المملكة المتحدة") },
+    { name: "Othmane Allaoui", focus: l("AI infrastructure, data & enterprise scalability", "بنية الذكاء الاصطناعي التحتية والبيانات وقابلية التوسع المؤسسي"), country: l("France", "فرنسا") },
+    { name: "Matthieu Quiniou", focus: l("AI regulation, compliance & enterprise trust", "تنظيم الذكاء الاصطناعي والامتثال وثقة المؤسسات"), country: l("France", "فرنسا") },
+    { name: "Mehdi Ammi", focus: l("Scientific AI leadership & deeptech platforms", "القيادة العلمية في الذكاء الاصطناعي ومنصات التقنيات العميقة"), country: l("France", "فرنسا") },
+    { name: "Naji Bouchiba", focus: l("Cognitive UX & AI solution adoption", "تجربة المستخدم المعرفية وتبنّي حلول الذكاء الاصطناعي"), country: l("France", "فرنسا") },
+  ] as Advisor[],
+
   offices: [
+    { city: l("Bournemouth", "بورنموث"), country: l("United Kingdom", "المملكة المتحدة"), headquarters: true },
     { city: l("Algiers", "الجزائر العاصمة"), country: l("Algeria", "الجزائر") },
   ] as Office[],
 
   regions: [
+    l("United Kingdom", "المملكة المتحدة"),
+    l("France", "فرنسا"),
     l("Algeria", "الجزائر"),
     l("Saudi Arabia", "المملكة العربية السعودية"),
     l("Qatar", "قطر"),
-    l("France", "فرنسا"),
   ],
+
+  /** Saudi registered IP for the Hajj & Umrah crowd-intelligence system (Nusuk Card). */
+  saudiIpDeposit: "1607864",
 
   social: {
     linkedin: "https://www.linkedin.com/company/hikmanova/" as string | null,
@@ -51,7 +100,12 @@ export const company = {
   },
 
   /** Only clients who have given permission to be shown. */
-  clientLogos: [] as ClientLogo[],
+  clientLogos: [
+    { name: "Arabsat", logo: "/images/clients/arabsat.jpg" },
+    { name: "Vodafone Qatar", logo: "/images/clients/vodafone-qatar.png" },
+    { name: "Prince Sultan University", logo: "/images/clients/prince-sultan-university.jpg" },
+    { name: "Naseej", logo: "/images/clients/naseej.jpg" },
+  ] as ClientLogo[],
   testimonials: [] as Testimonial[],
 
   openRoles: [] as OpenRole[],

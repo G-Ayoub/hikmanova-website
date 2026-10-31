@@ -43,12 +43,12 @@ export const pageDescriptions = {
     "نحوّل التحديات الميدانية إلى منتجات أصيلة — ونحمي الأفكار التي تقف خلفها.",
   ),
   "/clients": l(
-    "Organisations across telecom, events, religious tourism and hospitality that we have worked with.",
-    "مؤسسات في قطاعات الاتصالات والفعاليات والسياحة الدينية والضيافة عملنا معها.",
+    "Organisations across telecom, satellite, academia and digital services that we have worked with.",
+    "مؤسسات في قطاعات الاتصالات والأقمار الصناعية والتعليم العالي والخدمات الرقمية عملنا معها.",
   ),
   "/about": l(
-    "An Algerian technology company building AI and IoT systems for North Africa and the Gulf.",
-    "شركة تقنية جزائرية تبني أنظمة الذكاء الاصطناعي وإنترنت الأشياء لشمال أفريقيا والخليج.",
+    "A UK-registered technology company building AI and IoT systems for real-world operations across Europe, Africa and the Middle East.",
+    "شركة تقنية مسجّلة في المملكة المتحدة تبني أنظمة الذكاء الاصطناعي وإنترنت الأشياء للعمليات الفعلية في أوروبا وأفريقيا والشرق الأوسط.",
   ),
   "/careers": l(
     "Join a small team shipping AI and IoT systems that run in stadiums, holy sites and national data centres.",

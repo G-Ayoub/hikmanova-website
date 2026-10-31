@@ -7,6 +7,8 @@ export interface LegalSection {
   heading: Localized;
   paragraphs?: Localized[];
   list?: Localized[];
+  /** Paragraphs shown after the list (closing remarks about the listed items). */
+  afterList?: Localized[];
 }
 
 const updatedLabel: Localized = { en: "Last updated", ar: "آخر تحديث" };
@@ -35,6 +37,9 @@ export default function LegalPage({ title, description, updated, sections }: { t
                   ))}
                 </ul>
               )}
+              {s.afterList?.map((p) => (
+                <p key={p.en} className="text-muted-foreground leading-relaxed mt-4">{t(p)}</p>
+              ))}
             </div>
           ))}
         </div>

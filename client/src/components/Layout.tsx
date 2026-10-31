@@ -6,7 +6,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { LANGUAGES, useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { ui, useI18n } from "@/lib/i18n";
-import { company, hasClientProof } from "@/data/company";
+import { company, hasClientProof, legalEntity } from "@/data/company";
 import { asset } from "@/lib/asset";
 import { Segmented, spring } from "@/components/motion";
 
@@ -234,10 +234,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </div>
 
-          <div className="border-t border-[var(--hairline)] pt-6">
+          <div className="border-t border-[var(--hairline)] pt-6 space-y-1.5">
             <p>
-              &copy; {new Date().getFullYear()} <span dir="ltr">HikmaNova</span>. {t(ui.footer.rights)}
+              &copy; {new Date().getFullYear()} <span dir="ltr">{company.legal.name}</span>. {t(ui.footer.rights)}
             </p>
+            <p className="text-xs text-muted-foreground/80">{t(legalEntity())}.</p>
           </div>
         </div>
       </footer>

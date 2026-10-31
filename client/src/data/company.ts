@@ -22,6 +22,17 @@ export const company = {
   /** UK-registered company (company deck, Oct 2026). */
   registeredIn: l("United Kingdom", "المملكة المتحدة"),
 
+  /**
+   * Legal details shown in the footer, Privacy and Terms (UK company websites must show the registered
+   * name, number, place of registration and registered office). Fill in companyNumber when available.
+   */
+  legal: {
+    name: "HikmaNova Ltd",
+    registeredIn: l("England and Wales", "إنجلترا وويلز"),
+    companyNumber: null as string | null,
+    registeredOffice: l("Bournemouth, United Kingdom", "بورنموث، المملكة المتحدة"),
+  },
+
   /** Key numbers for the Home page, e.g. { value: "10+", label: l("Years of experience", "...") } */
   stats: [
     { value: "20+", label: l("Specialists in R&D, engineering, product and business", "متخصصاً في البحث والتطوير والهندسة والمنتجات والأعمال") },
@@ -131,4 +142,13 @@ export const company = {
 /** The Clients page is shown (nav, footer, sitemap) only once there are logos or testimonials. */
 export function hasClientProof() {
   return company.clientLogos.length > 0 || company.testimonials.length > 0;
+}
+
+/** "HikmaNova Ltd, a company registered in England and Wales (company no. …), registered office: …" */
+export function legalEntity(): Localized {
+  const { name, registeredIn, companyNumber, registeredOffice } = company.legal;
+  return {
+    en: `${name}, a company registered in ${registeredIn.en}${companyNumber ? ` (company no. ${companyNumber})` : ""}, registered office: ${registeredOffice.en}`,
+    ar: `${name}، شركة مسجّلة في ${registeredIn.ar}${companyNumber ? ` (رقم الشركة ${companyNumber})` : ""}، ومكتبها المسجّل في ${registeredOffice.ar}`,
+  };
 }
